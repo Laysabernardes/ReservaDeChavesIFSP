@@ -1,13 +1,10 @@
-
-import './App.css';
+import Header from './pages/header.js'; // Ajuste o caminho conforme necessário
+import './css/App.css';
 
 function App() {
   return (
 <div>
-  <div className="cabecalho">
-    <h3 className="containerH3">Reserva de Chaves</h3>
-    <input type="text" id="pesquisa" placeholder="O que deseja encontrar"></input>
-  </div>
+<Header/> {/*comando para importar o header*/}
   <div className="containerSemNome">
   <h2 className="containerH2">Todas as Chaves:</h2>
   <button className="editar">Editar</button>
