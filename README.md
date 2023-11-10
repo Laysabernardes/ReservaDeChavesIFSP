@@ -40,18 +40,19 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
 
 ## Comando git 🚀
 
-1. Clone o repositório: `git clone https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
-2. Crie uma branch: `git checkout -b nome-da-sua-branch`
-3. Adicionar mudanças: `git add nome-do-arquivo` ou `git add .` para adicionar todas as mudanças
-4. Commitar Mudanças Locais: `git commit -m 'Descrição da alteração'`
-5. Enviar Mudanças para o Repositório Remoto (Push): `git push origin nome-da-sua-branch`
-6. Atualizar o Repositório Local com Alterações do Remoto (Pull): `git pull origin nome-da-sua-branch`
-7. Verificar o Status do Repositório: `git status`
-8. Ver o Histórico de Commits: `git log`
-9. Trocar de Branch: `git checkout nome-da-outra-branch`
-10. Adiciona o Remote: `git remote add origin https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
-11. Verificar se o repositorio remoto foi adicionado: `git remote -v` 
-12. Inicializar um repositório git: `git init` 
+- Inicializar um repositório git: `git init` 
+- Adiciona o Remote: `git remote add origin https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
+- Verificar se o repositorio remoto foi adicionado: `git remote -v` 
+- Clonar o repositório: `git clone https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
+- Verificar o Status do Repositório: `git status`
+- Adicionar mudanças: `git add nome-do-arquivo` ou `git add .` para adicionar todas as mudanças
+- Commitar Mudanças Locais: `git commit -m 'Descrição da alteração'`
+- Atualizar o Repositório Local com Alterações do Remoto (Pull): `git pull origin nome-da-sua-branch`
+- Enviar Mudanças para o Repositório Remoto (Push): `git push origin nome-da-sua-branch`
 
+- Crie uma branch: `git checkout -b nome-da-sua-branch`
+- Ver o Histórico de Commits: `git log`
+- Trocar de Branch: `git checkout nome-da-outra-branch`
+ 
 A princípio, estamos trabalhando na branch "main". O desenvolvimento principal do projeto está nessa branch. 
 
