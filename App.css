@@ -1,0 +1,56 @@
+.indisponivel{
+  width: 100px;
+  height: 100px;
+  background-color: rgb(255, 0, 0);
+  border: 1px solid black;
+  margin: 10px;
+  text-align:center;
+}
+.disponivel{
+  width: 100px;
+  height: 100px;
+  background-color: rgb(21, 255, 0);
+  border: 1px solid black;
+  margin: 10px;
+  text-align:center;
+}
+.containerChaves{
+  display: flex;
+  margin: 10px;
+}
+.containerSemNome{
+  display:flex;
+  padding-right: 100px;
+}
+.editar{
+  display: inline-block;
+      padding: 6px 12px; /* Tamanho ainda menor */
+      font-size: 12px; /* Tamanho menor da fonte */
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      border-radius: 2px; /* Totalmente quadrado com bordas mais arredondadas */
+      background-color: #4CAF50; /* Cor verde */
+      color: #fff; /* Cor do texto */
+}
+.containerH2{
+  margin-right: 552px;
+}
+.containerH3{
+  margin-right: 482px;
+}
+.cabecalho{
+  display: flex;
+  padding: 15px;
+  background-color: white;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
