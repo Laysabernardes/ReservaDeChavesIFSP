@@ -40,16 +40,18 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
 
 ## Comando git 🚀
 
-- Inicializar um repositório git: `git init` 
+- Clonar o repositório: `git clone https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
+- Inicializar um repositório git: `git init`
+#
 - Adiciona o Remote: `git remote add origin https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
 - Verificar se o repositorio remoto foi adicionado: `git remote -v` 
-- Clonar o repositório: `git clone https://github.com/Laysabernardes/ReservaDeChavesIFSP.git`
+#
 - Verificar o Status do Repositório: `git status`
 - Adicionar mudanças: `git add nome-do-arquivo` ou `git add .` para adicionar todas as mudanças
 - Commitar Mudanças Locais: `git commit -m 'Descrição da alteração'`
 - Atualizar o Repositório Local com Alterações do Remoto (Pull): `git pull origin nome-da-sua-branch`
 - Enviar Mudanças para o Repositório Remoto (Push): `git push origin nome-da-sua-branch`
-
+#
 - Crie uma branch: `git checkout -b nome-da-sua-branch`
 - Ver o Histórico de Commits: `git log`
 - Trocar de Branch: `git checkout nome-da-outra-branch`
