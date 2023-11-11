@@ -8,7 +8,7 @@
     display: flex; /* Define o contêiner como flexível */
     flex-direction: row; /* Alinha os itens em uma linha horizontal */
     align-items: center; /* Centraliza os itens verticalmente */
-    justify-content: space-between; /* Distribui o espaço entre os itens */
+    justify-content: space-around; /* Distribui o espaço entre os itens */
 }
 
 /* Configuração para a seção de informações no cabeçalho */
@@ -57,6 +57,7 @@
     color: var(--cor-de-destaque); /* Define a cor do texto como a cor de destaque */
     padding: .7rem 2.4rem; /* Adiciona preenchimento interno de .7rem na vertical e 2.4rem na horizontal */
     border-radius: 5px; /* Adiciona borda arredondada com raio de 5px */
+    text-decoration: none; /* remove o sublinhado do texto do botão */
 }
 
 /* Estilo para o botão no cabeçalho quando o mouse passa sobre ele */

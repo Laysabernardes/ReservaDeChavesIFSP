@@ -25,7 +25,7 @@ function Header() {
           <img className="header__lupa" src={lupa} alt="lupa" />
         </div>
         {/* Link para a página de login */}
-        <a className="header__boton" href="./login.html">Login</a>
+        <a className="header__boton" href="./login.html">Logout</a>
         {/* Ícone de lupa para dispositivos móveis, não aparece em desktop */}
         <img className="header__lupa-mobile" src={lupaMobile} alt="lupa" />
       </header>
