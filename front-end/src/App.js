@@ -1,4 +1,5 @@
-import Header from './pages/header.js'; // Ajuste o caminho conforme necessário
+import Header from './pages/header.js'; 
+import Footer from './pages/footer.js'
 import './css/App.css';
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
         <>Laboratório 4</>
       </div>
     </div>
+    <Footer/>
 </div>
       
   );

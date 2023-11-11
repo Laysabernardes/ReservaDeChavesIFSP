@@ -16,4 +16,7 @@ code {
   --cor-de-fundo: #f5f5f5;
   --cor-de-realce: #000;
   --cor-de-destaque: #339A46;
+  --cor-do-fundo-footer: #EAF2FD;
+  --branco: #fff;
+  --erro: red;
 }
