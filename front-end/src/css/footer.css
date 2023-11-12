@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
-/* Define a fonte 'Raleway' */
-body {
-    font-family: 'Raleway', sans-serif;
-}
+
 
 /* Estiliza a seção de rodapé, adicionando espaço interno superior e inferior e definindo 
    a cor de fundo com uma variável de cor específica */

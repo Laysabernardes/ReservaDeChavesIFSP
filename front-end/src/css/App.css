@@ -1,48 +1,115 @@
 .indisponivel{
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 17.4rem;
   background-color: rgb(255, 0, 0);
-  border: 1px solid black;
-  margin: 10px;
+  border: .1rem solid black;
   text-align:center;
 }
+
 .disponivel{
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 17.4rem;
   background-color: rgb(21, 255, 0);
-  border: 1px solid black;
-  margin: 10px;
+  border: .1rem solid black;
   text-align:center;
 }
-.containerChaves{
+
+.Carta{
+  width: 17.6rem;
   display: flex;
-  margin: 10px;
+  flex-direction: column;
+  justify-content: center;
 }
+
+.Carta p{
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.Carta span{
+  font-size: 1.6rem;
+  color: var(--cor-de-destaque);
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;  
+  width: 113rem;
+}
+
+#Salas{
+  display: flex;
+  flex-direction: column; 
+  width: 113.3rem; 
+  margin: 6.4rem 0rem;
+}
+
+#Laboratorios{
+  display: flex;
+  flex-direction: column;  
+  margin-bottom: 6.4rem;
+}
+
+#Diversos{
+  display: flex;
+  flex-direction: column;  
+  margin-bottom: 6.4rem;
+}
+
+.tituloContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rem 1rem 1.6rem;
+}
+
+.tituloContainer a{
+  text-decoration: none;
+  color: var(--cor-de-destaque);
+  font-size: 1.6rem;
+}
+
+.tituloContainer h2{
+  font-size: 3.2rem;
+  margin: 0;
+}
+
+.chavesContainer{
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  margin: 1rem;
+}
+
 .containerSemNome{
-  display:flex;
-  padding-right: 100px;
+  display: flex;
+  padding-right: 10rem;
 }
+
 .editar{
   display: inline-block;
-      padding: 6px 12px; /* Tamanho ainda menor */
-      font-size: 12px; /* Tamanho menor da fonte */
+      padding: .6rem 1.2rem; /* Tamanho ainda menor */
+      font-size: 1.2rem; /* Tamanho menor da fonte */
       text-align: center;
       text-decoration: none;
       cursor: pointer;
       border: none;
-      border-radius: 2px; /* Totalmente quadrado com bordas mais arredondadas */
+      border-radius: .2rem; /* Totalmente quadrado com bordas mais arredondadas */
       background-color: #4CAF50; /* Cor verde */
       color: #fff; /* Cor do texto */
 }
+
 .containerH2{
-  margin-right: 552px;
+  margin-right: 55.2rem;
 }
 .containerH3{
-  margin-right: 482px;
+  margin-right: 48.2rem;
 }
 .cabecalho{
   display: flex;
-  padding: 15px;
+  padding: 1.5rem;
   background-color: white;
 }
 

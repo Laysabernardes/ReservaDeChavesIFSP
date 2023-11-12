@@ -27,6 +27,7 @@
 
 /* Estilo para o logo no cabeçalho */
 .header__titulo{
+    font-size: 1.4rem;
     height: 80%; /* Define a altura do título para 80% da altura do contêiner pai */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ; /* Define a família da fonte */
 }
