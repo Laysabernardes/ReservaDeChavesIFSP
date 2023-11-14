@@ -59,6 +59,7 @@
     padding: .7rem 2.4rem; /* Adiciona preenchimento interno de .7rem na vertical e 2.4rem na horizontal */
     border-radius: 5px; /* Adiciona borda arredondada com raio de 5px */
     text-decoration: none; /* remove o sublinhado do texto do botão */
+    transition: all 0.2s ease; /* Adiciona um tempo para a transição ao passar o mouse */
 }
 
 /* Estilo para o botão no cabeçalho quando o mouse passa sobre ele */
