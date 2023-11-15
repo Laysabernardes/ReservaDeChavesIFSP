@@ -10,7 +10,7 @@ function Banner() {
         <div className='banner__conteudo container'>
             <h2 className='banner__titulo'>Campus Cubatão</h2>
             <p className='banner__texto'>Sistema de reserva de chaves.</p>
-            <a href="#" className='banner__botao'>Ver chaves</a>
+            <a href="/" className='banner__botao'>Ver chaves</a>
         </div>
     </section>
   );

@@ -9,10 +9,13 @@ import '../css/reset.css';
 import '../css/index.css';
 import '../css/adm-page.css';
 
+//Criando a função de Adm que carregará a página html do Administrativo
 function Adm(){
   return (
+    //Elementos html criação de Div e inputs que carregarão dados do banco de dados (a ser modificados).
     <div>
-      <Header/> 
+      
+      <Header /> 
       <div className="principal">
         <div className="inputs">
          <h1>Aprovar Reserva:</h1>
