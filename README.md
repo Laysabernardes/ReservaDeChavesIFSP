@@ -2,7 +2,7 @@
 
 Bem-vindo ao repositório do projeto Sistema de Reservas por Chave! Aqui você encontrará informações importantes sobre o projeto, os integrantes do grupo e os prazos estabelecidos para o desenvolvimento.
 
-## Integrantes do Grupo 👩‍💻👨‍💻
+## Integrantes do Grupo 👩‍💻
 - Beatriz Bastos Borges
 - Eduardo Miranda Silva Sousa
 - Laysa Bernardes Campos da Rocha
@@ -26,6 +26,10 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
 - Reserva das chaves disponíveis.
 - Autorização por um funcionário de nível superior em casos de solicitação por alunos (individual ou em grupo).
 - Notificação em casos de perda, entrega em mal estado ou atraso.
+
+
+## Link Figma 👨‍💻
+[Clique aqui](https://www.figma.com/file/9Tv6VRPZciiEMYh1am0cpL/Reserva-de-Chaves?type=design&node-id=0-1&mode=design&t=1NGAws6fL6hmiK0f-0) para acessar o design no Figma.
 
 ## Datas Importantes 📅
 ### Front-end
@@ -58,3 +62,54 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
  
 A princípio, estamos trabalhando na branch "main". O desenvolvimento principal do projeto está nessa branch. 
 
+
+### Comando do MySQL
+CREATE TABLE Estudante (
+    cd_estudante VARCHAR(9) PRIMARY KEY,
+    nm_estudante VARCHAR(255),
+    email_estudante VARCHAR(100)
+);
+
+CREATE TABLE Funcionario (
+    cd_funcionario INT PRIMARY KEY,
+    nm_funcionario VARCHAR(255),
+    email_funcionario VARCHAR(100)
+);
+
+CREATE TABLE Chave (
+    cd_chave VARCHAR(9) PRIMARY KEY,
+    mn_sala VARCHAR(255),
+    status VARCHAR(15)
+);
+
+CREATE TABLE ReservaEstudante (
+    cd_reserva_estudante VARCHAR(9) PRIMARY KEY,
+    cd_estudante VARCHAR(9),
+    cd_chave VARCHAR(9),
+    data_reserva DATETIME,
+    data_devolucao DATETIME,
+    status VARCHAR(15),
+    FOREIGN KEY (cd_estudante) REFERENCES Estudante(cd_estudante),
+    FOREIGN KEY (cd_chave) REFERENCES Chave(cd_chave)
+);
+
+CREATE TABLE ReservaFuncionario (
+    cd_reserva_funcionario VARCHAR(9) PRIMARY KEY,
+    cd_funcionario VARCHAR(9),
+    cd_chave VARCHAR(9),
+    data_reserva DATETIME,
+    data_devolucao DATETIME,
+    status VARCHAR(15),
+    FOREIGN KEY (cd_funcionario) REFERENCES Funcionario(cd_funcionario),
+    FOREIGN KEY (cd_chave) REFERENCES Chave(cd_chave)
+);
+
+CREATE TABLE PermissaoReserva (
+    cd_permissao VARCHAR(9) PRIMARY KEY,
+    cd_funcionario VARCHAR(9),
+  	cd_estudante VARCHAR(9),
+    cd_chave INT VARCHAR(9),
+    FOREIGN KEY (cd_funcionario) REFERENCES Funcionario(cd_funcionario),
+  	FOREIGN KEY (cd_estudante) REFERENCES Estudante(cd_estudante),
+    FOREIGN KEY (cd_chave) REFERENCES Chave(cd_chave)
+);
