@@ -27,10 +27,10 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
 - Autorização por um funcionário de nível superior em casos de solicitação por alunos (individual ou em grupo).
 - Notificação em casos de perda, entrega em mal estado ou atraso.
 
-# 
+
 ## Link Figma 👨‍💻
 [Clique aqui](https://www.figma.com/file/9Tv6VRPZciiEMYh1am0cpL/Reserva-de-Chaves?type=design&node-id=0-1&mode=design&t=1NGAws6fL6hmiK0f-0) para acessar o design no Figma.
-#
+
 ## Datas Importantes 📅
 ### Front-end
 - **Parte lógica:** 15/11
