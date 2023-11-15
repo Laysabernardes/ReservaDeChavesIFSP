@@ -223,11 +223,12 @@
 	background-color: var(--cor-de-destaque); /* Define a cor de fundo do botão com uma variável específica */
 	font-weight: 500; /* Define a espessura da fonte do botão */
 	border: none; /* Remove a borda padrão do botão */
+    transition: all 0.2s ease; /* Adiciona um tempo para a transição ao passar o mouse */
 }
 
 /* Efeito de sombra quando o cursor passa sobre o botão no formulário */
 .boton-form:hover {
-	box-shadow: 1px 1px 8px 0px var(--cor-de-realce); /* Adiciona uma sombra sutil ao botão ao passar o cursor sobre ele */
+	box-shadow: 1px 1px 8px 0px var(--cor-de-destaque); /* Adiciona uma sombra sutil ao botão ao passar o cursor sobre ele */
 	cursor: pointer; /* Muda o cursor para uma mão quando está sobre o botão, indicando que é clicável */
 }
 
