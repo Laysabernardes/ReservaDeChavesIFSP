@@ -62,3 +62,52 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
  
 A princípio, estamos trabalhando na branch "main". O desenvolvimento principal do projeto está nessa branch. 
 
+
+### Comando do MySQL
+CREATE TABLE Estudante (
+    cd_estudante varchar(9) PRIMARY KEY,
+    nm_estudante VARCHAR(255),
+    email_estudante VARCHAR(100)
+);
+
+CREATE TABLE Funcionario (
+    cd_funcionario INT PRIMARY KEY,
+    nm_funcionario VARCHAR(255),
+    email_funcionario VARCHAR(100)
+);
+
+CREATE TABLE Chave (
+    cd_chave INT PRIMARY KEY,
+    mn_sala VARCHAR(255),
+    status VARCHAR(15)
+);
+
+CREATE TABLE ReservaEstudante (
+    cd_reserva_estudante INT PRIMARY KEY,
+    cd_estudante INT,
+    cd_chave INT,
+    data_reserva DATETIME,
+    data_devolucao DATETIME,
+    status VARCHAR(15),
+    FOREIGN KEY (cd_estudante) REFERENCES Estudante(cd_estudante),
+    FOREIGN KEY (cd_chave) REFERENCES Chave(cd_chave)
+);
+
+CREATE TABLE ReservaFuncionario (
+    cd_reserva_funcionario INT PRIMARY KEY,
+    cd_funcionario INT,
+    cd_chave INT,
+    data_reserva DATETIME,
+    data_devolucao DATETIME,
+    status VARCHAR(15),
+    FOREIGN KEY (cd_funcionario) REFERENCES Funcionario(cd_funcionario),
+    FOREIGN KEY (cd_chave) REFERENCES Chave(cd_chave)
+);
+
+CREATE TABLE PermissaoReserva (
+    cd_permissao INT PRIMARY KEY,
+    cd_funcionario INT,
+    cd_chave INT,
+    FOREIGN KEY (cd_funcionario) REFERENCES Funcionario(cd_funcionario),
+    FOREIGN KEY (cd_chave) REFERENCES Chave(cd_chave)
+);
