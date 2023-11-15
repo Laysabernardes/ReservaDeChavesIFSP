@@ -1,6 +1,6 @@
-.section__produtos{
+.section__locais{
     background-color: #f5f5f5;
-    padding: 3rem 0;
+    padding: 64px 0;
 }
 
 .salas,
@@ -41,40 +41,45 @@
     margin-left: .6rem;
 }
 
-.salas__produtos,
-.labs__produtos,
-.diversos__produtos,
-.produtos_admin,
-.produto_similares,
-.produtos_index{
+.salas__locais,
+.labs__locais,
+.diversos__locais,
+.locais_admin,
+.locais_similares,
+.locais_index{
     display: grid;
     gap: 1rem;
     grid-auto-rows: 22rem;
     grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
 }
 
-.produto__card__fundo{
+.local__card__fundo{
     height: 279px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.produto__card__fundo,
-.produto__card__titulo{
+.local__card__fundo,
+.local__card__situacao,
+.local__card__titulo{
     margin-bottom: .5rem;
 }
 
-.produto__card__titulo{
+.local__card__titulo{
     color: #464646;
 }
 
-.produto__card__botao{
+.local__card__situacao{
+    font-weight: 800;
+}
+
+.local__card__botao{
     color: #2A7AE4;
     font-weight: 800;
 }
 
-.produtos__resultados_mensagem{
+.locais__resultados_mensagem{
     height: 30vh;
     font-weight: 700;
     font-size: 2rem;
@@ -95,7 +100,7 @@
 
 @media (min-width:768px) and (max-width:1024px){
 
-    .produtos__resultados_mensagem{
+    .locais__resultados_mensagem{
         height: 48vh;
     }
 
