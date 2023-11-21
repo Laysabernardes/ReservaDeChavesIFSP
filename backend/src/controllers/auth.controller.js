@@ -33,14 +33,4 @@ const login = async (req, res) => {
     };
 };
 
-const redirecionar = (req, res) => {
-    // Verifica se o usuário está logado
-    if (!req.user) {
-        // Dispara o evento "userNotLoggedIn"
-        req.app.emit("userNotLoggedIn");
-    } else {
-        // Faz outra coisa
-    }
-};
-
 module.exports = { login, redirecionar};//Exportando um obejto desconstruido, só a função.
