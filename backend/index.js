@@ -7,6 +7,7 @@ const authRoute = require("./src/routes/auth.route.js");
 const dotenv = require ("dotenv");
     // Importa o'dotenv' para carregar variáveis de ambiente a partir de um arquivo chamado '.env'.
 
+
 var cors = require('cors');
 
 dotenv.config();

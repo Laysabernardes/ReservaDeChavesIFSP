@@ -26,10 +26,21 @@ const login = async (req, res) => {
 
         // Se o login for bem-sucedido, envia uma resposta indicando que o login está ok.
         res.status(200).send({ message: "Login bem-sucedido", categoria });
+        console.log({ message: "Login bem-sucedido", categoria });
 
     } catch (err) {
         res.status(500).send(err.message);
     };
 };
 
-module.exports = { login };//Exportando um obejto desconstruido, só a função.
+const redirecionar = (req, res) => {
+    // Verifica se o usuário está logado
+    if (!req.user) {
+        // Dispara o evento "userNotLoggedIn"
+        req.app.emit("userNotLoggedIn");
+    } else {
+        // Faz outra coisa
+    }
+};
+
+module.exports = { login, redirecionar};//Exportando um obejto desconstruido, só a função.
