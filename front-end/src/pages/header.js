@@ -1,7 +1,7 @@
-// Arquivo: Header.js
 import React from 'react';
 import '../css/header.css';  // Importa o estilo CSS para o componente Header
 import { logoIF, lupaMobile, lupa } from '../img/index.js';  // Importa as imagens do ícone do IF, ícone de pesquisa para dispositivos móveis e ícone de pesquisa
+
 
 function Header() {
   return (
@@ -25,7 +25,16 @@ function Header() {
           <img className="header__lupa" src={lupa} alt="lupa" />
         </div>
         {/* Link para a página de login */}
-        <a className="header__boton" href="./login.html">Logout</a>
+        <a
+  className="header__boton"
+  href="/login"
+  onClick={(e) => {
+    // Redireciona o usuário para a página de login
+    window.location.replace("/login");
+  }}
+>
+  Login
+</a>
         {/* Ícone de lupa para dispositivos móveis, não aparece em desktop */}
         <img className="header__lupa-mobile" src={lupaMobile} alt="lupa" />
       </header>
@@ -33,4 +42,4 @@ function Header() {
   );
 }
 
-export default Header;  // Exporta o componente Header para ser usado em outros lugares do projeto
+export default Header;
