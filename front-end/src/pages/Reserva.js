@@ -11,13 +11,12 @@ function ReservaForm(){
     return(
       <div>
       <Header/>
-      <section class="seccion__producto">
-        <div class="producto container" data-producto="">
-          <img className='producto__imagen' src="https://upload.wikimedia.org/wikipedia/commons/2/23/Light_green.PNG"></img>
-          <div class="producto__info">
-            <h2 class="producto__info__titulo"></h2>
-            <p class="producto__info__valor"></p>
-            <p class="producto__info__descripcion">
+      <section class="sessao__chave">
+        <div class="chave container" data-chave="">
+          <img className='chave__imagem' src="https://upload.wikimedia.org/wikipedia/commons/2/23/Light_green.PNG"></img>
+          <div class="chave__info">
+            <h2 class="chave__info__titulo"></h2>
+            <p class="chave__info__descricao">
             <div className="formulario">
               <div className="formulario-login container">
                 <h3 className="formulario-login__titulo">Nome da sala</h3>
