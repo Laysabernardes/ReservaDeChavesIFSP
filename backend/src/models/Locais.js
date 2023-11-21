@@ -13,7 +13,7 @@ const localSchema = new mongoose.Schema({
         enum: ['Sala', 'Laboratório', 'Diverso'],
         required: true,
     },
-    situacao: {
+    status: {
         type: String,
         enum: ['LIVRE', 'OCUPADO'],
         required: true,

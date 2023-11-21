@@ -1,18 +1,18 @@
-//Conexão
-const listaLocais = () => fetch('BANCO').then(response => response.json());
+const Local = require("../models/Locais");
 
-//Todos os locais cadastrados no banco
-const findAllLocais = async (id) => {
-  return fetch(`BANCO/locais/${id}`).then( response => response.json());
+//.create é um metodo do mongoose para criar um novo documento no mongoDB
+const createLocal = (body) => Local.create(body);
+
+//.find é um método de consulta do Mongoose para consultar as coleções
+const findAllLocal = () => Local.find();
+
+//findById é um método de consulta do Mongoose que é utilizado para recuperar um único documento com base no ID.
+const findByIdLocal = (id) => Local.findById(id);
+
+const locaisServices = {
+  createLocal,
+  findAllLocal,
+  findByIdLocal
 };
 
-//Detalhes do local achado por ID
-const findLocalByID = async () => {
-  return fetch(`BANCO/locais/`).then( response => response.json());
-};
-
-export const locaisServices = {
-  listaLocais,
-  findAllLocais,
-  findLocalByID,
-}
+module.exports = locaisServices;

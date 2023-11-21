@@ -2,7 +2,7 @@ const express = require('express');
     // Importa o express, que é uma biblioteca para criar aplicativos web em Node.js.
 const connectDatabase =  require("./src/database/db.js");
     // Importa o connectDatabase de db.js para conectar ao MongoDB.
-const authRoute = require("./src/routes/auth.route.js");
+const routes = require("./src/routes/routes.js");
     // Importa o authRoute do arquivo auth.route.js para definir rotas de autenticação.
 const dotenv = require ("dotenv");
     // Importa o'dotenv' para carregar variáveis de ambiente a partir de um arquivo chamado '.env'.
@@ -24,7 +24,7 @@ app.use(cors());
 
 app.use(express.json());
     // Define que a aplicação Express irá lidar com solicitações e respostas em formato JSON.
-app.use("/auth", authRoute);
+app.use(routes);
     // Associa as rotas definidas no arquivo 'auth.route.js' à aplicação Express, prefixando-as com "/auth".
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
     // Inicia o servidor Express e escuta na porta definida, exibindo uma mensagem quando o servidor está rodando.

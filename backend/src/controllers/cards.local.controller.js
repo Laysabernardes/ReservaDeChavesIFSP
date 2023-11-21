@@ -1,4 +1,4 @@
-export class CardsFunctions{
+class CardsFunctions{
   //Criando o card do local
   MostrarLocal = (nome, categoria, situacao, id) => {
     //Creando el div que guarda todo el card
@@ -27,3 +27,5 @@ export class CardsFunctions{
     }).catch(error => alert("ocurrio un error"));
   }
 }
+
+module.exports = CardsFunctions;
