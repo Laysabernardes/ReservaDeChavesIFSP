@@ -16,32 +16,28 @@ function LoginForm() {
           <form action="" className="formulario-login_form">
             <div className="formulario-login__input-container">
               <input
-                name="usuario"
-                id="usuario"
+                name="prontuario"
+                id="prontuario"
                 className="input inputs"
                 type="text"
                 placeholder=""
                 required
-                data-tipo="usuario"
-                data-form-usuario
               />
-              <label className="input-label" htmlFor="usuario">
-                Escreva seu e-mail
+              <label className="input-label" htmlFor="prontuario">
+                Escreva seu prontuario
               </label>
               <span className="input-message-error">Este campo não é valido</span>
             </div>
             <div className="formulario-login__input-container">
               <input
-                name="contraseña"
-                id="contraseña"
-                className="input inputs input-contraseña"
+                name="senha"
+                id="senha"
+                className="input inputs"
                 type="password"
                 placeholder=""
                 required
-                data-tipo="contraseña"
-                data-form-contraseña
               />
-              <label className="input-label" htmlFor="contraseña">
+              <label className="input-label" htmlFor="senha">
                 Escreva sua senha
               </label>
               <span className="input-message-error">Este campo não é valido</span>
