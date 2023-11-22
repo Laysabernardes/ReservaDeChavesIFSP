@@ -1,59 +1,255 @@
-.principal{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color:var(--cor-de-fundo);
-  width: 100%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
 
-.inputs {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 380px;
-  width: 559px;
-  margin: 50px 50px;
-  /* Adicione uma altura específica aqui */
-}
+body {
 
-.inputs h1{
   font-family: 'Raleway', sans-serif;
-  font-weight: 400px;
-  font-size: 20px;
+}
 
+/* Estilo para o formulário principal */
+.formulario {
+  width: 100%;
+  /* Largura total */
+  background-color: var(--cor-de-fundo);
+  /* Cor de fundo personalizada */
+  padding-top: 5rem;
+  /* Espaçamento superior de 5 unidades de medida */
+  padding-bottom: 5rem;
+  /* Espaçamento inferior de 5 unidades de medida */
+}
+
+/* Estilo para o formulário de login */
+.formulario-approved {
+  display: flex;
+  /* Configuração de exibição flexível para os itens do contêiner */
+  flex-direction: column;
+  /* Organização dos itens em coluna */
+  justify-content: center;
+  /* Centralização vertical dos itens */
+  align-items: center;
+  /* Centralização horizontal dos itens */
+}
+
+/* Estilo para o formulário de login - largura */
+.formulario-approved_form {
+  width: 40%;
+  /* Largura do formulário de login de 40% */
+}
+
+/* Estilo para o título do formulário de login */
+.formulario-approved__titulo {
+  margin-bottom: 3rem;
+  /* Margem inferior de 3 unidades de medida */
+  font-weight: 800;
+  /* Peso da fonte 800 (negrito) */
+  font-size: 1.5rem;
+  /* Tamanho da fonte 1.5 unidades de medida */
+}
+
+/* Estilo para rótulos de formulário */
+.form__label {
+  margin-bottom: 1rem;
+  /* Margem inferior de 1 unidade de medida */
+}
+
+/* Container para os elementos de entrada do formulário de login */
+.formulario-approved__input-container {
+  position: relative;
+  /* Define a posição do contêiner em relação ao elemento pai */
+  margin-bottom: 1rem;
+  /* Adiciona uma margem na parte inferior do contêiner */
+  display: flex;
+  /* Configuração de exibição flexível para os itens do contêiner */
+  flex-direction: column;
+  /* Organização dos itens em coluna */
+  justify-content: flex-end;
+  /* Alinha os itens na extremidade inferior do contêiner */
+  box-sizing: border-box;
+  /* Configura a caixa para incluir bordas e preenchimento no tamanho total */
+}
+
+/* Estilo para o campo de entrada de texto */
+.input {
+  background-color: var(--branco);
+  /* Cor de fundo personalizada para o campo de entrada */
+  border: none;
+  /* Remove a borda padrão do campo de entrada */
+  box-sizing: border-box;
+  /* adiciona uma sombra aos inputs*/
+  box-shadow: 0px 1px 3px rgb(172, 172, 172);
+  /* Configura a caixa para incluir bordas e preenchimento no tamanho total */
+  border-bottom: 1px solid var(--cor-de-destaque);
+  /* Adiciona uma borda na parte inferior */
+  padding: 1.375rem 0.5rem 0.5rem;
+  /* Adiciona preenchimento ao campo de entrada */
+  height: 3.25rem;
+  /* Define a altura do campo de entrada */
+  width: 100%;
+  /* Largura total do campo de entrada */
+}
+
+/* Estilo para o texto de espaço reservado no campo de entrada */
+.input::placeholder {
+  visibility: hidden;
+  /* Esconde o texto de espaço reservado no campo de entrada */
+  color: var(--cor-de-realce);
+  /* Cor do texto de espaço reservado personalizada */
+}
+
+/* Estilo para o campo de entrada quando está em foco */
+.input:focus {
+  outline: none;
+  /* Remove a borda de contorno ao focar no campo de entrada */
+}
+
+/* Estilo para o rótulo do campo de entrada */
+.input-label {
+  position: absolute;
+  /* Define a posição absoluta do rótulo em relação ao contêiner pai */
+  top: 1.375rem;
+  /* Afasta o rótulo da parte superior do campo de entrada */
+  left: 0.5rem;
+  /* Afasta o rótulo da parte esquerda do campo de entrada */
+
+  transition: all 0.25s;
+  /* Adiciona uma transição suave de 0.25 segundos para alterações */
+}
+
+
+/* Estilo para o rótulo do campo de entrada quando o campo não está vazio */
+.input:not(:placeholder-shown)+.input-label,
+/* Estilo para o rótulo do campo de entrada quando está em foco */
+.input:focus+.input-label {
+  font-size: 0.875rem;
+  /* Reduz o tamanho da fonte do rótulo */
+  top: 0.25rem;
+  /* Ajusta a posição do rótulo para cima */
+  transition: all 0.25s;
+  /* Adiciona uma transição suave de 0.25 segundos para alterações */
 }
 
 
 
-.inputs input{
-  height: 46px;
-  border-style: none;
-  box-shadow: 1px 2px 6px rgb(126, 126, 126);
+
+
+
+
+/* Estilo padrão para o rótulo do campo de entrada */
+.input-label {
+  position: absolute;
+  /* Define a posição absoluta do rótulo em relação ao contêiner pai */
+  top: 0.5rem;
+  /* Afasta o rótulo da parte superior do campo de entrada */
+  left: 0.5rem;
+  /* Afasta o rótulo da parte esquerda do campo de entrada */
+  transition: all 0.25s;
+  /* Adiciona uma transição suave de 0.25 segundos para alterações */
 }
 
-.inputs input::placeholder {
-  
-  text-indent: 10px;
+/* Estilo para o campo de texto quando há um erro de validação */
+.input-container--invalid .textarea {
+  border: 1px solid var(--erro);
+  /* Adiciona uma borda sólida de 1px com a cor de erro */
 }
 
-.approved{
-  border-style: none;
-  background-color: #4DA75D;
-font-family: 'Raleway', sans-serif;
-font-weight: 400px;
-font-size: 15px;
-color: #fff;
+/* Estilo para o rótulo do campo de texto quando há um erro de validação */
+.textarea-container--invalid .input-label {
+  color: var(--erro);
+  /* Define a cor do texto do rótulo como a cor de erro */
 }
 
-.approved:hover{
-  transition: 0.5s;
-  filter: invert();
+/* Estilo padrão para a mensagem de erro do campo de texto */
+.textarea-mensagem-erro {
+  display: none;
+  /* Esconde a mensagem de erro por padrão */
 }
 
-.inputs select{
-  height: 46px;
-    border-style: none;
-    box-shadow: 1px 2px 6px rgb(126, 126, 126);
-    border-style: none;
+/* Estilo para a mensagem de erro quando há um erro de validação no campo de texto */
+.textarea-container--invalid .textarea-mensagem-erro {
+  display: block;
+  /* Exibe a mensagem de erro */
+  color: var(--erro);
+  /* Define a cor do texto da mensagem de erro como a cor de erro */
+  margin-top: 0.5rem;
+  /* Adiciona uma margem superior à mensagem de erro */
+  padding-left: 0.5rem;
+  /* Adiciona preenchimento à esquerda da mensagem de erro */
 }
 
+/* Estilo para o botão de formulário */
+.boton-formulario-approved {
+  border-radius: 5px;
+  /* Adiciona bordas arredondadas ao botão */
+  padding: 1rem 2rem;
+  /* Adiciona preenchimento ao botão */
+  color: var(--branco);
+  /* Define a cor do texto do botão como branco */
+  background-color: var(--cor-de-destaque);
+  /* Define a cor de fundo do botão como a cor de destaque */
+  font-weight: 500;
+  /* Define o peso da fonte como 500 (moderadamente negrito) */
+  border: none;
+  /* Remove a borda do botão */
+  font-size: 1rem;
+  /* Define o tamanho da fonte como 1rem */
+  width: 100%;
+  /* Define a largura do botão como 100% */
+}
+
+/* Efeito de sombra quando o mouse passa sobre o botão de formulário */
+.boton-formulario-approved:hover {
+  box-shadow: 1px 1px 8px 0px var(--cor-de-realce);
+  /* Adiciona uma sombra suave com cor de realce */
+  cursor: pointer;
+  /* Muda o cursor para uma mão indicando que o botão é clicável */
+}
+
+.boton-formulario-repproved {
+  margin-top: 10px;
+  border-radius: 5px;
+    /* Adiciona bordas arredondadas ao botão */
+    padding: 1rem 2rem;
+    /* Adiciona preenchimento ao botão */
+    color: var(--branco);
+    /* Define a cor do texto do botão como branco */
+    background-color: rgb(173, 23, 23);
+    /* Define a cor de fundo do botão como a cor de destaque */
+    font-weight: 500;
+    /* Define o peso da fonte como 500 (moderadamente negrito) */
+    border: none;
+    /* Remove a borda do botão */
+    font-size: 1rem;
+    /* Define o tamanho da fonte como 1rem */
+    width: 100%;
+    /* Define a largura do botão como 100% */
+}
+
+.boton-formulario-repproved:hover {
+  box-shadow: 1px 1px 8px 0px var(--cor-de-realce);
+  /* Adiciona uma sombra suave com cor de realce */
+  cursor: pointer;
+  /* Muda o cursor para uma mão indicando que o botão é clicável */
+}
+
+/* ------------------------------------ */
+/* ----- Responsive para Mobiles ------ */
+/* ------------------------------------ */
+
+/* Estilo aplicado apenas quando a largura da tela é no máximo 767 pixels (para dispositivos móveis pequenos) */
+@media only screen and (max-width: 767px) {
+  .formulario-approved_form {
+    width: 70%;
+    /* Define a largura do formulário como 70% da largura da tela */
+  }
+}
+
+/* ------------------------------------ */
+/* ----- Responsive para Tablets ------ */
+/* ------------------------------------ */
+
+/* Estilo aplicado apenas quando a largura da tela está entre 768 pixels e 1024 pixels (para tablets) */
+@media (min-width:768px) and (max-width:1024px) {
+  .formulario-approved_form {
+    width: 70%;
+    /* Define a largura do formulário como 70% da largura da tela */
+  }
+}

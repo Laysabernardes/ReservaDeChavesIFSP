@@ -16,29 +16,115 @@ function Adm(){
     <div>
       
       <Header /> 
-      <div className="principal">
-        <div className="inputs">
-         <h1>Aprovar Reserva:</h1>
-         <input type="text" placeholder='Nome da Reserva'></input>
-         <input type="text" placeholder='Categoria'></input>
-         <input type="text" placeholder='Reservou'></input>
-          <input type="datetime-local" placeholder='Data e Hora da reserva'></input>
-          <select placeholder='Tempo de expiração'>
-            <option value='0'>Selecione</option>
-            <option value='10'>10 minutos</option>
-            <option value='20'>20 minutos</option>
-             <option value='30'>30 minutos</option>
-         </select>
-          <input type="button" value="Aprovar" className='approved'></input>
-
-          </div>
-      
-
+       <div className="formulario">
+        <div className="formulario-approved container">
+          <h3 className="formulario-approved__titulo">Aprovar Reserva:</h3>
+          <form action="" className="formulario-approved_form">
+            <div className="formulario-approved__input-container">
+              <input
+                name="nome_reserva"
+                id="reservaName"
+                className="input inputs"
+                type="text"
+                placeholder=""
+                disabled
+              />
+              <label className="input-label" htmlFor="reservaName">
+                Nome da Reserva
+              </label>
+            </div>
+            <div className="formulario-approved__input-container">
+              <input
+                name="categoria"
+                id="categoriaLocal"
+                className="input inputs"
+                type="text"
+                placeholder=""
+                disabled
+              />
+              <label className="input-label" htmlFor="categoriaLocal">
+                Categoria 
+              </label>
+            </div>
+            <div className="formulario-approved__input-container">
+              <input
+                name="approvedFor"
+                id="aprovadoPor"
+                className="input inputs"
+                type="text"
+                placeholder=""
+                disabled
+              />
+              <label className="input-label" htmlFor="aprovadorPor">
+                Liberado pelo funcionário
+              </label>
+            </div>
+            <div className="formulario-approved__input-container">
+              <input
+                name="reserva"
+                id="reservouLocal"
+                className="input inputs"
+                type="text"
+                placeholder=""
+                disabled
+              />
+              <label className="input-label" htmlFor="reservouLocal">
+                Reservou
+              </label>
+            </div>
+            <div className="formulario-approved__input-container">
+              <input
+                name="date"
+                id="dateTime"
+                className="input inputs"
+                type="text"
+                placeholder=""
+                disabled
+              />
+              <label className="input-label" htmlFor="dateTime">
+                Data e Horário da reserva
+              </label>
+            </div>
+            <div className="formulario-approved__input-container">
+              <input
+                name="expireTime"
+                id="tempoLimite"
+                className="input inputs"
+                type="text"
+                placeholder=""
+                disabled
+              />
+              <label className="input-label" htmlFor="tempoLimite">
+                Tempo limite de retirada da chave
+              </label>
+            </div>
+            <input
+              className="boton-formulario-approved"
+              type="submit"
+              name="aprovar"
+              id="enviar-aprovado"
+              value="Aprovar"
+              onClick={(e) => {
+                // Redireciona o usuário para a página principal
+                window.location.replace("/main");
+              }}
+            />
+            <input
+              className="boton-formulario-repproved"
+              type="submit"
+              name="reprovar"
+              id="enviar-reprovado"
+              value="Reprovar"
+              onClick={(e) => {
+                // Redireciona o usuário para a página principal
+                window.location.replace("/main");
+              }}
+            />
+          </form>
+        </div>
       </div>
-      
       <Footer />
-      </div>
-
+    </div>
 
 
 )
