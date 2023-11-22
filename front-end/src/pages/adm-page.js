@@ -22,6 +22,7 @@ function Adm(){
           <form action="" className="formulario-approved_form">
             <div className="formulario-approved__input-container">
               <input
+                value={""}
                 name="nome_reserva"
                 id="reservaName"
                 className="input inputs"
@@ -35,6 +36,7 @@ function Adm(){
             </div>
             <div className="formulario-approved__input-container">
               <input
+                value={""}
                 name="categoria"
                 id="categoriaLocal"
                 className="input inputs"
@@ -48,6 +50,7 @@ function Adm(){
             </div>
             <div className="formulario-approved__input-container">
               <input
+                value={""}
                 name="approvedFor"
                 id="aprovadoPor"
                 className="input inputs"
@@ -61,6 +64,7 @@ function Adm(){
             </div>
             <div className="formulario-approved__input-container">
               <input
+                value={""}
                 name="reserva"
                 id="reservouLocal"
                 className="input inputs"
@@ -74,6 +78,7 @@ function Adm(){
             </div>
             <div className="formulario-approved__input-container">
               <input
+                value={""}
                 name="date"
                 id="dateTime"
                 className="input inputs"
@@ -93,6 +98,7 @@ function Adm(){
                 type="text"
                 placeholder=""
                 disabled
+                
               />
               <label className="input-label" htmlFor="tempoLimite">
                 Tempo limite de retirada da chave
