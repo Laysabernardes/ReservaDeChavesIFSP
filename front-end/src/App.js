@@ -4,8 +4,8 @@ import './css/App.css'
 import React, { Component } from "react";
 import Login from "./pages/login.js";
 
-import Api from "./api.js"
-const api = new Api();
+//import Api from "./api.js"
+//const api = new Api();
 
 // Classe do componente principal do aplicativo
 class App extends Component {

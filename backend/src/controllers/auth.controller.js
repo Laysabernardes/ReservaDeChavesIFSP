@@ -33,4 +33,4 @@ const login = async (req, res) => {
     };
 };
 
-module.exports = { login, redirecionar};//Exportando um obejto desconstruido, só a função.
+module.exports = {login};//Exportando um obejto desconstruido, só a função.
