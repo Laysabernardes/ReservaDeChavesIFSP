@@ -13,4 +13,12 @@ const connetcDatabase = () => {
 };
 
 // Exporta a função "connectDatabase" para que ela possa ser usada em outras partes do aplicativo.
-module.exports = connetcDatabase;
+///module.exports = connetcDatabase;
+
+//const mysql = require('mysql');
+//const connection = mysql.createConnection({
+ // host: 'localhost',
+ // user: 'dbuser',
+  //password: 's3kreee7',
+ // database: 'my_db'
+//});
