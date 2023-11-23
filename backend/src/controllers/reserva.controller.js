@@ -8,7 +8,7 @@ const reservaController = {};
 reservaController.create = async (req, res) => {
   try {
     // Obter os dados da reserva do corpo da requisição
-    const {professor, data, sala, periodo, motivo} = req.body;
+    const { data, sala, periodo, professor, motivo } = req.body;
 
     // Validar os dados da reserva, por exemplo, se a sala está disponível, se o professor existe, etc.
     // Você pode usar algum módulo de validação, como o express-validator ou o joi
@@ -40,3 +40,6 @@ reservaController.create = async (req, res) => {
 
 // Exportar o controlador para ser usado em outros módulos, como as rotas
 module.exports = reservaController;
+
+
+
