@@ -2,8 +2,8 @@ const {Router} = require("express");
 const localRouter = Router();
 
 // Classe dos locais
-const LocaisController = require("../controllers/locais.controller.js"); 
-const controller = new LocaisController();
+const ChavesController = require("../controllers/chaves.controller.js"); 
+const controller = new ChavesController();
 
 // Funções de Usuário
 localRouter.post("/", controller.create);

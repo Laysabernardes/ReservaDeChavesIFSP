@@ -1,4 +1,3 @@
-const Local = require("../models/Locais");
 
 //.create é um metodo do mongoose para criar um novo documento no mongoDB
 const createLocal = (body) => Local.create(body);

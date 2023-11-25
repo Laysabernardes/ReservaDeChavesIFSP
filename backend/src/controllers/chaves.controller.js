@@ -1,32 +1,32 @@
-const locaisServices = require("../services/locais.service.js");
+const locaisServices = require("../services/chaves.service.js");
 const CardsFunctions = require("./cards.local.controller.js");
 const cardsFunc = new CardsFunctions();
 
-//Capturando a seção de locais em que a categoria seja = a salas
-const locaisSalas = document.querySelector("data-salas");
-//Capturando a seção de locais em que a categoria seja = a labs
-const locaisLabs = document.querySelector("[data-labs]");
-//Capturando a seção de locais em que a categoria seja = a diversos
-const locaisDiversos = document.querySelector("[data-diversos]");
+// //Capturando a seção de locais em que a categoria seja = a salas
+// const locaisSalas = document.querySelector("data-salas");
+// //Capturando a seção de locais em que a categoria seja = a labs
+// const locaisLabs = document.querySelector("[data-labs]");
+// //Capturando a seção de locais em que a categoria seja = a diversos
+// const locaisDiversos = document.querySelector("[data-diversos]");
 
-//Recorrer los datos traidos del JSON
-locaisServices.findAllLocal().then(data => {
-  data.forEach(({nome, categoria, status}) => {
-    //Imprimir os campos no index com a função MostraLocal 
-    if(categoria === "Sala"){
-      const localCard = cardsFunc.MostrarLocal(nome, categoria, status);
-      locaisSalas.appendChild(localCard); // Adiciona o card criado na div das salas
-    }else if(categoria === "Laboratório"){
-      const localCard = cardsFunc.MostrarLocal(nome, categoria, status);
-      locaisLabs.appendChild(localCard); // Adiciona o card criado na div dos laboratórios
-    }else if(categoria === "Diverso"){
-      const localCard = cardsFunc.MostrarLocal(nome, categoria, status);
-      locaisDiversos.appendChild(localCard); // Adiciona o card criado na div dos diversos
-    }
-  });
-})
+// //Recorrer los datos traidos del JSON
+// locaisServices.findAllLocal().then(data => {
+//   data.forEach(({nome, categoria, status}) => {
+//     //Imprimir os campos no index com a função MostraLocal 
+//     if(categoria === "Sala"){
+//       const localCard = cardsFunc.MostrarLocal(nome, categoria, status);
+//       locaisSalas.appendChild(localCard); // Adiciona o card criado na div das salas
+//     }else if(categoria === "Laboratório"){
+//       const localCard = cardsFunc.MostrarLocal(nome, categoria, status);
+//       locaisLabs.appendChild(localCard); // Adiciona o card criado na div dos laboratórios
+//     }else if(categoria === "Diverso"){
+//       const localCard = cardsFunc.MostrarLocal(nome, categoria, status);
+//       locaisDiversos.appendChild(localCard); // Adiciona o card criado na div dos diversos
+//     }
+//   });
+// })
 
-class LocaisController{
+class ChavesController{
     create = async (req, res) => {
         try {//constante que verifica todos os campos
             const { nome, categoria, status} = req.body;
@@ -70,7 +70,7 @@ class LocaisController{
     };
 }
 
-module.exports = LocaisController;
+module.exports = ChavesController;
 
 
 

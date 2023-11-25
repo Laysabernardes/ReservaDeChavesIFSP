@@ -1,11 +1,11 @@
 const {Router} = require("express");
 
 // Importando rotas
-const localRouter = require("./local.routes");
-const authRouter = require("./auth.routes");
+const localRouter = require("./chaves.routes");
+const userRouter = require("./user.routes")
 
 const router = Router();
 router.use("/local", localRouter);
-router.use("/auth", authRouter);
+router.use("/user", userRouter);
 
 module.exports = router;

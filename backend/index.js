@@ -1,7 +1,7 @@
 const express = require('express');
     // Importa o express, que é uma biblioteca para criar aplicativos web em Node.js.
-const connectDatabase =  require("./src/database/db.js");
-    // Importa o connectDatabase de db.js para conectar ao MongoDB.
+const connection =  require("./src/database/db.js");
+    // Importa o connection de db.js para conectar ao MongoDB.
 const routes = require("./src/routes/routes.js");
     // Importa o authRoute do arquivo auth.route.js para definir rotas de autenticação.
 const dotenv = require ("dotenv");
@@ -19,7 +19,7 @@ const app = express();
 const port = process.env.PORT || 3001;
     // Define uma porta para o servidor, usando a variável de ambiente 'PORT' se estiver definida, caso contrário, usa a porta 3000.
 
-connectDatabase();
+connection.connect();
     // Conecta ao banco de dados.
 app.use(cors());
 
