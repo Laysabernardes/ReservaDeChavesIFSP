@@ -28,14 +28,9 @@ const UserSchema = new mongoose.Schema({
         enum: ['aluno', 'professor', 'adm'],
         required: true,
     },
-    
 });
-
-
 const User = mongoose.model("User", UserSchema);
     // Define o modelo "User" baseado no esquema "UserSchema".
     //A linha cria uma "caixa" chamada User que define como os dados dos usuários são armazenados e recuperados no banco de dados.
-
-
 module.exports = User;
     // Exporta o modelo "User" para que ele possa ser usado em outras partes do aplicativo.

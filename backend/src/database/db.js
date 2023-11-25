@@ -1,24 +1,40 @@
-// Importa a biblioteca "mongoose" para se conectar ao MongoDB
-const mongoose=require( "mongoose");
+// Conecta ao banco de dados MYSQL
+const mysql = require("mysql2");
 
-// Declara a função "connectDatabase" para conectar ao banco de dados.
-const connetcDatabase = () => {
-    console.log("Aguarde enquanto a conexão com o banco de dados é estabelecida");
+const connection = mysql.createConnection({
+  host: "db4free.net",
+  port: 3306,
+  database: "reservaifsp",
+  user: "admreservaifsp",
+  password: "reserva123",
+});
 
-    // Conecta ao banco de dados usando a URL fornecida em "process.env.MONGODB_URI".
-    // As opções { useNewUrlParser: true, useUnifiedTopology: true } são usadas para configurar a conexão.
-    //.then() é usado para executar ações quando uma operação assíncrona é bem-sucedida
-    //.catch() lida com erros que podem ocorrer durante essa operação.
-    mongoose.connect("mongodb+srv://reservaifsp:teste123@cluster0.u13cjwv.mongodb.net/", { useNewUrlParser: true, useUnifiedTopology: true }).then(() => console.log("Conexão com o MongoDB Atlas estabelecida")).catch((error) => console.log(error));
-};
+// Resposta da conexão ao banco de dados 
+connection.connect((err) => {
+  if (err) {
+    console.error("Failed to connect to database:", err);
+    return;
+  }
+  console.log("Connected to database successfully!");
 
-// Exporta a função "connectDatabase" para que ela possa ser usada em outras partes do aplicativo.
-///module.exports = connetcDatabase;
+  connection.query("SELECT * FROM Funcionario ", (err, results) => {
+     if (err) {
+      console.error("Error executing query:", err);
+      return;
+   }
+
+    // Imprime os resultados da consulta no console.
+    console.log("Resultados da consulta:", results);
+  });
+});
+
+module.exports = connection;
+
 
 //const mysql = require('mysql');
 //const connection = mysql.createConnection({
- // host: 'localhost',
- // user: 'dbuser',
-  //password: 's3kreee7',
- // database: 'my_db'
+// host: 'localhost',
+// user: 'dbuser',
+//password: 's3kreee7',
+// database: 'my_db'
 //});
