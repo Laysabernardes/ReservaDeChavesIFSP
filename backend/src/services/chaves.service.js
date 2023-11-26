@@ -2,9 +2,9 @@ const connection =  require("../database/db.js");
 
 class ChavesServices{
   
-  create = (nm_sala, ds_sala, ds_status) => {
+  create = (nm_chave, ds_chave, ds_status, ds_obs_chave) => {
     return new Promise((resolve, reject) => {
-      connection.query("INSERT INTO Chaves (nm_sala, ds_sala, ds_status) VALUES (?, ?, ?)",  [nm_sala, ds_sala, ds_status], (err, results) => {
+      connection.query("INSERT INTO Chaves (nm_chave, ds_chave, ds_status, ds_obs_chave) VALUES (?, ?, ?, ?)",  [nm_chave, ds_chave, ds_status, ds_obs_chave], (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);

@@ -31,21 +31,22 @@ const services = new ChavesServices();
 class ChavesController{
     create = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { nm_sala, ds_sala, ds_status } = req.body;
+            const { nm_chave, ds_chave, ds_status, ds_obs_chave } = req.body;
 
-            if (!nm_sala || !ds_sala || !ds_status) {
+            if (!nm_chave || !ds_chave || !ds_status || !ds_obs_chave) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
 
             //await é usado junto com async
-            await services.create(nm_sala, ds_sala, ds_status);
+            await services.create(nm_chave, ds_chave, ds_status, ds_obs_chave);
 
             res.status(201).send({
                 message: "Chave criada com sucesso!",
                 chave: {
-                    nm_sala, 
-                    ds_sala, 
-                    ds_status
+                    nm_chave, 
+                    ds_chave, 
+                    ds_status, 
+                    ds_obs_chave
                 }
             });
         } catch (err) {
