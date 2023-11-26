@@ -1,6 +1,12 @@
+<<<<<<< HEAD:backend/src/controllers/locais.controller.js
 // const locaisServices = require("../services/locais.service.js");
 // const CardsFunctions = require("./cards.local.controller.js");
 // const cardsFunc = new CardsFunctions();
+=======
+const locaisServices = require("../services/chaves.service.js");
+const CardsFunctions = require("./cards.local.controller.js");
+const cardsFunc = new CardsFunctions();
+>>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/controllers/chaves.controller.js
 
 // //Capturando a seção de locais em que a categoria seja = a salas
 // const locaisSalas = document.querySelector("data-salas");
@@ -26,10 +32,17 @@
 //   });
 // })
 
+<<<<<<< HEAD:backend/src/controllers/locais.controller.js
 // class LocaisController{
 //     create = async (req, res) => {
 //         try {//constante que verifica todos os campos
 //             const { nome, categoria, status} = req.body;
+=======
+class ChavesController{
+    create = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const { nome, categoria, status} = req.body;
+>>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/controllers/chaves.controller.js
 
 //             if (!nome || !categoria || !status) {
 //                 res.status(400).send({ message: "Preencha todos os espaços" });
@@ -70,7 +83,11 @@
 //     };
 // }
 
+<<<<<<< HEAD:backend/src/controllers/locais.controller.js
 // module.exports = LocaisController;
+=======
+module.exports = ChavesController;
+>>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/controllers/chaves.controller.js
 
 
 

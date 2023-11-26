@@ -1,5 +1,5 @@
 // Importar o modelo Reserva, que foi definido no modelo em expressJS
-const Reserva = require('./reserva.controller');
+const Reserva = require('../models/Reserva.js');
 
 // Definir o controlador como um objeto com métodos
 const reservaController = {};
