@@ -1,6 +1,8 @@
-const locaisServices = require("../services/chaves.service.js");
+const ChavesServices = require("../services/chaves.service.js");
 const CardsFunctions = require("./cards.local.controller.js");
+
 const cardsFunc = new CardsFunctions();
+const services = new ChavesServices();
 
 // //Capturando a seção de locais em que a categoria seja = a salas
 // const locaisSalas = document.querySelector("data-salas");
@@ -29,27 +31,42 @@ const cardsFunc = new CardsFunctions();
 class ChavesController{
     create = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { nome, categoria, status} = req.body;
+            const { nm_sala, ds_sala, ds_status } = req.body;
 
-            if (!nome || !categoria || !status) {
+            if (!nm_sala || !ds_sala || !ds_status) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
 
             //await é usado junto com async
-            const local = await locaisServices.createLocal(req.body);
-
-            if (!local) {
-                return res.status(400).send({ message: "Erro ao criar Local" });
-            }
+            await services.create(nm_sala, ds_sala, ds_status);
 
             res.status(201).send({
-                message: "Local criado com sucesso!",
-                local: {
-                    id: local._id,
-                    nome,
-                    categoria,
-                    status,
+                message: "Chave criada com sucesso!",
+                chave: {
+                    nm_sala, 
+                    ds_sala, 
+                    ds_status
                 }
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
+
+    find = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const { cd_chave } = req.params;
+
+            if (!cd_chave) {
+                res.status(400).send({ message: "Adicione o código da chave!" });
+            }
+
+            //await é usado junto com async
+            let chave = await services.find(cd_chave);
+
+            res.status(201).send({
+                message: "Chave:",
+                chave: chave
             });
         } catch (err) {
             res.status(500).send({ message: err });
@@ -58,16 +75,57 @@ class ChavesController{
 
     findAll = async (req, res) => {
         try {
-            const locais = await locaisServices.findAllLocal();
+            const chaves = await services.findAll();
 
-            if (locais.length === 0) {
+            if (chaves.length === 0) {
                 return res.status(400).send({ message: "Não existe nenhum local registrado" });
             }
-            res.send(locais);
+            res.send(chaves);
         } catch (err) {
             res.status(500).send({ message: err.message })
         }
     };
+
+    update = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const { cd_chave, ds_status } = req.body;
+
+            if (!cd_chave || !ds_status) {
+                res.status(400).send({ message: "Preencha os campos!" });
+            }
+
+            //await é usado junto com async
+            await services.update(cd_chave, ds_status);
+
+            
+            res.status(201).send({
+                message: "Chave Status Update:",
+                status: ds_status
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
+
+    delete = async (req, res) => {
+        try{
+            const {cd_chave} = req.params;
+
+            if (!cd_chave) {
+                res.status(400).send({ message: "Adicione o código da chave!" });
+            }
+
+            //await é usado junto com async
+            let chave = await services.delete(cd_chave);
+
+            res.status(201).send({
+                message: "Chave:",
+                chave: chave
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
 }
 
 module.exports = ChavesController;

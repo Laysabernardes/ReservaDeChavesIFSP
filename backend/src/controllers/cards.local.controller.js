@@ -5,10 +5,10 @@ class CardsFunctions{
     const cardLocal = document.createElement("div");
     cardLocal.className = "local__card";
     const conteudo = `
-      <div class="local__card__imagem" style="background-Image: url('https://img.freepik.com/fotos-premium/fundo-de-design-verde-gradiente-ilustracao-de-cenario-colorido-vazio-com-espaco-de-copia_7954-36853.jpg')"></div>
-      <h3 class="local__card__titulo">${nome}</h3>
-      <p class="local__card__status">${status}</p>
-      <a class="local__card__botao" href=".../${id}">Reservar ${categoria}</a>
+      <div className="local__card__imagem" style="background-Image: url('https://img.freepik.com/fotos-premium/fundo-de-design-verde-gradiente-ilustracao-de-cenario-colorido-vazio-com-espaco-de-copia_7954-36853.jpg')"></div>
+      <h3 className="local__card__titulo">${nome}</h3>
+      <p className="local__card__status">${status}</p>
+      <a className="local__card__botao" href=".../${id}">Reservar ${categoria}</a>
     `
     cardLocal.innerHTML = conteudo;
     return cardLocal;
