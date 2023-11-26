@@ -1,18 +1,15 @@
-// const {Router} = require("express");
-// const localRouter = Router();
+const {Router} = require("express");
+const localRouter = Router();
 
-<<<<<<< HEAD:backend/src/routes/local.routes.js
-// // Classe dos locais
-// const LocaisController = require("../controllers/locais.controller.js"); 
-// const controller = new LocaisController();
-=======
 // Classe dos locais
 const ChavesController = require("../controllers/chaves.controller.js"); 
 const controller = new ChavesController();
->>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/routes/chaves.routes.js
 
-// // Funções de Usuário
-// localRouter.post("/", controller.create);
-// localRouter.get("/", controller.findAll);
+// Funções de Usuário
+localRouter.post("/", controller.create);
+localRouter.get("/:cd_chave", controller.find);
+localRouter.get("/", controller.findAll);
+localRouter.patch("/", controller.update);
+localRouter.delete("/:cd_chave", controller.delete);
 
-// module.exports = localRouter;
+module.exports = localRouter;

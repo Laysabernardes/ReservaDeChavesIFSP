@@ -1,12 +1,8 @@
-<<<<<<< HEAD:backend/src/controllers/locais.controller.js
-// const locaisServices = require("../services/locais.service.js");
-// const CardsFunctions = require("./cards.local.controller.js");
-// const cardsFunc = new CardsFunctions();
-=======
-const locaisServices = require("../services/chaves.service.js");
+const ChavesServices = require("../services/chaves.service.js");
 const CardsFunctions = require("./cards.local.controller.js");
+
 const cardsFunc = new CardsFunctions();
->>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/controllers/chaves.controller.js
+const services = new ChavesServices();
 
 // //Capturando a seção de locais em que a categoria seja = a salas
 // const locaisSalas = document.querySelector("data-salas");
@@ -32,64 +28,104 @@ const cardsFunc = new CardsFunctions();
 //   });
 // })
 
-<<<<<<< HEAD:backend/src/controllers/locais.controller.js
-// class LocaisController{
-//     create = async (req, res) => {
-//         try {//constante que verifica todos os campos
-//             const { nome, categoria, status} = req.body;
-=======
 class ChavesController{
     create = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { nome, categoria, status} = req.body;
->>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/controllers/chaves.controller.js
+            const { nm_sala, ds_sala, ds_status } = req.body;
 
-//             if (!nome || !categoria || !status) {
-//                 res.status(400).send({ message: "Preencha todos os espaços" });
-//             }
+            if (!nm_sala || !ds_sala || !ds_status) {
+                res.status(400).send({ message: "Preencha todos os espaços" });
+            }
 
-//             //await é usado junto com async
-//             const local = await locaisServices.createLocal(req.body);
+            //await é usado junto com async
+            await services.create(nm_sala, ds_sala, ds_status);
 
-//             if (!local) {
-//                 return res.status(400).send({ message: "Erro ao criar Local" });
-//             }
+            res.status(201).send({
+                message: "Chave criada com sucesso!",
+                chave: {
+                    nm_sala, 
+                    ds_sala, 
+                    ds_status
+                }
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
 
-//             res.status(201).send({
-//                 message: "Local criado com sucesso!",
-//                 local: {
-//                     id: local._id,
-//                     nome,
-//                     categoria,
-//                     status,
-//                 }
-//             });
-//         } catch (err) {
-//             res.status(500).send({ message: err });
-//         }
-//     }
+    find = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const { cd_chave } = req.params;
 
-//     findAll = async (req, res) => {
-//         try {
-//             const locais = await locaisServices.findAllLocal();
+            if (!cd_chave) {
+                res.status(400).send({ message: "Adicione o código da chave!" });
+            }
 
-//             if (locais.length === 0) {
-//                 return res.status(400).send({ message: "Não existe nenhum local registrado" });
-//             }
-//             res.send(locais);
-//         } catch (err) {
-//             res.status(500).send({ message: err.message })
-//         }
-//     };
-// }
+            //await é usado junto com async
+            let chave = await services.find(cd_chave);
 
-<<<<<<< HEAD:backend/src/controllers/locais.controller.js
-// module.exports = LocaisController;
-=======
+            res.status(201).send({
+                message: "Chave:",
+                chave: chave
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
+
+    findAll = async (req, res) => {
+        try {
+            const chaves = await services.findAll();
+
+            if (chaves.length === 0) {
+                return res.status(400).send({ message: "Não existe nenhum local registrado" });
+            }
+            res.send(chaves);
+        } catch (err) {
+            res.status(500).send({ message: err.message })
+        }
+    };
+
+    update = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const { cd_chave, ds_status } = req.body;
+
+            if (!cd_chave || !ds_status) {
+                res.status(400).send({ message: "Preencha os campos!" });
+            }
+
+            //await é usado junto com async
+            await services.update(cd_chave, ds_status);
+
+            
+            res.status(201).send({
+                message: "Chave Status Update:",
+                status: ds_status
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
+
+    delete = async (req, res) => {
+        try{
+            const {cd_chave} = req.params;
+
+            if (!cd_chave) {
+                res.status(400).send({ message: "Adicione o código da chave!" });
+            }
+
+            //await é usado junto com async
+            let chave = await services.delete(cd_chave);
+
+            res.status(201).send({
+                message: "Chave:",
+                chave: chave
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    }
+}
+
 module.exports = ChavesController;
->>>>>>> 4f306e23e687bb451717658c96f2d2d6432dd3cb:backend/src/controllers/chaves.controller.js
-
-
-
-
-

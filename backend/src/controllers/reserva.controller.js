@@ -40,6 +40,3 @@ reservaController.create = async (req, res) => {
 
 // Exportar o controlador para ser usado em outros módulos, como as rotas
 module.exports = reservaController;
-
-
-
