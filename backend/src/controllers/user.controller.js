@@ -1,25 +1,21 @@
-const find = require("../services/user.service.js");
+const UserServices = require("../services/user.service.js");
+const services = new UserServices();
 
 class UserController{
-    find = async (req, res) => {
+    login = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { cd, cd_matricula, nome, cargo} = req.body;
+            const {login, senha} = req.body;
 
-            if (!cd || !cd_matricula || !nome || !cargo) {
+            if (!login || !senha) {
                 res.status(400).send({ message: "Preencha todos os espaços!" });
             }
 
             //await é usado junto com async
-            await find(cd, cd_matricula, nome, cargo);
+            let user = await services.login(login, senha);
 
             res.status(201).send({
                 message: "Usuario:",
-                user: {
-                    cd,
-                    cd_matricula,
-                    nome,
-                    cargo
-                }
+                user: user
             });
         } catch (err) {
             res.status(500).send({ message: err });

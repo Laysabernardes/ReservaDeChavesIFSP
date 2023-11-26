@@ -8,7 +8,7 @@ const controller = new UserController();
 const router = Router();
 // Cria uma instância do Router para definir as rotas.
 
-router.get("/", controller.find);
+router.post("/", controller.login);
 // Define uma rota POST no endpoint raiz ("/") que será acessada quando uma solicitação POST for feita para o servidor.
 // Quando essa rota é acessada, a função "login" do controlador será chamada para processar a solicitação.
 
