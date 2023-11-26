@@ -13,7 +13,7 @@ function Cadastro() {
           <h3 className="formulario-cadastro__titulo">Cadastrar Chave:</h3>
           <form action="" className="formulario-cadastro_form">
             <div className="formulario-cadastro__input-container">
-              <input               
+              <input
                 name="nome_reserva"
                 id="reservaName"
                 className="input inputs"
@@ -25,55 +25,55 @@ function Cadastro() {
                 Número da chave:
               </label>
             </div>
-            
-            <div className="formulario-cadastro__input-container">
-              
+
+            <div className="formulario-cadastro__input-container input ">
+
               <label className="input-label" htmlFor="categoriaLocal">
                 Tipo de sala:
               </label>
               <div className="radio-buttons-container">
-              <input
-                type="radio"
-                id="sala"
-                name="categoria"
-                value="Sala"
-                required
-              />
-              <label htmlFor="sala">Sala</label>
+                <input
+                  type="radio"
+                  id="sala"
+                  name="categoria"
+                  value="Sala"
+                  required
+                />
+                <label htmlFor="sala">Sala</label>
 
-              <input
-                type="radio"
-                id="laboratorio"
-                name="categoria"
-                value="Laboratório"
-                required
-              />
-              <label htmlFor="laboratorio">Laboratório</label>
+                <input
+                  type="radio"
+                  id="laboratorio"
+                  name="categoria"
+                  value="Laboratório"
+                  required
+                />
+                <label htmlFor="laboratorio">Laboratório</label>
 
-              <input
-                type="radio"
-                id="outro"
-                name="categoria"
-                value="Outro"
-                required
-              />
-              <label htmlFor="outro">Outro</label>
+                <input
+                  type="radio"
+                  id="outro"
+                  name="categoria"
+                  value="Outro"
+                  required
+                />
+                <label htmlFor="outro">Outro</label>
               </div>
             </div>
             <div className="formulario-cadastro__input-container">
-              <input               
+              <input
                 name="cadastroFor"
                 id="aprovadoPor"
                 className="input inputs"
                 type="text"
-                placeholder=""               
+                placeholder=""
               />
-              
+
               <label className="input-label" htmlFor="aprovadorPor">
                 Observações adicionais:
               </label>
             </div>
-            
+
             <input
               className="boton-formulario-cadastro"
               type="submit"
@@ -85,7 +85,7 @@ function Cadastro() {
                 window.location.replace("/main");
               }}
             />
-            
+
           </form>
         </div>
       </div>
