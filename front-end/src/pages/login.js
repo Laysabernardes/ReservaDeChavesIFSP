@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/reset.css';
 import '../css/index.css';
 import '../css/login.css';
-import Header from './header.js'
+import Header from './header.js';
 import Footer from './footer.js';
 
 

@@ -7,13 +7,16 @@ import '../css/index.css';
 import '../css/login.css';
 import '../css/Reserva.css';
 
+// na linha 16, fazer função para atualizar o src de acordo com a situacao da chave
+//verde: https://upload.wikimedia.org/wikipedia/commons/2/23/Light_green.PNG
+//vermelho: https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Solid_red.svg/512px-Solid_red.svg.png?20150316143248
 function ReservaForm(){
     return(
       <div>
       <Header/>
       <section className="sessao__chave">
-        <div className="chave container" data-chave="">
-          <img className='chave__imagem' src="https://upload.wikimedia.org/wikipedia/commons/2/23/Light_green.PNG"></img>
+        <div className="chave container" data-chave="">        
+          <img className='chave__imagem' src=""></img>
           <div class="chave__info">
             <h2 class="chave__info__titulo"></h2>
             <p class="chave__info__descricao">
@@ -31,7 +34,8 @@ function ReservaForm(){
                     placeholder=""
                     required
                     data-tipo="situacao"
-                    value="Livre"
+                    //Colocar a situacao no value
+                    value=""
                     data-form-usuario
                     />
                   <label className="input-label" htmlFor="situacao">
@@ -75,5 +79,4 @@ function ReservaForm(){
     </div>
   );
 }
-
 export default ReservaForm;
