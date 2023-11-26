@@ -1,42 +1,101 @@
-// Importar o modelo Reserva, que foi definido no modelo em expressJS
-const Reserva = require('../models/Reserva.js');
+const ReservaServicesServices = require("../services/reserva.service.js");
+const services = new ReservaServicesServices();
+class ReservaController {
+  create = async (req, res) => {
+    try {//constante que verifica todos os campos
+      const { cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega } = req.body;
 
-// Definir o controlador como um objeto com métodos
-const reservaController = {};
+      if (!cd_solicitante || !cd_cargo || !cd_permissao_estudante || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status || !ds_tempo_entrega) {
+        res.status(400).send({ message: "Preencha todos os espaços" });
+      }
 
-// Método para criar uma nova reserva
-reservaController.create = async (req, res) => {
-  try {
-    // Obter os dados da reserva do corpo da requisição
-    const { data, sala, periodo, professor, motivo } = req.body;
+      //await é usado junto com async
+      await services.create(cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega);
 
-    // Validar os dados da reserva, por exemplo, se a sala está disponível, se o professor existe, etc.
-    // Você pode usar algum módulo de validação, como o express-validator ou o joi
-    // Aqui vamos supor que os dados são válidos
-
-    // Criar uma nova instância do modelo Reserva com os dados da requisição
-    const reserva = new Reserva({
-      professor,
-      data,
-      sala,
-      periodo,
-      motivo
-    });
-
-    // Salvar a reserva no banco de dados usando o método save do mongoose
-    await reserva.save();
-
-    // Enviar a reserva para uma página de aprovação, que pode ser uma rota do express ou uma API externa
-    // Você pode usar algum módulo de requisição HTTP, como o axios ou o request
-    // Aqui vamos supor que a página de aprovação é uma rota do express chamada /aprovar
-    // Você pode usar o método redirect do objeto de resposta para redirecionar o cliente para essa rota
-    // Você pode passar a reserva como um parâmetro na URL
-    res.redirect(`/aprovar?reserva=${reserva._id}`);
-  } catch (err) {
-    // Tratar o erro, por exemplo, enviando uma mensagem de erro ao cliente
-    res.status(500).send(`Ocorreu um erro ao criar a reserva: ${err.message}`);
+      res.status(201).send({
+        message: "Reserva criada com sucesso!",
+        reserva: {
+          cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega
+        }
+      });
+    } catch (err) {
+      res.status(500).send({ message: err });
+    }
   }
-};
 
-// Exportar o controlador para ser usado em outros módulos, como as rotas
-module.exports = reservaController;
+  find = async (req, res) => {
+    try {//constante que verifica todos os campos
+      const { id_reserva } = req.params;
+
+      if (!id_reserva) {
+        res.status(400).send({ message: "Adicione o código da Reserva!" });
+      }
+
+      //await é usado junto com async
+      let reserva = await services.find(id_reserva);
+
+      res.status(201).send({
+        message: "Reserva:",
+        reserva: reserva
+      });
+    } catch (err) {
+      res.status(500).send({ message: err });
+    }
+  }
+
+  findAll = async (req, res) => {
+    try {
+      const reserva = await services.findAll();
+
+      if (reserva.length === 0) {
+        return res.status(400).send({ message: "Não existe nenhuma reserva registrada" });
+      }
+      res.send(reserva);
+    } catch (err) {
+      res.status(500).send({ message: err.message })
+    }
+  };
+
+  update = async (req, res) => {
+    try {//constante que verifica todos os campos
+      const { id_reserva, ds_status } = req.body;
+
+      if (!id_reserva || !ds_status) {
+        res.status(400).send({ message: "Preencha os campos!" });
+      }
+
+      //await é usado junto com async
+      await services.update(id_reserva, ds_status);
+
+
+      res.status(201).send({
+        message: "Reserva Status Update:",
+        status: ds_status
+      });
+    } catch (err) {
+      res.status(500).send({ message: err });
+    }
+  }
+
+  delete = async (req, res) => {
+    try {
+      const { id_reserva} = req.params;
+
+      if (!id_reserva) {
+        res.status(400).send({ message: "Adicione o código da Reserva!" });
+      }
+
+      //await é usado junto com async
+      let reserva = await services.delete(id_reserva);
+
+      res.status(201).send({
+        message: "Reserva:",
+        reserva: reserva
+      });
+    } catch (err) {
+      res.status(500).send({ message: err });
+    }
+  }
+}
+
+module.exports = ReservaController;
