@@ -25,6 +25,9 @@ app.use(cors());
 
 app.use(express.json());
     // Define que a aplicação Express irá lidar com solicitações e respostas em formato JSON.
+    
+    app.use(express.urlencoded({ extended: true }));
+
 app.use(routes);
     // Associa as rotas definidas no arquivo 'auth.route.js' à aplicação Express, prefixando-as com "/auth".
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));

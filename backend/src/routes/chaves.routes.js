@@ -7,6 +7,7 @@ const controller = new ChavesController();
 
 // Funções de Usuário
 localRouter.post("/", controller.create);
+localRouter.get("/categoria", controller.findByCategoria);
 localRouter.get("/:cd_chave", controller.find);
 localRouter.get("/", controller.findAll);
 localRouter.patch("/", controller.update);
