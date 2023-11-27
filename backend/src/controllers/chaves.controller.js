@@ -77,8 +77,19 @@ class ChavesController {
         }
     };
 
+    findAll = async (req, res) => {
+        try {
+            const chaves = await services.findAll();
 
-    //Esta com erro
+            if (chaves.length === 0) {
+                return res.status(400).send({ message: "Não existe nenhum local registrado" });
+            }
+            res.send(chaves);
+        } catch (err) {
+            res.status(500).send({ message: err.message })
+        }
+    };
+
     findByCategoria = async (req, res) => {
         try {
             const { ds_chave } = req.params;
@@ -107,20 +118,7 @@ class ChavesController {
             res.status(500).send({ message: err.message });
         }
     }
-
-    findAll = async (req, res) => {
-        try {
-            const chaves = await services.findAll();
-
-            if (chaves.length === 0) {
-                return res.status(400).send({ message: "Não existe nenhum local registrado" });
-            }
-            res.send(chaves);
-        } catch (err) {
-            res.status(500).send({ message: err.message })
-        }
-    };
-
+    
     update = async (req, res) => {
         try {//constante que verifica todos os campos
             const { cd_chave, ds_status } = req.body;
