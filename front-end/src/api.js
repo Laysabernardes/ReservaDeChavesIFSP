@@ -1,4 +1,10 @@
-// import axios from 'axios';
+import axios from 'axios';
+
+const instance = axios.create({
+    baseURL: 'http://localhost:3001', // Substitua pela URL do seu backend
+  });
+
+export default instance;
 
 // class Api {
 
@@ -17,5 +23,3 @@
 //     return this.api.post('/auth/', userData);
 //   };
 // }
-
-// export default Api;
