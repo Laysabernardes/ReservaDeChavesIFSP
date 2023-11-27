@@ -1,25 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import { BrowserRouter as Router } from 'react-router-dom'; // Importe BrowserRouter ou HashRouter
+
 import './css/index.css';
-import App from '../src/App.js';
 import Login from './pages/login.js'
-import Admpage from './pages/adm-page.js'
 import reportWebVitals from './reportWebVitals';
-import Cadastro from './pages/cadastroChaves.js'
-
-
-
+import Routes from './Routes.js'
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <Admpage/> */}
-    {/* <Cadastro /> */}
-    {/* <Login/> */}
-    <App/>
+    <Router>
+      <Login />
+      <Routes />
+    </Router>
   </React.StrictMode>
 );
 
