@@ -81,7 +81,7 @@ class ChavesController {
     //Esta com erro
     findByCategoria = async (req, res) => {
         try {
-            const { ds_chave } = req.query;
+            const { ds_chave } = req.params;
             console.log('Parâmetros recebidos:', { ds_chave });
     
             if (!ds_chave) {

@@ -16,27 +16,6 @@ class ChavesServices{
     });
   }
 
-  //SELECT * FROM `Chaves` WHERE `ds_status` LIKE 'livre'
-  findByCategoria = (ds_chave) => {
-    return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM `Chaves` WHERE `ds_chave` LIKE ?', [`%${ds_chave}%`], (err, results) => {
-            if (err) {
-                console.error('Erro ao executar a consulta SQL:', err);
-                reject({ error: 'Erro ao encontrar categoria' });
-            } else {
-                if (results.length === 0) {
-                    console.log('Categoria não encontrada.');
-                    resolve({ error: 'Erro ao encontrar categoria' });
-                } else {
-                    console.log('Categoria encontrada com sucesso:', results);
-                    resolve(results);
-                }
-            }
-        });
-    });
-}
-  
-
   find = (cd_chave) => {
     return new Promise((resolve, reject) => {
       connection.query('SELECT * FROM Chaves WHERE cd_chave = ?;',  cd_chave, (err, results) => {
@@ -50,8 +29,6 @@ class ChavesServices{
       });
     });
   }
-
-  
 
   findAll = () => {
     return new Promise((resolve, reject) => {
@@ -67,6 +44,25 @@ class ChavesServices{
     });
   }
 
+  findByCategoria = (ds_chave) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM Chaves WHERE ds_chave LIKE ?', ds_chave, (err, results) => {
+            if (err) {
+                console.error('Erro ao executar a consulta SQL:', err);
+                reject({ error: 'Erro ao encontrar categoria' });
+            } else {
+                if (results.length === 0) {
+                    console.log('Categoria não encontrada.');
+                    resolve({ error: 'Erro ao encontrar categoria' });
+                } else {
+                    console.log('Categoria encontrada com sucesso:', results);
+                    resolve(results);
+                }
+            }
+        });
+    });
+  }  
+  
   update = (cd_chave, ds_status) => {
     return new Promise((resolve, reject) => {
       connection.query('UPDATE Chaves SET ds_status = ? WHERE cd_chave = ?;', [ds_status, cd_chave], (err, results) => {
