@@ -95,7 +95,7 @@ const Main = () => {
                 }}>Ver todos:</a> */}
             </div>
             <div className="barra-de-rolagem">
-              <div className="produtos_index" id="data-salas">
+              <div className="produtos_index">
               
                 {/* Renderiza os locais de salas usando a função específica */}
                 {renderizarLocais(locaisSalas, navigate)}
@@ -107,7 +107,7 @@ const Main = () => {
             <div className="labs__head">
               <h2 className="labs__head__titulo-principal">Laboratórios:</h2>
             </div>
-            <div className="produtos_index" id="data-labs">
+            <div className="produtos_index">
               {/* Renderiza os locais de laboratórios usando a função específica */}
               {renderizarLocais(locaisLabs, navigate)}
             </div>

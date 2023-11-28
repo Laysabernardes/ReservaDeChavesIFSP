@@ -17,7 +17,7 @@ const MostraChave = () => {
       
           if (response.status === 200) {
             // Extrai a lista de chaves da resposta ou utiliza um array vazio
-            const data = response.data.chave || [];
+            const data = response.data || [];
             console.log('Dados das chaves:', data);
       
             // Atualiza o estado com todas as chaves obtidas
@@ -31,8 +31,6 @@ const MostraChave = () => {
         }
       };
       
-      
-
     // Executa a função de busca ao montar o componente
     fetchData();
   }, []);
