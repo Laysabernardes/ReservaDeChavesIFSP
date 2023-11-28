@@ -6,15 +6,17 @@ import Banner from './banner.js';
 import Footer from './footer.js';
 import api from '../api'; // Importe a instância do Axios
 
+const coresHex = ['#81F459', '#85D139', '#68C13D', '#50C128', '#73DB4E', '#559A2A', '#24BC17', '19A516', '#11791B', '#0F7113', '#2A7B0D', '#0D9232' ];
+
 // Função para renderizar os cartões de locais
 const renderizarLocais = (locais) => {
-  return locais.map((local) => (
+  return locais.map((local, index) => (
     // Para cada local, cria um cartão com informações
     <div key={local.cd_chave} className="local__card">
       <div
         className="local__card__imagem"
         // Estilo da imagem de fundo (comentado para ser ajustado)
-        style={{ backgroundImage: `url(https://img.freepik.com/fotos-premium/fundo-verde-retro_196038-6919.jpg)` }}
+        style={{ backgroundColor: coresHex[index % coresHex.length] }}
       ></div>
       <h3 className="local__card__titulo">{local.nm_chave}</h3>
       <p className="local__card__status">{local.ds_status}</p>
