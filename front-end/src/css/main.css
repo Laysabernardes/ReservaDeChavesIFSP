@@ -2,9 +2,8 @@
     display: grid;
     gap: 1rem;
     grid-auto-rows: 22rem;
-    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); 
 }
-
 .local__card__imagem{
     height: 279px;
     display: flex;
@@ -20,6 +19,7 @@
 .labs,
 .diversos{
     margin: 0 0 2rem 0;
+   
 }
 
 .salas__head,
@@ -88,9 +88,15 @@
     font-weight: 800;
 }
 
-.local__card__botao{
+.local__card__botao, .local_botao{
     color: var( --cor-de-destaque);
     font-weight: 800;
+}
+
+.local_botao::after {
+    content: '🡪';
+    color:var( --cor-de-destaque);
+    margin-left: 0.6rem;
 }
 
 .locais__resultados_mensagem{

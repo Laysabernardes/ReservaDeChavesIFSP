@@ -1,6 +1,7 @@
 // Importa as bibliotecas necessárias do React
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useUser } from '../UserContext.js';
 
 // Importa a instância configurada do Axios do arquivo api.js
 import api from '../api'; // Caminho para o arquivo api.js
@@ -17,6 +18,7 @@ import Footer from './footer';
 
 // Define o componente funcional LoginForm
 function LoginForm() {
+  
   // Estados para controlar os campos de login e senha
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
@@ -26,6 +28,7 @@ function LoginForm() {
 
   // Obtém a função navigate
   const navigate = useNavigate();
+  const { setUserData } = useUser();
 
   // Função assíncrona para lidar com o login do usuário
   async function handleLogin(e) {
@@ -35,13 +38,14 @@ function LoginForm() {
       // Chama a API para fazer login com as credenciais fornecidas
       const response = await api.post('/user', { login, senha });
       console.log('Resposta da API:', response.data);
+      const user = response.data.user[0];
 
-      const user = response.data;
       const userName = response.data.user[0].nm_solicitante;
       const userCargo = response.data.user[0].cd_cargo;
 
       // Atualiza os estados com os dados do usuário e o estado de login
       setIsLoggedIn(true);
+      setUserData(user);
 
       // Imprime informações para depuração
       console.log('Login:', login);

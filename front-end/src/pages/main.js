@@ -6,7 +6,9 @@ import Banner from './banner.js';
 import Footer from './footer.js';
 import api from '../api'; // Importe a instância do Axios
 
-const coresHex = ['#81F459', '#85D139', '#68C13D', '#50C128', '#73DB4E', '#559A2A', '#24BC17', '19A516', '#11791B', '#0F7113', '#2A7B0D', '#0D9232' ];
+import { useUser } from '../UserContext.js';
+
+const coresHex = ['#81F459', '#85D139', '#68C13D', '#50C128', '#73DB4E', '#559A2A', '#24BC17', '19A516', '#11791B', '#0F7113', '#2A7B0D', '#0D9232'];
 
 // Função para renderizar os cartões de locais
 const renderizarLocais = (locais) => {
@@ -20,7 +22,11 @@ const renderizarLocais = (locais) => {
       ></div>
       <h3 className="local__card__titulo">{local.nm_chave}</h3>
       <p className="local__card__status">{local.ds_status}</p>
-      <a className="local__card__botao" href={`.../${local.cd_chave}`}>
+      <a className="local__card__botao" href="/reserva"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.replace("/reserva");
+                }}>
         Reservar {local.ds_chave}
       </a>
     </div>
@@ -36,7 +42,7 @@ const buscaLocais = async (categoria) => {
 
     // Extrai a lista de locais da resposta ou utiliza um array vazio
     const data = response.data.chave || [];
-    
+
     // Filtra os locais com base na categoria
     const locais = data.filter(local => local.ds_chave === categoria);
 
@@ -51,6 +57,13 @@ const buscaLocais = async (categoria) => {
 
 // Componente principal do main
 const Main = () => {
+
+  const { userData, setUserData, chavesData, setChavesData } = useUser();
+  const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
+  const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
+  console.log('Nome do usuáriooo:', nomeDoUsuario);
+  console.log('Cargooo', cargoDoUsuario); // Obtém as informações do usuário do contexto
+  
   // Estados para armazenar locais de diferentes categorias
   const [locaisSalas, setLocaisSalas] = useState([]);
   const [locaisLabs, setLocaisLabs] = useState([]);
@@ -93,10 +106,18 @@ const Main = () => {
           <div className="salas">
             <div className="salas__head">
               <h2 className="salas__head__titulo-principal">Salas:</h2>
+              {/* <a className="local_botao" href="/mostraChave"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.replace("/mostraChave");
+                }}>Ver todos:</a> */}
             </div>
-            <div className="produtos_index" id="data-salas">
-              {/* Renderiza os locais de salas usando a função específica */}
-              {renderizarLocais(locaisSalas)}
+            <div className="barra-de-rolagem">
+              <div className="produtos_index" id="data-salas">
+              
+                {/* Renderiza os locais de salas usando a função específica */}
+                {renderizarLocais(locaisSalas)}
+              </div>
             </div>
           </div>
           {/* Categoria de Laboratórios */}
