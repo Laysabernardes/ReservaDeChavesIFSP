@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter as Router } from 'react-router-dom'; // Importe BrowserRouter ou HashRouter
 import { UserProvider } from './UserContext.js';

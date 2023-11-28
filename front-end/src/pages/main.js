@@ -1,37 +1,17 @@
 // Importações necessárias do React e de componentes externos
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import '../css/main.css'; // Importa o estilo CSS para o componente main
 import Header from './header';
 import Banner from './banner.js';
 import Footer from './footer.js';
 import api from '../api'; // Importe a instância do Axios
+import { renderizarLocais } from '../renderizar.js';
 
 import { useUser } from '../UserContext.js';
 
-const coresHex = ['#81F459', '#85D139', '#68C13D', '#50C128', '#73DB4E', '#559A2A', '#24BC17', '19A516', '#11791B', '#0F7113', '#2A7B0D', '#0D9232'];
 
-// Função para renderizar os cartões de locais
-const renderizarLocais = (locais) => {
-  return locais.map((local, index) => (
-    // Para cada local, cria um cartão com informações
-    <div key={local.cd_chave} className="local__card">
-      <div
-        className="local__card__imagem"
-        // Estilo da imagem de fundo (comentado para ser ajustado)
-        style={{ backgroundColor: coresHex[index % coresHex.length] }}
-      ></div>
-      <h3 className="local__card__titulo">{local.nm_chave}</h3>
-      <p className="local__card__status">{local.ds_status}</p>
-      <a className="local__card__botao" href="/reserva"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.replace("/reserva");
-                }}>
-        Reservar {local.ds_chave}
-      </a>
-    </div>
-  ));
-};
+
 
 // Função para buscar locais de uma determinada categoria no backend
 const buscaLocais = async (categoria) => {
@@ -57,6 +37,8 @@ const buscaLocais = async (categoria) => {
 
 // Componente principal do main
 const Main = () => {
+
+  const navigate = useNavigate();
 
   const { userData, setUserData, chavesData, setChavesData } = useUser();
   const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
@@ -116,7 +98,7 @@ const Main = () => {
               <div className="produtos_index" id="data-salas">
               
                 {/* Renderiza os locais de salas usando a função específica */}
-                {renderizarLocais(locaisSalas)}
+                {renderizarLocais(locaisSalas, navigate)}
               </div>
             </div>
           </div>
@@ -127,7 +109,7 @@ const Main = () => {
             </div>
             <div className="produtos_index" id="data-labs">
               {/* Renderiza os locais de laboratórios usando a função específica */}
-              {renderizarLocais(locaisLabs)}
+              {renderizarLocais(locaisLabs, navigate)}
             </div>
           </div>
           {/* Categoria de Diversos */}
@@ -137,7 +119,7 @@ const Main = () => {
             </div>
             <div className="produtos_index" data-diversos>
               {/* Renderiza os locais diversos usando a função específica */}
-              {renderizarLocais(locaisDiversos)}
+              {renderizarLocais(locaisDiversos, navigate)}
             </div>
           </div>
         </div>
