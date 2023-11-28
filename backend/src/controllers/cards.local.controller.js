@@ -1,25 +1,4 @@
 class CardsFunctions{
-  
-  find = async (req, res) => {
-    try {//constante que verifica todos os campos
-        const { ds_chave} = req.params;
-
-        if (!ds_chave) {
-            res.status(400).send({ message: "Adicione o valores validos!" });
-        }
-
-        //await é usado junto com async
-        let categoria = await services.find(cd_chave);
-
-        res.status(201).send({
-            message: "Categoria:",
-            categoria: categoria
-        });
-    } catch (err) {
-        res.status(500).send({ message: err });
-    }
-}
-
   //Criando o card do local
   MostrarLocal = (nm_chave, ds_chave, ds_status, cd_chave) => {
     

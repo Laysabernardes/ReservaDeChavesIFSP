@@ -1,7 +1,7 @@
 const ChavesServices = require("../services/chaves.service.js");
-const CardsFunctions = require("./cards.local.controller.js");
+// const CardsFunctions = require("./cards.controller.js");
 
-const cardsFunc = new CardsFunctions();
+// const cardsFunc = new CardsFunctions();
 const services = new ChavesServices();
 
 // // //Capturando a seção de locais em que a categoria seja = a salas
