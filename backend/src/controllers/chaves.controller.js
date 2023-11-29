@@ -1,35 +1,5 @@
 const ChavesServices = require("../services/chaves.service.js");
-// const CardsFunctions = require("./cards.controller.js");
-
-// const cardsFunc = new CardsFunctions();
 const services = new ChavesServices();
-
-// // //Capturando a seção de locais em que a categoria seja = a salas
-// const locaisSalas = document.querySelector("data-salas");
-// // //Capturando a seção de locais em que a categoria seja = a labs
-// const locaisLabs = document.querySelector("[data-labs]");
-// // //Capturando a seção de locais em que a categoria seja = a diversos
-// const locaisDiversos = document.querySelector("[data-diversos]");
-
-// // 
-// locaisServices.findAllLocal().then(data => {
-//     data.forEach(({ nm_chave, ds_chave, ds_status}) => {
-//         //     //Imprimir os campos no index com a função MostraLocal 
-//         if (categoria === "Sala") {
-//             const localCard = cardsFunc.MostrarLocal(nm_chave, ds_chave, ds_status);
-//             locaisSalas.appendChild(localCard);
-//             // Adiciona o card criado na div das salas
-//         } else if (categoria === "Laboratório") {
-//             const localCard = cardsFunc.MostrarLocal(nm_chave, ds_chave, ds_status);
-//             locaisLabs.appendChild(localCard);
-//             // Adiciona o card criado na div dos laboratórios
-//         } else if (categoria === "Diverso") {
-//             const localCard = cardsFunc.MostrarLocal(nm_chave, ds_chave, ds_status);
-//             locaisDiversos.appendChild(localCard);
-//             // Adiciona o card criado na div dos diversos
-//         }
-//     });
-// })
 
 class ChavesController {
     create = async (req, res) => {
