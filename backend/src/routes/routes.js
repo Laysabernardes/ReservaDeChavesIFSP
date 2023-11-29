@@ -4,10 +4,12 @@ const {Router} = require("express");
 const localRouter = require("./chaves.routes");
 const userRouter = require("./user.routes");
 const reservaRouter = require("./reserva.routes");
+const SolicitacaoRouter = require("./solicitacao.route")
 
 const router = Router();
 router.use("/chaves", localRouter);
 router.use("/user", userRouter);
 router.use("/reserva", reservaRouter);
+router.use("/solicitacao", SolicitacaoRouter);
 
 module.exports = router;

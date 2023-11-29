@@ -72,7 +72,7 @@ const Main = () => {
     console.log('Dados do Usuário em Main:', userData);
     // Executa a função de busca ao montar o componente
     fetchData();
-  }, []); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
+  }, [userData]); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
 
   // Renderização do componente principal
   return (
@@ -97,7 +97,7 @@ const Main = () => {
               <div className="produtos_index">
 
                 {/* Renderiza os locais de salas usando a função específica */}
-                {renderizarLocais(locaisSalas, navigate)}
+                {renderizarLocais(locaisSalas, navigate, userData)}
               </div>
             </div>
           </div>

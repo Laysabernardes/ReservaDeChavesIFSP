@@ -14,66 +14,91 @@ function ReservaForm(props) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // const [situacao, setSituacao] = useState('');
-  const [data, setData] = useState('');
-
-  const { userData, setUserData, chavesData, setChavesData } = useUser();
+  const { userData } = useUser();
   const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
   const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
 
   const { state } = location || {};
   const chave = state ? state.chave : null;
+  const user = state ? state.user : null;
 
   const [situacao, setSituacao] = useState(chave ? chave.ds_status : '');
+  const [data, setData] = useState('');
 
-  console.log('RESERVA - Nome do usuáriooo:', nomeDoUsuario);
+  console.log('RESERVA - Nome do usuáriooo:', user ? user.nm_solicitante : 'N/A');
   console.log('RESERVA - Cargoo', cargoDoUsuario);
   console.log('RESERVA - ds_chave:', chave ? chave.ds_chave : 'N/A');
   console.log('RESERVA - cd_chave:', chave ? chave.cd_chave : 'N/A');
   console.log('RESERVA - nm_chave:', chave ? chave.nm_chave : 'N/A');
-  console.log('RESERVA - ds_status:', chave ? chave.ds_status: 'N/A');
-
+  console.log('RESERVA - ds_status:', chave ? chave.ds_status : 'N/A');
 
   const handleReservarSala = async (e) => {
     e.preventDefault();
   
     try {
-      // Obtenha as informações adicionais necessárias
-      const dt_reserva = new Date().toISOString().split('T')[0]; // Data atual
-      const ds_status = 'livre'; // Defina conforme necessário
+      if (!user) {
+        console.error('Usuário não encontrado.');
+        return;
+      }
   
-      // Faça a chamada à API para reservar a sala
-      const response = await api.post('/reserva', {
-        cd_solicitante: nomeDoUsuario,
-        cd_cargo: cargoDoUsuario,
-        cd_permissao: ' ' , 
+      const dt_reserva = new Date().toISOString().split('T')[0];
+      const ds_status = situacao;
+  
+      const payload = {
+        cd_solicitante: user.cd_solicitante,
+        cd_cargo: user.cd_cargo,
         cd_chave: chave.cd_chave,
         dt_reserva: data,
-        dt_devolucao: ' ',
-        ds_status: situacao,
-      });
+        dt_devolucao: dt_reserva,
+        ds_status: 'solicitacao',
+      };
   
-      // Lide com a resposta da API conforme necessário
-      console.log('Reserva bem-sucedida:', response.data);
+      if (user.cd_cargo === 'A0001') {
+        // Adicione um campo para o código de permissão
+        const idPermissao = prompt('Informe o ID da permissão:');
+        if (!idPermissao) {
+          console.error('ID da permissão não fornecido.');
+          return;
+        }
   
-      // Redireciona para outra página ou faça o que for necessário após a reserva
-      navigate('/pagina-de-sucesso');
+        try {
+          // Verifique se a permissão existe
+          const responsePermissao = await api.get(`/solicitacao/${idPermissao}`);
+          console.log(responsePermissao.data);
+  
+          // Se a permissão existe, permitir a reserva
+          payload.cd_permissao = idPermissao;
+  
+          const response = await api.post('/reserva', payload);
+          console.log('Reserva bem-sucedida:', response.data);
+  
+          navigate('/solicitacao', { state: { chave: response.data } });
+        } catch (error) {
+          // Se a permissão não existe, exibir mensagem de erro
+          console.error('Permissão não encontrada:', error);
+        }
+      } else {
+        // Se o usuário não é da categoria A0001, faça a reserva diretamente
+        const response = await api.post('/reserva', payload);
+        console.log('Reserva bem-sucedida:', response.data);
+  
+        navigate('/solicitacao', { state: { chave: response.data } });
+      }
     } catch (error) {
-      // Lide com erros da API, por exemplo, exibindo uma mensagem de erro
       console.error('Erro ao reservar sala:', error.message);
     }
   };
   
+
 
   return (
     <div>
       <Header />
       <section className="sessao__chave">
         <div className="chave container" data-chave="">
-        <img className="chave__imagem" src="https://www.pontoxtecidos.com.br/static/567/sku/155904889647122.jpg" alt="Imagem da chave"></img>
+          <img className="chave__imagem" src="https://www.pontoxtecidos.com.br/static/567/sku/155904889647122.jpg" alt="Imagem da chave" />
           <div className="chave__info">
-            <h2 className="chave__info__titulo"></h2>
-            <p className="chave__info__descricao">
+            <div className="chave__info__descricao">
               <div className="formulario">
                 <div className="formulario-login container">
                   <h3 className="formulario-login__titulo">Nome da sala</h3>
@@ -98,10 +123,29 @@ function ReservaForm(props) {
                         Este campo não é válido
                       </span>
                     </div>
-                    <div
-                      id="previsao"
-                      className="formulario-login__input-container"
-                    >
+
+                    {/* ... (seu código anterior) */}
+                    {user.cd_cargo === 'A0001' && (
+                      <div className="formulario-login__input-container">
+                        <input
+                          name="codigoPermissao"
+                          id="codigoPermissao"
+                          className="input inputs"
+                          type="text"
+                          placeholder="Código de Permissão"
+                          required
+                        // Adicione a lógica necessária para lidar com o valor do código de permissão
+                        />
+                        <label className="input-label" htmlFor="codigoPermissao">
+                          Código de Permissão:
+                        </label>
+                        <span className="input-message-error">
+                          Este campo não é válido
+                        </span>
+                      </div>
+                    )}
+
+                    <div id="previsao" className="formulario-login__input-container">
                       <input
                         name="data"
                         id="data"
@@ -120,6 +164,7 @@ function ReservaForm(props) {
                         Este campo não é válido
                       </span>
                     </div>
+
                     <button
                       className="boton-formulario-login"
                       onClick={handleReservarSala}
@@ -129,7 +174,7 @@ function ReservaForm(props) {
                   </form>
                 </div>
               </div>
-            </p>
+            </div>
           </div>
         </div>
       </section>

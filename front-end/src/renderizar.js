@@ -1,6 +1,6 @@
 // Função para renderizar os cartões de locais
 
-export const renderizarLocais = (locais, navigate) => {
+export const renderizarLocais = (locais, navigate, userData) => {
     
     const coresHex = ['#81F459', '#85D139', '#68C13D', '#50C128', '#73DB4E', '#559A2A', '#24BC17', '#19A516', '#11791B', '#0F7113', '#2A7B0D', '#0D9232'];
     return locais.map((local, index) => (
@@ -16,7 +16,7 @@ export const renderizarLocais = (locais, navigate) => {
             <a
                 href="/reserva"
                 className="local__card__botao"
-                onClick={() => navigate('/reserva', { state: { chave: local } })}
+                onClick={() => navigate('/reserva', { state: { chave: local, user: userData } })}
             >
                 Reservar {local.ds_chave}
             </a>
