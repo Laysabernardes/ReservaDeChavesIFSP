@@ -1,17 +1,15 @@
 // Importações necessárias do React e de componentes externos
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { renderizarLocais } from '../renderizar.js';
+import { useNavigate, useLocation } from 'react-router-dom'; // Importa useNavigate
+import { useUser } from '../UserContext.js';
+import api from '../api'; // Importe a instância do Axios
+
 import '../css/main.css'; // Importa o estilo CSS para o componente main
+
 import Header from './header';
 import Banner from './banner.js';
 import Footer from './footer.js';
-import api from '../api'; // Importe a instância do Axios
-import { renderizarLocais } from '../renderizar.js';
-
-import { useUser } from '../UserContext.js';
-
-
-
 
 // Função para buscar locais de uma determinada categoria no backend
 const buscaLocais = async (categoria) => {
@@ -26,6 +24,8 @@ const buscaLocais = async (categoria) => {
     // Filtra os locais com base na categoria
     const locais = data.filter(local => local.ds_chave === categoria);
 
+
+
     // Retorna a lista de locais
     return locais;
   } catch (error) {
@@ -39,13 +39,12 @@ const buscaLocais = async (categoria) => {
 const Main = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const userData = location.state ? location.state.userData : null;
 
-  const { userData, setUserData, chavesData, setChavesData } = useUser();
-  const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
-  const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
-  console.log('Nome do usuáriooo:', nomeDoUsuario);
-  console.log('Cargooo', cargoDoUsuario); // Obtém as informações do usuário do contexto
-  
+  console.log('Dados do Usuário em Main:', userData);
+
+
   // Estados para armazenar locais de diferentes categorias
   const [locaisSalas, setLocaisSalas] = useState([]);
   const [locaisLabs, setLocaisLabs] = useState([]);
@@ -70,10 +69,10 @@ const Main = () => {
         console.error('Erro ao buscar locais:', error);
       }
     };
-
+    console.log('Dados do Usuário em Main:', userData);
     // Executa a função de busca ao montar o componente
     fetchData();
-  }, []); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
+  }, [userData]); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
 
   // Renderização do componente principal
   return (
@@ -90,15 +89,15 @@ const Main = () => {
               <h2 className="salas__head__titulo-principal">Salas:</h2>
               <a className="local_botao" href="/mostraChave"
                 onClick={(e) => {
-                e.preventDefault();
-                navigate('/mostraChave');
-              }}>Ver todos:</a>
+                  e.preventDefault();
+                  navigate('/mostraChave');
+                }}>Ver todos:</a>
             </div>
             <div className="barra-de-rolagem">
               <div className="produtos_index">
-              
+
                 {/* Renderiza os locais de salas usando a função específica */}
-                {renderizarLocais(locaisSalas, navigate)}
+                {renderizarLocais(locaisSalas, navigate, userData)}
               </div>
             </div>
           </div>
