@@ -14,24 +14,24 @@ function ReservaForm(props) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [situacao, setSituacao] = useState('');
+  // const [situacao, setSituacao] = useState('');
   const [data, setData] = useState('');
 
   const { userData, setUserData, chavesData, setChavesData } = useUser();
   const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
   const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
 
-  const cdChave = chavesData ? chavesData.cd_chave : 'Nome Padrão';
-  const dsChave = chavesData ? chavesData.ds_chave : 'Cargo Padrão';
-
   const { state } = location || {};
   const chave = state ? state.chave : null;
+
+  const [situacao, setSituacao] = useState(chave ? chave.ds_status : '');
 
   console.log('RESERVA - Nome do usuáriooo:', nomeDoUsuario);
   console.log('RESERVA - Cargoo', cargoDoUsuario);
   console.log('RESERVA - ds_chave:', chave ? chave.ds_chave : 'N/A');
   console.log('RESERVA - cd_chave:', chave ? chave.cd_chave : 'N/A');
   console.log('RESERVA - nm_chave:', chave ? chave.nm_chave : 'N/A');
+  console.log('RESERVA - ds_status:', chave ? chave.ds_status: 'N/A');
 
 
   const handleReservarSala = async (e) => {
@@ -43,16 +43,14 @@ function ReservaForm(props) {
       const ds_status = 'livre'; // Defina conforme necessário
   
       // Faça a chamada à API para reservar a sala
-      const response = await api.post('/sua-rota-de-reserva', {
-        nm_solicitante: nomeDoUsuario,
+      const response = await api.post('/reserva', {
+        cd_solicitante: nomeDoUsuario,
         cd_cargo: cargoDoUsuario,
+        cd_permissao: ' ' , 
         cd_chave: chave.cd_chave,
-        ds_status: 
-        dt_reserva,
-        dt_devolucao: data,
-        ds_status,
-        situacao,
-        // Outros dados necessários para a reserva
+        dt_reserva: data,
+        dt_devolucao: ' ',
+        ds_status: situacao,
       });
   
       // Lide com a resposta da API conforme necessário
@@ -91,6 +89,7 @@ function ReservaForm(props) {
                         data-tipo="situacao"
                         value={situacao}
                         onChange={(e) => setSituacao(e.target.value)}
+                        readOnly
                       />
                       <label className="input-label" htmlFor="situacao">
                         Situação:

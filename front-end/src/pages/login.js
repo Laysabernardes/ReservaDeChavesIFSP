@@ -47,6 +47,13 @@ function LoginForm() {
       setIsLoggedIn(true);
       setUserData(user);
       
+      const userData = {
+        cd_cargo: response.data.user[0].cd_cargo,
+        cd_matricula_solicitante:response.data.user[0].cd_matricula_solicitante,
+        cd_senha_solicitante: response.data.user[0].cd_senha_solicitante,
+        cd_solicitante: response.data.user[0].cd_solicitante,
+        nm_solicitante: response.data.user[0].nm_solicitante,
+      };
 
       // Imprime informações para depuração
       console.log('Login:', login);
@@ -58,17 +65,17 @@ function LoginForm() {
         case 'A0001':
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/reserva'); // Redireciona para a página específica para alunos
+          navigate('/reserva',{ state: { userData } }); // Redireciona para a página específica para alunos
           break;
         case '707001':
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/cadastro');
+          navigate('/cadastro',{ state: { userData } });
           break;
         default:
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/main'); // Redireciona para a página principal padrão
+          navigate('/main',{ state: { userData } }); // Redireciona para a página principal padrão
       }
 
     } catch (error) {
