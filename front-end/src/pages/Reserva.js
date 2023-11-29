@@ -1,51 +1,62 @@
+// Importando as bibliotecas e componentes necessários do React e do React Router
 import React, { useState } from 'react';
 import { useUser } from '../UserContext.js';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+// Importando a API e componentes adicionais
 import api from '../api';
 import Header from './header.js';
 import Footer from './footer.js';
+// Importando os estilos CSS
 import '../css/reset.css';
 import '../css/index.css';
 import '../css/login.css';
 import '../css/Reserva.css';
 
+// Componente principal que representa o formulário de reserva
+//props são os dados da reserva passados para a função.
 function ReservaForm(props) {
+  // Hooks do React para gerenciar o estado e a navegação
+  //Hooks são funções que gerenciam estado e navegação.
   const navigate = useNavigate();
+  //useNavigate() é um hook que retorna uma função que pode ser usada para navegar para uma nova página
   const location = useLocation();
+  //useLocation() é um hook que retorna um objeto que contém informações sobre a página atual.
 
-  const { userData } = useUser();
-  const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
-  const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
-
+  // Obtendo dados da localização (URL)
   const { state } = location || {};
   const chave = state ? state.chave : null;
   const user = state ? state.user : null;
-
+  
+  // Hooks de estado para gerenciar dados do formulário
   const [situacao, setSituacao] = useState(chave ? chave.ds_status : '');
   const [codigoPermissao, setCodigoPermissao] = useState('');
   const [data, setData] = useState('');
 
-  console.log('RESERVA - Nome do usuáriooo:', user ? user.nm_solicitante : 'N/A');
-  console.log('RESERVA - Cargoo', cargoDoUsuario);
+  // Exibindo informações no console para depuração
+  console.log('RESERVA - Nome do usuário:', user ? user.nm_solicitante : 'N/A');
   console.log('RESERVA - ds_chave:', chave ? chave.ds_chave : 'N/A');
   console.log('RESERVA - cd_chave:', chave ? chave.cd_chave : 'N/A');
   console.log('RESERVA - nm_chave:', chave ? chave.nm_chave : 'N/A');
   console.log('RESERVA - ds_status:', chave ? chave.ds_status : 'N/A');
 
+  // Função assíncrona para lidar com a reserva
   const handleReservarSala = async (e) => {
+    //e.preventDefault() cancela a ação padrão do evento
     e.preventDefault();
   
     try {
+      // Verifica se o usuário está presente
       if (!user) {
         console.error('Usuário não encontrado.');
         return;
       }
-  
+      // Obtém a data atual para a reserva
       const dt_reserva = new Date().toISOString().split('T')[0];
-      const ds_status = situacao;
-      let cd_permissao_estudante = codigoPermissao || null; // Defina como '000' se não for definido
+      
+      // Define cd_permissao_estudante como null se não estiver definido
+      let cd_permissao_estudante = codigoPermissao || null; 
   
+      // Cria um payload com os dados da reserva
       const payload = {
         cd_solicitante: user.cd_solicitante,
         cd_cargo: user.cd_cargo,
@@ -57,8 +68,9 @@ function ReservaForm(props) {
         ds_tempo_entrega: '01:00'
       };
   
+      // Verifica se o usuário tem o cargo A0001 (categoria Aluno)
       if (user.cd_cargo === 'A0001') {
-        // Adicione um campo para o código de permissão
+        // Adiciona um campo para o código de permissão
         if (!codigoPermissao) {
           console.error('ID da permissão não fornecido.');
           return;
@@ -71,10 +83,12 @@ function ReservaForm(props) {
   
           // Se a permissão existe, permitir a reserva
           payload.cd_permissao = codigoPermissao;
-  
+
+          // Envia uma solicitação POST para a API para criar a reserva
           const response = await api.post('/reserva', payload);
           console.log('Reserva bem-sucedida:', response.data);
   
+          // Navega para a página de solicitação com a chave da reserva
           navigate('/solicitacao', { state: { chave: response.data } });
         } catch (error) {
           // Se a permissão não existe, exibir mensagem de erro
@@ -85,17 +99,19 @@ function ReservaForm(props) {
         const response = await api.post('/reserva', payload);
         console.log('Reserva bem-sucedida:', response.data);
   
+        // Navega para a página de solicitação com a chave da reserva
         navigate('/solicitacao', { state: { chave: response.data } });
       }
     } catch (error) {
+      // Exibe mensagem de erro em caso de falha na reserva
       console.error('Erro ao reservar sala:', error.message);
     }
   };
   
-
-
+  // Renderiza o componente JSX
   return (
     <div>
+      {/* Componentes de cabeçalho e rodapé */}
       <Header />
       <section className="sessao__chave">
         <div className="chave container" data-chave="">
@@ -104,8 +120,10 @@ function ReservaForm(props) {
             <div className="chave__info__descricao">
               <div className="formulario">
                 <div className="formulario-login container">
+                  {/* Título do formulário */}
                   <h3 className="formulario-login__titulo">Nome da sala</h3>
                   <form className="formulario-login_form">
+                    {/* Campo de entrada para a situação (readonly) */}
                     <div className="formulario-login__input-container">
                       <input
                         name="situacao"
@@ -127,7 +145,7 @@ function ReservaForm(props) {
                       </span>
                     </div>
 
-                    {/* ... (seu código anterior) */}
+                    {/* Campo de entrada para o código de permissão (condicional) */}
                     {user.cd_cargo === 'A0001' && (
                       <div className="formulario-login__input-container">
                         <input
@@ -149,6 +167,7 @@ function ReservaForm(props) {
                       </div>
                     )}
 
+                    {/* Campo de entrada para a data e horário */}
                     <div id="previsao" className="formulario-login__input-container">
                       <input
                         name="data"
@@ -168,7 +187,8 @@ function ReservaForm(props) {
                         Este campo não é válido
                       </span>
                     </div>
-
+                    
+                    {/* Botão para reservar a sala */}
                     <button
                       className="boton-formulario-login"
                       onClick={handleReservarSala}
