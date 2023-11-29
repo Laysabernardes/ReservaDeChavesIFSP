@@ -23,6 +23,7 @@ function ReservaForm(props) {
   const user = state ? state.user : null;
 
   const [situacao, setSituacao] = useState(chave ? chave.ds_status : '');
+  const [codigoPermissao, setCodigoPermissao] = useState('');
   const [data, setData] = useState('');
 
   console.log('RESERVA - Nome do usuáriooo:', user ? user.nm_solicitante : 'N/A');
@@ -43,31 +44,33 @@ function ReservaForm(props) {
   
       const dt_reserva = new Date().toISOString().split('T')[0];
       const ds_status = situacao;
+      let cd_permissao_estudante = codigoPermissao || null; // Defina como '000' se não for definido
   
       const payload = {
         cd_solicitante: user.cd_solicitante,
         cd_cargo: user.cd_cargo,
+        cd_permissao_estudante: cd_permissao_estudante,
         cd_chave: chave.cd_chave,
         dt_reserva: data,
         dt_devolucao: dt_reserva,
-        ds_status: 'solicitacao',
+        ds_status: 'solicitacao0',
+        ds_tempo_entrega: '01:00'
       };
   
       if (user.cd_cargo === 'A0001') {
         // Adicione um campo para o código de permissão
-        const idPermissao = prompt('Informe o ID da permissão:');
-        if (!idPermissao) {
+        if (!codigoPermissao) {
           console.error('ID da permissão não fornecido.');
           return;
         }
   
         try {
           // Verifique se a permissão existe
-          const responsePermissao = await api.get(`/solicitacao/${idPermissao}`);
+          const responsePermissao = await api.get(`/solicitacao/${codigoPermissao}`);
           console.log(responsePermissao.data);
   
           // Se a permissão existe, permitir a reserva
-          payload.cd_permissao = idPermissao;
+          payload.cd_permissao = codigoPermissao;
   
           const response = await api.post('/reserva', payload);
           console.log('Reserva bem-sucedida:', response.data);
@@ -134,7 +137,8 @@ function ReservaForm(props) {
                           type="text"
                           placeholder="Código de Permissão"
                           required
-                        // Adicione a lógica necessária para lidar com o valor do código de permissão
+                          value={codigoPermissao}
+                          onChange={(e) => setCodigoPermissao(e.target.value)}
                         />
                         <label className="input-label" htmlFor="codigoPermissao">
                           Código de Permissão:

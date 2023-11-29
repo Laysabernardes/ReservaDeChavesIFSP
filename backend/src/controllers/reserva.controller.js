@@ -5,21 +5,26 @@ class ReservaController {
     try {//constante que verifica todos os campos
       const { cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega } = req.body;
 
-      if (!cd_solicitante || !cd_cargo || !cd_permissao_estudante || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status || !ds_tempo_entrega) {
+      if (!cd_solicitante || !cd_cargo || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status || !ds_tempo_entrega) {
         res.status(400).send({ message: "Preencha todos os espaços" });
       }
 
       //await é usado junto com async
       await services.create(cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega);
 
-      res.status(201).send({
-        message: "Reserva criada com sucesso!",
-        reserva: {
-          cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega
-        }
-      });
+      // Verifique se a resposta já foi enviada
+      if (!res.headersSent) {
+        res.status(201).send({
+          message: "Reserva criada com sucesso!",
+          reserva: {
+            cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega
+          }
+        });
+      }
     } catch (err) {
-      res.status(500).send({ message: err });
+      if (!res.headersSent) {
+        res.status(500).send({ message: err.message });
+      }
     }
   }
 
@@ -79,7 +84,7 @@ class ReservaController {
 
   delete = async (req, res) => {
     try {
-      const { id_reserva} = req.params;
+      const { id_reserva } = req.params;
 
       if (!id_reserva) {
         res.status(400).send({ message: "Adicione o código da Reserva!" });

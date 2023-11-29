@@ -5,7 +5,7 @@ import Main from './pages/main.js';
 import Reserva from './pages/Reserva.js';
 import Cadastro from './pages/cadastroChaves.js';
 import MostraChave from './pages/mostraChaves.js';
-import PaginaDeSolicitacao from './pages/solicitação.js';
+import PaginaDeSolicitacao from './pages/solicitacao.js';
 
 function Routes() {
   return (
