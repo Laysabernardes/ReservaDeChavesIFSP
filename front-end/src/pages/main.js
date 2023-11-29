@@ -1,17 +1,14 @@
 // Importações necessárias do React e de componentes externos
 import React, { useEffect, useState } from 'react';
+import { renderizarLocais } from '../renderizar.js';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import api from '../api'; // Importe a instância do Axios
+
 import '../css/main.css'; // Importa o estilo CSS para o componente main
+
 import Header from './header';
 import Banner from './banner.js';
 import Footer from './footer.js';
-import api from '../api'; // Importe a instância do Axios
-import { renderizarLocais } from '../renderizar.js';
-
-import { useUser } from '../UserContext.js';
-
-
-
 
 // Função para buscar locais de uma determinada categoria no backend
 const buscaLocais = async (categoria) => {
@@ -40,11 +37,7 @@ const Main = () => {
 
   const navigate = useNavigate();
 
-  const { userData, setUserData, chavesData, setChavesData } = useUser();
-  const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
-  const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
-  console.log('Nome do usuáriooo:', nomeDoUsuario);
-  console.log('Cargooo', cargoDoUsuario); // Obtém as informações do usuário do contexto
+  
   
   // Estados para armazenar locais de diferentes categorias
   const [locaisSalas, setLocaisSalas] = useState([]);

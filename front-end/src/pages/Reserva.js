@@ -1,9 +1,10 @@
 import React from 'react';
-
-
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import api from '../api'; // Importe a instância do Axios
 
 import Header from './header.js';
 import Footer from './footer.js';
+
 import '../css/reset.css';
 import '../css/index.css';
 import '../css/login.css';
@@ -11,8 +12,10 @@ import '../css/Reserva.css';
 
 function ReservaForm() {
 
+  const navigate = useNavigate();
   // Restante do componente
   return (
+    
     <div>
       <Header />
       <section className="sessao__chave">

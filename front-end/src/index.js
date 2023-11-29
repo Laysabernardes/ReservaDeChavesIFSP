@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter as Router } from 'react-router-dom'; // Importe BrowserRouter ou HashRouter
-import { UserProvider } from './UserContext.js';
+
 
 import './css/index.css';
 // import Login from './pages/login.js'
@@ -16,9 +16,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <UserProvider>
+      
         <Routes />
-      </UserProvider>
+      
     </Router>
   </React.StrictMode>
 );
