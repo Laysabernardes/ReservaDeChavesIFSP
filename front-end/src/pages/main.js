@@ -88,11 +88,11 @@ const Main = () => {
           <div className="salas">
             <div className="salas__head">
               <h2 className="salas__head__titulo-principal">Salas:</h2>
-              {/* <a className="local_botao" href="/mostraChave"
+              <a className="local_botao" href="/mostraChave"
                 onClick={(e) => {
-                  e.preventDefault();
-                  window.location.replace("/mostraChave");
-                }}>Ver todos:</a> */}
+                e.preventDefault();
+                navigate('/mostraChave');
+              }}>Ver todos:</a>
             </div>
             <div className="barra-de-rolagem">
               <div className="produtos_index">
@@ -117,7 +117,7 @@ const Main = () => {
             <div className="diversos__head">
               <h2 className="diversos__head__titulo-principal">Diversos:</h2>
             </div>
-            <div className="produtos_index" data-diversos>
+            <div className="produtos_index">
               {/* Renderiza os locais diversos usando a função específica */}
               {renderizarLocais(locaisDiversos, navigate)}
             </div>

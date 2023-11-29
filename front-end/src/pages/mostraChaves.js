@@ -1,11 +1,15 @@
 // MostraChave.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import '../css/main.css'; // Importe o estilo CSS para o componente mostraChave
 import Header from './header';
 import Footer from './footer';
 import api from '../api'; // Importe a instância do Axios
+import { renderizarLocais } from '../renderizar.js';
 
 const MostraChave = () => {
+
+  const navigate = useNavigate();
   const [todasChaves, setTodasChaves] = useState([]);
 
   useEffect(() => {
@@ -35,20 +39,6 @@ const MostraChave = () => {
     fetchData();
   }, []);
 
-  // Função para renderizar os cartões de chaves
-  const renderizarChaves = () => {
-    return todasChaves.map((chave) => (
-      // Para cada chave, cria um cartão com informações
-      <div key={chave.cd_chave} className="local__card">
-        <h3 className="local__card__titulo">{chave.nm_chave}</h3>
-        <p className="local__card__status">{chave.ds_status}</p>
-        <a className="local__card__botao" href={`/reservar/${chave.cd_chave}`}>
-          Reservar
-        </a>
-      </div>
-    ));
-  };
-
   return (
     <div>
       {/* Componentes de cabeçalho e rodapé */}
@@ -58,10 +48,15 @@ const MostraChave = () => {
         <div className="produtos container">
           <div className="salas__head">
             <h2 className="salas__head__titulo-principal">Todas as Chaves:</h2>
+            <a className="local_botao" href="/mostraChave"
+                onClick={(e) => {
+                e.preventDefault();
+                navigate('/main');
+              }}>Voltar:</a>
           </div>
           <div className="produtos_index" id="data-chaves">
             {/* Renderiza todas as chaves usando a função específica */}
-            {renderizarChaves()}
+            {renderizarLocais(todasChaves, navigate)}
           </div>
         </div>
       </section>
