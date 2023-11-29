@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 // Importa a instância configurada do Axios do arquivo api.js
 import api from '../api'; // Caminho para o arquivo api.js
+import { useUser } from '../UserContext.js';
 
 // Importa os estilos para esta página
 import '../css/reset.css';
@@ -27,6 +28,7 @@ function LoginForm() {
 
   // Obtém a função navigate
   const navigate = useNavigate();
+  const { setUserData } = useUser();
 
   // Função assíncrona para lidar com o login do usuário
   async function handleLogin(e) {
@@ -43,6 +45,7 @@ function LoginForm() {
 
       // Atualiza os estados com os dados do usuário e o estado de login
       setIsLoggedIn(true);
+      setUserData(user);
       
 
       // Imprime informações para depuração
@@ -146,8 +149,6 @@ function LoginForm() {
     </div>
   );
 }
-
-
 
 // Exporta o componente LoginForm para ser utilizado em outras partes do código
 export default LoginForm;

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { renderizarLocais } from '../renderizar.js';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useUser } from '../UserContext.js';
 import api from '../api'; // Importe a instância do Axios
 
 import '../css/main.css'; // Importa o estilo CSS para o componente main
@@ -36,7 +37,18 @@ const buscaLocais = async (categoria) => {
 const Main = () => {
 
   const navigate = useNavigate();
+  
+  const { userData, setUserData, chavesData, setChavesData } = useUser();
+  const nomeDoUsuario = userData ? userData.nm_solicitante : 'Nome Padrão';
+  const cargoDoUsuario = userData ? userData.cd_cargo : 'Cargo Padrão';
+  console.log('Nome do usuáriooo:', nomeDoUsuario);
+  console.log('Cargooo', cargoDoUsuario);
 
+  const cdChave = chavesData ? chavesData.cd_chave : 'Nome Padrão';
+  const dsChave = chavesData ? chavesData.ds_chave : 'Cargo Padrão';
+  console.log('MAIN - cdchaves:', cdChave);
+  console.log('main - dschave', dsChave);
+  
   
   
   // Estados para armazenar locais de diferentes categorias
