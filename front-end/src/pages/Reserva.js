@@ -28,6 +28,7 @@ function ReservaForm(props) {
   const user = state ? state.user : null;
   
   // Hooks de estado para gerenciar dados do formulário
+  // const [armazena o valor, usado para alterar o valor] ...
   const [situacao, setSituacao] = useState(chave ? chave.ds_status : '');
   const [codigoPermissao, setCodigoPermissao] = useState('');
   const [data, setData] = useState('');
@@ -187,7 +188,7 @@ function ReservaForm(props) {
                         Este campo não é válido
                       </span>
                     </div>
-                    
+
                     {/* Botão para reservar a sala */}
                     <button
                       className="boton-formulario-login"
