@@ -34,6 +34,27 @@ class UserController{
             res.status(500).send({ message: err.message })
         }
     };
+
+    updateSenha = async (req, res) => {
+        try {
+            const { cd_matricula_solicitante, cd_senha_solicitante } = req.body;
+    
+            if (!cd_matricula_solicitante || !cd_senha_solicitante) {
+                return res.status(400).send({ message: "Campos inválidos ou ausentes", error: "Detalhes adicionais sobre o erro" });
+            }
+            
+    
+            //await é usado junto com async
+            await services.updateSenha(cd_matricula_solicitante, cd_senha_solicitante);
+    
+            res.status(201).send({
+                message: "Senha atualizada com sucesso:",
+                senha: cd_senha_solicitante
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    };
 }
 
 module.exports = UserController;
