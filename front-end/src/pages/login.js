@@ -65,7 +65,7 @@ function LoginForm() {
         case 'A0001':
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/main',{ state: { userData } }); // Redireciona para a página específica para alunos
+          navigate('/perfil',{ state: { userData } }); // Redireciona para a página específica para alunos
           break;
         case '707001':
           setIsLoggedIn(true);
