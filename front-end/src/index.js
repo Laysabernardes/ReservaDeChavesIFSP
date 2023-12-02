@@ -10,15 +10,17 @@ import './css/index.css';
 import reportWebVitals from './reportWebVitals';
 import Routes from './Routes.js'
 
+import LoginForm from './pages/login.js';
+
+
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      
-        <Routes />
-      
+    <Router>      
+        <LoginForm />
     </Router>
   </React.StrictMode>
 );
