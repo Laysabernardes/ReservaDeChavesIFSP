@@ -6,6 +6,7 @@ import Reserva from './pages/Reserva.js';
 import Cadastro from './pages/cadastroChaves.js';
 import MostraChave from './pages/mostraChaves.js';
 import PaginaDeSolicitacao from './pages/solicitacao.js';
+import Adm from './pages/adm-page.js'
 
 function Routes() {
   return (
@@ -16,6 +17,7 @@ function Routes() {
       <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/mostraChave" element={<MostraChave />} />
       <Route path="/solicitacao" element={<PaginaDeSolicitacao />} />
+      <Route path="/adm" element={<Adm />} />
     </RouterRoutes>
 
   );

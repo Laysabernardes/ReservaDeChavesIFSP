@@ -78,6 +78,7 @@ function ReservaForm(props) {
         }
   
         try {
+          //
           // Verifique se a permissão existe
           const responsePermissao = await api.get(`/solicitacao/${codigoPermissao}`);
           console.log(responsePermissao.data);
