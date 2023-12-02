@@ -53,9 +53,9 @@
     }
 
     .chave__imagem{
-        width: 110%;
+        width: 50%;
         height: auto;
-        margin-bottom: 1rem;
+        margin: 3rem 1rem 1rem 1rem;
     }
     
     .chave__info{

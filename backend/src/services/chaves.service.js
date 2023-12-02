@@ -62,6 +62,25 @@ class ChavesServices{
         });
     });
   }  
+
+  findByStatus = (ds_status) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM Chaves WHERE ds_status LIKE ?', ds_status, (err, results) => {
+            if (err) {
+                console.error('Erro ao executar a consulta SQL:', err);
+                reject({ error: 'Erro ao encontrar categoria' });
+            } else {
+                if (results.length === 0) {
+                    console.log('Categoria não encontrada.');
+                    resolve({ error: 'Erro ao encontrar categoria' });
+                } else {
+                    console.log('Categoria encontrada com sucesso:', results);
+                    resolve(results);
+                }
+            }
+        });
+    });
+  }  
   
   update = (cd_chave, ds_status) => {
     return new Promise((resolve, reject) => {

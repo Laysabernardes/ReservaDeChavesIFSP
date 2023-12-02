@@ -9,7 +9,8 @@ const controller = new ChavesController();
 localRouter.post("/", controller.create);
 localRouter.get("/:cd_chave", controller.find);
 localRouter.get("/", controller.findAll);
-localRouter.get("/:categoria/:ds_chave", controller.findByCategoria);
+localRouter.get("/categoria/:ds_chave", controller.findByCategoria);
+localRouter.get("/status/:ds_status", controller.findByStatus);
 localRouter.patch("/", controller.update);
 localRouter.delete("/:cd_chave", controller.delete);
 

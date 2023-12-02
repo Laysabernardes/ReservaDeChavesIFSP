@@ -1,7 +1,8 @@
 // Importações necessárias do React e de componentes externos
 import React, { useEffect, useState } from 'react';
 import { renderizarLocais } from '../renderizar.js';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate, useLocation } from 'react-router-dom'; // Importa useNavigate
+import { useUser } from '../UserContext.js';
 import api from '../api'; // Importe a instância do Axios
 
 import '../css/main.css'; // Importa o estilo CSS para o componente main
@@ -23,6 +24,8 @@ const buscaLocais = async (categoria) => {
     // Filtra os locais com base na categoria
     const locais = data.filter(local => local.ds_chave === categoria);
 
+
+
     // Retorna a lista de locais
     return locais;
   } catch (error) {
@@ -36,9 +39,12 @@ const buscaLocais = async (categoria) => {
 const Main = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const userData = location.state ? location.state.userData : null;
 
-  
-  
+  console.log('Dados do Usuário em Main:', userData);
+
+
   // Estados para armazenar locais de diferentes categorias
   const [locaisSalas, setLocaisSalas] = useState([]);
   const [locaisLabs, setLocaisLabs] = useState([]);
@@ -63,10 +69,10 @@ const Main = () => {
         console.error('Erro ao buscar locais:', error);
       }
     };
-
+    console.log('Dados do Usuário em Main:', userData);
     // Executa a função de busca ao montar o componente
     fetchData();
-  }, []); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
+  }, [userData]); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
 
   // Renderização do componente principal
   return (
@@ -83,15 +89,15 @@ const Main = () => {
               <h2 className="salas__head__titulo-principal">Salas:</h2>
               <a className="local_botao" href="/mostraChave"
                 onClick={(e) => {
-                e.preventDefault();
-                navigate('/mostraChave');
-              }}>Ver todos:</a>
+                  e.preventDefault();
+                  navigate('/mostraChave');
+                }}>Ver todos:</a>
             </div>
             <div className="barra-de-rolagem">
               <div className="produtos_index">
-              
+
                 {/* Renderiza os locais de salas usando a função específica */}
-                {renderizarLocais(locaisSalas, navigate)}
+                {renderizarLocais(locaisSalas, navigate, userData)}
               </div>
             </div>
           </div>

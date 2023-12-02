@@ -9,7 +9,7 @@ class ReservaServices{
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Chave criada com sucesso:', results);
+          console.log('reserva criada com sucesso:', results);
           resolve(results);
         }
       });
