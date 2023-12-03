@@ -1,45 +1,59 @@
+// Importa o serviço responsável pela lógica de permissões
 const ChavesServices = require("../services/permissao.service.js");
 const services = new ChavesServices();
 
+// Define a classe PermissaoController que contém métodos para lidar com solicitações relacionadas a permissõe
 class PermissaoController {
+    // Método para criar um novo pedido de permissão
     createPedido = async (req, res) => {
-        try {//constante que verifica todos os campos
+        try {
+            // Extrai dados do corpo da requisição
             const { cd_matricula_funcionario, cd_matricula_estudante, cd_chave } = req.body;
 
+            // Verifica se todos os campos necessários foram fornecidos
             if (!cd_matricula_funcionario || !cd_matricula_estudante || !cd_chave) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
 
-            //await é usado junto com async
+            // Chama o serviço para criar o pedido de permissão
             await services.create(cd_matricula_funcionario, cd_matricula_estudante, cd_chave);
 
+            // Retorna uma resposta de sucesso
             res.status(201).send({
                 message: "Pedido enviado ao prof com sucesso!",
             });
         } catch (err) {
+            // Retorna uma resposta de erro em caso de falha
             res.status(500).send({ message: err });
         }
     };
 
+    // Método para encontrar pedidos associados a um funcionário
     findFuncionario = async (req, res) => {
-        try {//constante que verifica todos os campos
+        try {
+            // Obtém o código de matrícula do funcionário a partir dos parâmetros da requisição
             const { cd_matricula_funcionario } = req.params;
 
+            // Verifica se o código de matrícula foi fornecido
             if (!cd_matricula_funcionario) {
                 res.status(400).send({ message: "Adicione o código da chave!" });
             }
 
-            //await é usado junto com async
+            // Chama o serviço para encontrar pedidos associados ao funcionário
             let pedidos = await services.findFuncionario(cd_matricula_funcionario);
 
+            // Retorna os pedidos encontrados
             res.status(201).send({
                 message: "Pedidos de permissão enviados:",
                 pedidos: pedidos
             });
         } catch (err) {
+            // Retorna uma resposta de erro se não houver pedidos ou ocorrer um erro
             res.status(404).send({ message: "Nenhum pedido feito!" });
         }
     };
+
+    // Métodos semelhantes para encontrar pedidos associados a um estudante, uma permissão específica e todos os pedidos
 
     findEstudante = async (req, res) => {
         try {//constante que verifica todos os campos
@@ -94,26 +108,31 @@ class PermissaoController {
         }
     };
     
+    // Método para atualizar o status de uma permissão
     update = async (req, res) => {
-        try {//constante que verifica todos os campos
+        try {
+            // Extrai dados do corpo da requisição
             const { id_permissao, ds_status } = req.body;
 
+            // Verifica se todos os campos necessários foram fornecidos
             if (!id_permissao || !ds_status) {
                 res.status(400).send({ message: "Preencha os campos!" });
             }
 
-            //await é usado junto com async
+            // Chama o serviço para atualizar o status da permissão
             await services.update(id_permissao, ds_status);
 
-
+            // Retorna uma resposta de sucesso
             res.status(201).send({
                 message: "Permissão Status Update:",
                 status: ds_status
             });
         } catch (err) {
+            // Retorna uma resposta de erro em caso de falha
             res.status(500).send({ message: err });
         }
     };
 };
 
+// Exporta a classe PermissaoController para ser utilizada em outros módulos
 module.exports = PermissaoController;
