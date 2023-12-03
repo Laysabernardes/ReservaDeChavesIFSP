@@ -40,7 +40,7 @@ function LoginForm() {
       console.log('Resposta da API:', response.data);
       const user = response.data.user[0];
 
-      const userName = response.data.user[0].nm_solicitante;
+      const userName = response.data.user[0].nm_usuario;
       const userCargo = response.data.user[0].cd_cargo;
 
       // Atualiza os estados com os dados do usuário e o estado de login
@@ -49,10 +49,9 @@ function LoginForm() {
       
       const userData = {
         cd_cargo: response.data.user[0].cd_cargo,
-        cd_matricula_solicitante:response.data.user[0].cd_matricula_solicitante,
-        cd_senha_solicitante: response.data.user[0].cd_senha_solicitante,
-        cd_solicitante: response.data.user[0].cd_solicitante,
-        nm_solicitante: response.data.user[0].nm_solicitante,
+        cd_matricula_usuario:response.data.user[0].cd_matricula_usuario,
+        cd_senha_usuario: response.data.user[0].cd_senha_usuario,
+        nm_usuario: response.data.user[0].nm_usuario,
       };
 
       // Imprime informações para depuração

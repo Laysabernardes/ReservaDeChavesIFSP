@@ -27,8 +27,8 @@ function PaginaPerfil() {
     const [passwordChangeMessage, setPasswordChangeMessage] = useState('');
 
     // Obtém o prontuário e o nome do usuário ou define valores padrão se não estiverem disponíveis
-    const prontuario = userData ? userData.cd_matricula_solicitante : 'N/A';
-    const userName = userData ? userData.nm_solicitante : 'Usuário';
+    const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
+    const userName = userData ? userData.nm_usuario : 'Usuário';
 
     // Define um estado para controlar a exibição do formulário de alteração de senha
     const [showChangePassword, setShowChangePassword] = useState(false);
@@ -39,19 +39,19 @@ function PaginaPerfil() {
 
         try {
             // Verifica se os dados do usuário estão presentes e se a senha atual corresponde à senha no contexto do usuário
-            if (userData && userData.cd_senha_solicitante && currentPassword === userData.cd_senha_solicitante && newPassword === confirmNewPassword) {
+            if (userData && userData.cd_senha_usuario && currentPassword === userData.cd_senha_usuario && newPassword === confirmNewPassword) {
                 // Envia uma solicitação para a API para alterar a senha
                 const response = await api.patch('/user/senha', {
-                    cd_matricula_solicitante: prontuario,
-                    cd_senha_solicitante: newPassword,
+                    cd_matricula_usuario: prontuario,
+                    cd_senha_usuario: newPassword,
                 });
                 // Define uma mensagem de sucesso se a alteração de senha for bem-sucedida
                 setPasswordChangeMessage('Senha alterada com sucesso!');
             } else {
                 // Lida com diferentes cenários de erro e define mensagens apropriadas
-                if (!userData || !userData.cd_senha_solicitante) {
+                if (!userData || !userData.cd_senha_usuario) {
                     setPasswordChangeMessage('Dados do usuário ausentes.');
-                } else if (currentPassword !== userData.cd_senha_solicitante) {
+                } else if (currentPassword !== userData.cd_senha_usuario) {
                     setPasswordChangeMessage('Senha antiga incorreta.');
                 } else if (newPassword !== confirmNewPassword) {
                     setPasswordChangeMessage('A nova senha e a confirmação não coincidem.');
