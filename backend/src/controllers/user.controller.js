@@ -27,7 +27,7 @@ class UserController{
             const locais = await userServices.findAllUser();
 
             if (locais.length === 0) {
-                return res.status(400).send({ message: "Não existe nenhum local registrado" });
+                return res.status(400).send({ message: "Não existe nenhum usuário registrado" });
             }
             res.send(locais);
         } catch (err) {
@@ -37,19 +37,19 @@ class UserController{
 
     updateSenha = async (req, res) => {
         try {
-            const { cd_matricula_solicitante, cd_senha_solicitante } = req.body;
+            const { cd_matricula_usuario, cd_senha_usuario } = req.body;
     
-            if (!cd_matricula_solicitante || !cd_senha_solicitante) {
+            if (!cd_matricula_usuario || !cd_senha_usuario) {
                 return res.status(400).send({ message: "Campos inválidos ou ausentes", error: "Detalhes adicionais sobre o erro" });
             }
             
     
             //await é usado junto com async
-            await services.updateSenha(cd_matricula_solicitante, cd_senha_solicitante);
+            await services.updateSenha(cd_matricula_usuario, cd_senha_usuario);
     
             res.status(201).send({
                 message: "Senha atualizada com sucesso:",
-                senha: cd_senha_solicitante
+                senha: cd_senha_usuario
             });
         } catch (err) {
             res.status(500).send({ message: err });

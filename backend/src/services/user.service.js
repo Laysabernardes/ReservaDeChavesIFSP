@@ -4,7 +4,7 @@ class UserServices {
 
   login = (login, senha) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM Solicitante WHERE cd_matricula_solicitante = ? AND cd_senha_solicitante = ?;', [login, senha], (err, results) => {
+      connection.query('SELECT * FROM Usuario WHERE cd_matricula_usuario = ? AND cd_senha_usuario = ?;', [login, senha], (err, results) => {
         if (results.length === 0) {
           console.error('Usuário não encontrado:', err);
           reject(err);
@@ -16,9 +16,9 @@ class UserServices {
     });
   }
 
-  updateSenha = (cd_matricula_solicitante, cd_senha_solicitante) => {
+  updateSenha = (cd_matricula_usuario, cd_senha_usuario) => {
     return new Promise((resolve, reject) => {
-      connection.query('UPDATE Solicitante SET cd_senha_solicitante = ? WHERE cd_matricula_solicitante = ?;', [cd_senha_solicitante, cd_matricula_solicitante], (err, results) => {
+      connection.query('UPDATE Usuario SET cd_senha_usuario = ? WHERE cd_matricula_usuario = ?;', [cd_senha_usuario, cd_matricula_usuario], (err, results) => {
         if (err) {
           console.error('Erro ao atualizar a senha:', err);
           reject(err);
