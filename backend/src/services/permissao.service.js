@@ -2,9 +2,9 @@ const connection =  require("../database/db.js");
 
 class ChavesServices{
   
-  create = (cd_funcionario, cd_estudante, cd_chave) => {
+  create = (cd_matricula_funcionario, cd_matricula_estudante, cd_chave) => {
     return new Promise((resolve, reject) => {
-      connection.query("INSERT INTO PermissaoEstudante (cd_funcionario, cd_estudante, cd_chave, ds_status) VALUES (?, ?, ?, ?)",  [cd_funcionario, cd_estudante, cd_chave, "em andamento"], (err, results) => {
+      connection.query("INSERT INTO Permissao (cd_matricula_funcionario, cd_matricula_estudante, cd_chave, ds_status) VALUES (?, ?, ?, ?)",  [cd_matricula_funcionario, cd_matricula_estudante, cd_chave, "em andamento"], (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
@@ -16,28 +16,28 @@ class ChavesServices{
     });
   }
 
-  findFuncionario = (cd_funcionario) => {
+  findFuncionario = (cd_matricula_funcionario) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM PermissaoEstudante WHERE cd_funcionario = ?;',  cd_funcionario, (err, results) => {
+      connection.query('SELECT * FROM Permissao WHERE cd_matricula_funcionario = ?;',  cd_matricula_funcionario, (err, results) => {
         if (results.length === 0) {
-          console.error('Nenhum pedido feito para você:', err);
+          console.error('Nenhum pedido feito:', err);
           reject(err);
         } else {
-          console.log('Pedidos de permissão enviados para você:', results);
+          console.log('Pedidos de permissão enviados:', results);
           resolve(results);
         }
       });
     });
   }
 
-  findEstudante = (cd_estudante) => {
+  findEstudante = (cd_matricula_estudante) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM PermissaoEstudante WHERE cd_estudante = ?;',  cd_estudante, (err, results) => {
+      connection.query('SELECT * FROM Permissao WHERE cd_matricula_estudante = ?;',  cd_matricula_estudante, (err, results) => {
         if (results.length === 0) {
-          console.error('Você não possui pedidos em andamentou E/OU permissões:', err);
+          console.error('Não há pedidos em andamentou E/OU permissões:', err);
           reject(err);
         } else {
-          console.log('Seus Pedidos E/OU Permissões:', results);
+          console.log('Pedidos E/OU Permissões:', results);
           resolve(results);
         }
       });
@@ -46,7 +46,7 @@ class ChavesServices{
   
   findPermissao = (id_permissao) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM PermissaoEstudante WHERE id_permissao = ?;',  id_permissao, (err, results) => {
+      connection.query('SELECT * FROM Permissao WHERE id_permissao = ?;',  id_permissao, (err, results) => {
         if (results.length === 0) {
           console.error('Esta permissão não existe:', err);
           reject(err);
@@ -60,12 +60,12 @@ class ChavesServices{
 
   findAll = () => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM PermissaoEstudante;', (err, results) => {
+      connection.query('SELECT * FROM Permissao;', (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Todas as Chaves encontradas:', results);
+          console.log('Todas as permissões encontradas:', results);
           resolve(results);
         }
       });
@@ -74,12 +74,12 @@ class ChavesServices{
 
     update = (id_permissao, ds_status) => {
     return new Promise((resolve, reject) => {
-      connection.query('UPDATE PermissaoEstudante SET ds_status = ? WHERE id_permissao = ?;', [ds_status, id_permissao], (err, results) => {
+      connection.query('UPDATE Permissao SET ds_status = ? WHERE id_permissao = ?;', [ds_status, id_permissao], (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Chave Status Update:', results);
+          console.log('Permissão Status Update:', results);
           resolve(results);
         }
       });

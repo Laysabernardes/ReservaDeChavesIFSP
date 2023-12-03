@@ -4,14 +4,14 @@ const services = new ChavesServices();
 class PermissaoController {
     createPedido = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { cd_funcionario, cd_estudante, cd_chave } = req.body;
+            const { cd_matricula_funcionario, cd_matricula_estudante, cd_chave } = req.body;
 
-            if (!cd_funcionario || !cd_estudante || !cd_chave) {
+            if (!cd_matricula_funcionario || !cd_matricula_estudante || !cd_chave) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
 
             //await é usado junto com async
-            await services.create(cd_funcionario, cd_estudante, cd_chave);
+            await services.create(cd_matricula_funcionario, cd_matricula_estudante, cd_chave);
 
             res.status(201).send({
                 message: "Pedido enviado ao prof com sucesso!",
@@ -23,41 +23,41 @@ class PermissaoController {
 
     findFuncionario = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { cd_funcionario } = req.params;
+            const { cd_matricula_funcionario } = req.params;
 
-            if (!cd_funcionario) {
+            if (!cd_matricula_funcionario) {
                 res.status(400).send({ message: "Adicione o código da chave!" });
             }
 
             //await é usado junto com async
-            let chave = await services.findFuncionario(cd_funcionario);
+            let pedidos = await services.findFuncionario(cd_matricula_funcionario);
 
             res.status(201).send({
-                message: "Pedidos de permissão enviados para você:",
-                pedidos: chave
+                message: "Pedidos de permissão enviados:",
+                pedidos: pedidos
             });
         } catch (err) {
-            res.status(404).send({ message: "Nenhum pedido feito para você" });
+            res.status(404).send({ message: "Nenhum pedido feito!" });
         }
     };
 
     findEstudante = async (req, res) => {
         try {//constante que verifica todos os campos
-            const { cd_estudante } = req.params;
+            const { cd_matricula_estudante } = req.params;
 
-            if (!cd_estudante) {
+            if (!cd_matricula_estudante) {
                 res.status(400).send({ message: "Adicione o Código do Estudante" });
             }
 
             //await é usado junto com async
-            let chave = await services.findEstudante(cd_estudante);
+            let pedidos = await services.findEstudante(cd_matricula_estudante);
 
             res.status(201).send({
                 message: "Seus Pedidos E/OU Permissões:",
-                pedidos: chave
+                pedidos: pedidos
             });
         } catch (err) {
-            res.status(404).send({ message: "Você não possui pedidos em andamentou E/OU permissões" });
+            res.status(404).send({ message: "Não há pedidos em andamentou E/OU permissões" });
         }
     };
 
@@ -66,15 +66,15 @@ class PermissaoController {
             const { id_permissao } = req.params;
 
             if (!id_permissao) {
-                res.status(400).send({ message: "Adicione o código da chave!" });
+                res.status(400).send({ message: "Adicione o código da permissão!" });
             }
 
             //await é usado junto com async
-            let chave = await services.findPermissao(id_permissao);
+            let permissao = await services.findPermissao(id_permissao);
 
             res.status(201).send({
                 message: "Permissão:",
-                pedidos: chave
+                pedidos: permissao
             });
         } catch (err) {
             res.status(404).send({ message: "Permissão não consta no banco" });
@@ -83,12 +83,12 @@ class PermissaoController {
     
     findAll = async (req, res) => {
         try {
-            const chaves = await services.findAll();
+            const pedidos = await services.findAll();
 
-            if (chaves.length === 0) {
+            if (pedidos.length === 0) {
                 return res.status(400).send({ message: "Não existe nenhum local registrado" });
             }
-            res.send(chaves);
+            res.send(pedidos);
         } catch (err) {
             res.status(500).send({ message: err.message })
         }

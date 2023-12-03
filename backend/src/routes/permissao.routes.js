@@ -7,8 +7,8 @@ const controller = new PermissaoController();
 
 // Funções de Usuário
 localRouter.post("/", controller.createPedido);
-localRouter.get("/funcionario/:cd_funcionario", controller.findFuncionario);
-localRouter.get("/estudante/:cd_estudante", controller.findEstudante);
+localRouter.get("/funcionario/:cd_matricula_funcionario", controller.findFuncionario);
+localRouter.get("/estudante/:cd_matricula_estudante", controller.findEstudante);
 localRouter.get("/id/:id_permissao", controller.findPermissao);
 localRouter.get("/", controller.findAll);
 localRouter.patch("/", controller.update);
