@@ -24,9 +24,6 @@ const buscaLocais = async (categoria) => {
 
     // Filtra os locais com base na categoria
     const locais = data.filter(local => local.ds_chave === categoria);
-
-
-
     // Retorna a lista de locais
     return locais;
   } catch (error) {
@@ -88,23 +85,6 @@ const Main = () => {
       <Header />
       <Banner />
       {/* Seção de produtos */}
-      {temSolicitacoesPendentes === false && (
-        <div>
-          <p>Você tem solicitações de pedido pendentes. Clique aqui para ver.</p>
-          <a
-            href="/pedidos"
-            className="local__card__botao"
-            onClick={() => {
-              setTimeout(() => {
-                navigate('/pedidos', { state: { user: userData } });
-              }, 100); // Ajuste o tempo conforme necessário
-            }}
-          >
-            ver
-          </a>
-          {/* Adicione o link ou botão para redirecionar para a página de solicitações pendentes */}
-        </div>
-      )}
       <section className="section__produtos">
         <div className="produtos container">
           {/* Categoria de Salas */}
