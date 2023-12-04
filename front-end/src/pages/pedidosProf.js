@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../UserContext.js';
+import { useNavigate, useLocation } from 'react-router-dom'; // Importa useNavigate
 import Header from './header';
 import Footer from './footer';
 import api from '../api';
@@ -8,11 +9,16 @@ import '../css/index.css';
 import '../css/PedidosProf.css';
 
 function PedidosProf() {
-  const { userData } = useUser();
+  
   const [solicitacoesPendentes, setSolicitacoesPendentes] = useState([]);
   const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
   const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
   const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userData = location.state ? location.state.userData : null;
+  console.log('Dados do Usuário em pedidos:', userData);
 
   const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
   const userName = userData ? userData.nm_usuario : 'Usuário';
@@ -98,7 +104,7 @@ function PedidosProf() {
 
         // Atualiza a variável de estado para indicar se há solicitações pendentes
         setTemSolicitacoesPendentes(pendentes.length > 0);
-        
+
         // Exiba mensagens para categorias sem solicitações
         if (pendentes.length === 0) {
           console.warn('Não há solicitações pendentes disponíveis para processamento.');
@@ -156,9 +162,9 @@ function PedidosProf() {
   // Efeito para buscar as solicitações ao montar o componente
   useEffect(() => {
     buscarSolicitacoes();
-    
-      console.log('tem?', temSolicitacoesPendentes);
-    }, [temSolicitacoesPendentes]); // Este efeito será acionado sempre que temSo
+
+    console.log('tem?', temSolicitacoesPendentes);
+  }, [temSolicitacoesPendentes]); // Este efeito será acionado sempre que temSo
 
   return (
     <div className="App">

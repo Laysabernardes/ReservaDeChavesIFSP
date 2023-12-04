@@ -38,10 +38,12 @@ const buscaLocais = async (categoria) => {
 
 // Componente principal do main
 const Main = () => {
+  
+  const { userData } = useUser();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = location.state ? location.state.userData : null;
+  //const userData = location.state ? location.state.userData : null;
 
   console.log('Dados do Usuário em Main:', userData);
 
@@ -50,10 +52,12 @@ const Main = () => {
   const [locaisSalas, setLocaisSalas] = useState([]);
   const [locaisLabs, setLocaisLabs] = useState([]);
   const [locaisDiversos, setLocaisDiversos] = useState([]);
-  const { temSolicitacoesPendentes } = useSolicitacoes();
+  const { temSolicitacoesPendentes, buscarSolicitacoes } = useSolicitacoes();
 
   // Efeito que é executado ao montar o componente
   useEffect(() => {
+
+
     // Função assíncrona para buscar os locais
     const fetchData = async () => {
       try {
@@ -84,9 +88,20 @@ const Main = () => {
       <Header />
       <Banner />
       {/* Seção de produtos */}
-      {temSolicitacoesPendentes === true && (
+      {temSolicitacoesPendentes === false && (
         <div>
           <p>Você tem solicitações de pedido pendentes. Clique aqui para ver.</p>
+          <a
+            href="/pedidos"
+            className="local__card__botao"
+            onClick={() => {
+              setTimeout(() => {
+                navigate('/pedidos', { state: { user: userData } });
+              }, 100); // Ajuste o tempo conforme necessário
+            }}
+          >
+            ver
+          </a>
           {/* Adicione o link ou botão para redirecionar para a página de solicitações pendentes */}
         </div>
       )}
