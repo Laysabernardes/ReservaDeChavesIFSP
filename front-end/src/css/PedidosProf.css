@@ -7,6 +7,10 @@ body {
 .formulario-login__h2{
 	font-size: 1.5rem;
 }
+.sem-pedido{
+	margin: 2rem 2rem 2rem 0;
+	font-weight: bold;
+}
 .radio-buttons-container {
 	display: lex;
 	flex-direction: row;

@@ -60,16 +60,16 @@ function PedidosProf() {
     try {
       const response = await api.get(`/permissao/funcionario/${prontuario}`);
       const dadosDaAPI = response.data;
-  
+
       if (dadosDaAPI.pedidos && Array.isArray(dadosDaAPI.pedidos)) {
         const pendentes = [];
         const aceitas = [];
         const recusadas = [];
-  
+
         for (const solicitacao of dadosDaAPI.pedidos) {
           const nomeEstudante = await buscarNomeEstudante(solicitacao.cd_matricula_estudante);
           solicitacao.nomeEstudante = nomeEstudante;
-  
+
           const informacoesChave = await buscarInformacoesChave(solicitacao.cd_chave);
           if (informacoesChave) {
             solicitacao.nomeChave = informacoesChave.nm_chave;
@@ -78,10 +78,10 @@ function PedidosProf() {
             solicitacao.nomeChave = 'Chave não encontrada';
             solicitacao.categoriaChave = 'Categoria não encontrada';
           }
-  
+
           const idPermissao = solicitacao.id_permissao;
           console.log('ID da Permissão:', idPermissao);
-  
+
           if (solicitacao.ds_status === 'SOLICITADO') {
             pendentes.push(solicitacao);
           } else if (solicitacao.ds_status === 'ACEITO') {
@@ -90,11 +90,11 @@ function PedidosProf() {
             recusadas.push(solicitacao);
           }
         }
-  
+
         setSolicitacoesPendentes(pendentes);
         setSolicitacoesAceitas(aceitas);
         setSolicitacoesRecusadas(recusadas);
-  
+
         // Exiba mensagens para categorias sem solicitações
         if (pendentes.length === 0) {
           console.warn('Não há solicitações pendentes disponíveis para processamento.');
@@ -113,7 +113,7 @@ function PedidosProf() {
       console.error('Erro ao buscar solicitações:', error);
     }
   };
-  
+
 
   const atualizarSolicitacao = async (idPermissao, novoStatus) => {
     try {
@@ -160,96 +160,110 @@ function PedidosProf() {
             <div className="formulario-login_form">
               {/* Seção de Pedidos Pendentes */}
               {/* Seção de Pedidos Pendentes */}
+              <h2 className="formulario-login__h2">Pedidos Pendentes:</h2>
+              {solicitacoesPendentes.length === 0 && (
+                <>
+                  <p className='sem-pedido'>Não há pedidos Pendentes!</p>
+                </>
+              )}
               {solicitacoesPendentes.length > 0 && (
                 <>
-                  <h2 className="formulario-login__h2">Pedidos Pendentes:</h2>
                   {solicitacoesPendentes.map((solicitacao) => (
-                  <form key={solicitacao.id} className="formulario-pedidos">
-                    <div className="container-pedidos">
-                      <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
-                        <div className="container-texto">
-                          <p>Nome: {solicitacao.nomeEstudante}</p>
-                          <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
-                          <p>Chave: {solicitacao.nomeChave} </p>
-                          <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
-                        </div>
-                      </label>
-                      <div className="radio-buttons-container">
-                        <button
-                          className="boton-form-aceitar"
-                          type="button"
-                          onClick={() => handleAceitar(solicitacao.id_permissao)}
-                        >
-                          Aceitar
-                        </button>
-                        <button
-                          className="boton-form-recusar"
-                          type="button"
-                          onClick={() => handleRecusar(solicitacao.id_permissao)}
-                        >
-                          Recusar
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                  ))}
-                  </>
-                )}
-              {/* Seção de Pedidos Aceitos */}
-              {solicitacoesAceitas.length > 0 && (
-                <>
-                  <h2 className="formulario-login__h2">Pedidos Aceitos:</h2>
-                  {solicitacoesAceitas.map((solicitacao) => (
                     <form key={solicitacao.id} className="formulario-pedidos">
-                    <div className="container-pedidos">
-                      <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
-                        <div className="container-texto">
-                          <p>Nome: {solicitacao.nomeEstudante}</p>
-                          <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
-                          <p>Chave: {solicitacao.nomeChave} </p>
-                          <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                      <div className="container-pedidos">
+                        <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
+                          <div className="container-texto">
+                            <p>Nome: {solicitacao.nomeEstudante}</p>
+                            <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                            <p>Chave: {solicitacao.nomeChave} </p>
+                            <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                          </div>
+                        </label>
+                        <div className="radio-buttons-container">
+                          <button
+                            className="boton-form-aceitar"
+                            type="button"
+                            onClick={() => handleAceitar(solicitacao.id_permissao)}
+                          >
+                            Aceitar
+                          </button>
+                          <button
+                            className="boton-form-recusar"
+                            type="button"
+                            onClick={() => handleRecusar(solicitacao.id_permissao)}
+                          >
+                            Recusar
+                          </button>
                         </div>
-                      </label>
-                      <div className="radio-buttons-container">
-                        <button
-                          className="boton-form-recusar"
-                          type="button"
-                          onClick={() => handleRecusar(solicitacao.id_permissao)}
-                        >
-                          Remover permissão
-                        </button>
                       </div>
-                    </div>
-                  </form>
+                    </form>
                   ))}
                 </>
               )}
-
+              {/* Seção de Pedidos Aceitos */}
+              <h2 className="formulario-login__h2">Pedidos Aceitos:</h2>
+              {solicitacoesAceitas.length === 0 && (
+                <>
+                  <p className='sem-pedido'>Não há pedidos Aceitos!</p>
+                </>
+              )}
+              {solicitacoesAceitas.length > 0 && (
+                <>
+                  {solicitacoesAceitas.map((solicitacao) => (
+                    <form key={solicitacao.id} className="formulario-pedidos">
+                      <div className="container-pedidos">
+                        <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
+                          <div className="container-texto">
+                            <p>Nome: {solicitacao.nomeEstudante}</p>
+                            <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                            <p>Chave: {solicitacao.nomeChave} </p>
+                            <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                          </div>
+                        </label>
+                        <div className="radio-buttons-container">
+                          <button
+                            className="boton-form-recusar"
+                            type="button"
+                            onClick={() => handleRecusar(solicitacao.id_permissao)}
+                          >
+                            Remover permissão
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  ))}
+                </>
+              )}
+              <h2 className="formulario-login__h2">Pedidos Recusados:</h2>
+              {solicitacoesRecusadas.length  === 0 && (
+                <>
+                  <p className='sem-pedido'>Não há pedidos Recusados!</p>
+                </>
+              )}
               {/* Seção de Pedidos Recusados */}
               {solicitacoesRecusadas.length > 0 && (
                 <>
-                  <h2 className="formulario-login__h2">Pedidos Recusados:</h2>
                   {solicitacoesRecusadas.map((solicitacao) => (
                     <form key={solicitacao.id} className="formulario-pedidos">
                       {/* Renderize as informações da solicitação aqui */}
                       <div className="container-pedidos">
-                      <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
-                        <div className="container-texto">
-                          <p>Nome: {solicitacao.nomeEstudante}</p>
-                          <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
-                          <p>Chave: {solicitacao.nomeChave} </p>
-                          <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                        <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
+                          <div className="container-texto">
+                            <p>Nome: {solicitacao.nomeEstudante}</p>
+                            <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                            <p>Chave: {solicitacao.nomeChave} </p>
+                            <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                          </div>
+                        </label>
+                        <div className="radio-buttons-container">
+                          <button
+                            className="boton-form-aceitar"
+                            type="button"
+                            onClick={() => handleAceitar(solicitacao.id_permissao)}
+                          >
+                            Reconsiderar pedido
+                          </button>
                         </div>
-                      </label>
-                      <div className="radio-buttons-container">
-                        <button
-                          className="boton-form-aceitar"
-                          type="button"
-                          onClick={() => handleAceitar(solicitacao.id_permissao)}
-                        >
-                          Reconsiderar pedido
-                        </button>
-                      </div>
                       </div>
                     </form>
                   ))}
