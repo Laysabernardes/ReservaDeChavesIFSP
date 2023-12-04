@@ -8,7 +8,7 @@ class ChavesServices {
   create = (cd_matricula_funcionario, cd_matricula_estudante, cd_chave) => {
     return new Promise((resolve, reject) => {
       // Executa uma query SQL para inserir um novo pedido no banco de dados
-      connection.query("INSERT INTO Permissao (cd_matricula_funcionario, cd_matricula_estudante, cd_chave, ds_status) VALUES (?, ?, ?, ?)", [cd_matricula_funcionario, cd_matricula_estudante, cd_chave, "em andamento"], (err, results) => {
+      connection.query("INSERT INTO Permissao (cd_matricula_funcionario, cd_matricula_estudante, cd_chave, ds_status) VALUES (?, ?, ?, ?)", [cd_matricula_funcionario, cd_matricula_estudante, cd_chave, "SOLICITADO"], (err, results) => {
         if (err) {
           console.error('Erro ao criar pedido:', err);
           reject(err);
