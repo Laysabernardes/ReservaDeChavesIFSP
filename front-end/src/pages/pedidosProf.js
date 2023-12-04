@@ -9,8 +9,8 @@ import '../css/PedidosProf.css';
 
 function PedidosProf() {
   const { userData } = useUser();
-  const [solicitacoes, setSolicitacoes] = useState([]);
-  const [solicitacoesAprovadas, setSolicitacoesAprovadas] = useState([]);
+  const [solicitacoesPendentes, setSolicitacoesPendentes] = useState([]);
+  const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
   const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
 
   const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
@@ -54,45 +54,57 @@ function PedidosProf() {
     }
   };
 
+
   // Função para buscar as solicitações no banco de dados
   const buscarSolicitacoes = async () => {
     try {
       const response = await api.get(`/permissao/funcionario/${prontuario}`);
       const dadosDaAPI = response.data;
-      console.log(dadosDaAPI.pedidos);
-
-      // Verificar se dadosDaAPI.pedidos é um array antes de filtrar
+  
       if (dadosDaAPI.pedidos && Array.isArray(dadosDaAPI.pedidos)) {
-        // Filtrar solicitações com status "SOLICITADO"
-        const solicitacoesFiltradas = await Promise.all(
-          dadosDaAPI.pedidos.map(async (solicitacao) => {
-            if (solicitacao.ds_status === 'SOLICITADO') {
-              const nomeEstudante = await buscarNomeEstudante(solicitacao.cd_matricula_estudante);
-              solicitacao.nomeEstudante = nomeEstudante;
-              // Adiciona informações da chave à solicitação
-              const informacoesChave = await buscarInformacoesChave(solicitacao.cd_chave);
-              if (informacoesChave) {
-                solicitacao.nomeChave = informacoesChave.nm_chave;
-                solicitacao.categoriaChave = informacoesChave.ds_chave;
-
-              } else {
-                solicitacao.nomeChave = 'Chave não encontrada';
-                solicitacao.categoriaChave = 'Categoria não encontrada';
-              }
-
-              // Acesse o id_permissao aqui
-              const idPermissao = solicitacao.id_permissao;
-              console.log('ID da Permissão:', idPermissao);
-
-              return solicitacao;
-            }
-            return null;
-          })
-        );
-        // Remover elementos nulos do array
-        const solicitacoesValidas = solicitacoesFiltradas.filter((solicitacao) => solicitacao !== null);
-
-        setSolicitacoes(solicitacoesValidas);
+        const pendentes = [];
+        const aceitas = [];
+        const recusadas = [];
+  
+        for (const solicitacao of dadosDaAPI.pedidos) {
+          const nomeEstudante = await buscarNomeEstudante(solicitacao.cd_matricula_estudante);
+          solicitacao.nomeEstudante = nomeEstudante;
+  
+          const informacoesChave = await buscarInformacoesChave(solicitacao.cd_chave);
+          if (informacoesChave) {
+            solicitacao.nomeChave = informacoesChave.nm_chave;
+            solicitacao.categoriaChave = informacoesChave.ds_chave;
+          } else {
+            solicitacao.nomeChave = 'Chave não encontrada';
+            solicitacao.categoriaChave = 'Categoria não encontrada';
+          }
+  
+          const idPermissao = solicitacao.id_permissao;
+          console.log('ID da Permissão:', idPermissao);
+  
+          if (solicitacao.ds_status === 'SOLICITADO') {
+            pendentes.push(solicitacao);
+          } else if (solicitacao.ds_status === 'ACEITO') {
+            aceitas.push(solicitacao);
+          } else if (solicitacao.ds_status === 'RECUSADO') {
+            recusadas.push(solicitacao);
+          }
+        }
+  
+        setSolicitacoesPendentes(pendentes);
+        setSolicitacoesAceitas(aceitas);
+        setSolicitacoesRecusadas(recusadas);
+  
+        // Exiba mensagens para categorias sem solicitações
+        if (pendentes.length === 0) {
+          console.warn('Não há solicitações pendentes disponíveis para processamento.');
+        }
+        if (aceitas.length === 0) {
+          console.warn('Não há solicitações aceitas disponíveis para processamento.');
+        }
+        if (recusadas.length === 0) {
+          console.warn('Não há solicitações recusadas disponíveis para processamento.');
+        }
       } else {
         console.error('Os dados da API não contêm um array de pedidos:', dadosDaAPI);
         // Trate aqui o caso em que os dados não são como esperado
@@ -101,6 +113,7 @@ function PedidosProf() {
       console.error('Erro ao buscar solicitações:', error);
     }
   };
+  
 
   const atualizarSolicitacao = async (idPermissao, novoStatus) => {
     try {
@@ -108,7 +121,7 @@ function PedidosProf() {
         id_permissao: idPermissao,
         ds_status: novoStatus
       };
-      console.log("atualiza:" ,dadosAtualizacao);
+      console.log("atualiza:", dadosAtualizacao);
 
       // Substitua '/permissao/' pelo endpoint correto da sua API
       await api.patch('/permissao/', dadosAtualizacao);
@@ -131,32 +144,6 @@ function PedidosProf() {
     await atualizarSolicitacao(idPermissao, 'RECUSADO');
   };
 
-// Função para buscar solicitações aprovadas no banco de dados
-const buscarSolicitacoesAprovadas = async () => {
-  try {
-    // Substitua '/permissao/aprovadas' pelo endpoint correto da sua API
-    const response = await api.get(`/permissao/aprovadas/${prontuario}`);
-    const dadosDaAPI = response.data;
-
-    setSolicitacoesAprovadas(dadosDaAPI);
-  } catch (error) {
-    console.error('Erro ao buscar solicitações aprovadas:', error);
-  }
-};
-
-// Função para buscar solicitações recusadas no banco de dados
-const buscarSolicitacoesRecusadas = async () => {
-  try {
-    // Substitua '/permissao/recusadas' pelo endpoint correto da sua API
-    const response = await api.get(`/permissao/recusadas/${prontuario}`);
-    const dadosDaAPI = response.data;
-
-    setSolicitacoesRecusadas(dadosDaAPI);
-  } catch (error) {
-    console.error('Erro ao buscar solicitações recusadas:', error);
-  }
-};
-
 
   // Efeito para buscar as solicitações ao montar o componente
   useEffect(() => {
@@ -171,10 +158,12 @@ const buscarSolicitacoesRecusadas = async () => {
           <div className="formulario-login container">
             <h2 className="formulario-login__titulo">Pedidos para {userName}!</h2>
             <div className="formulario-login_form">
-              {solicitacoes.length === 0 ? (
-                <h2 className="formulario-login__h2">Não há pedidos para {userName}! </h2>
-              ) : (
-                solicitacoes.map((solicitacao) => (
+              {/* Seção de Pedidos Pendentes */}
+              {/* Seção de Pedidos Pendentes */}
+              {solicitacoesPendentes.length > 0 && (
+                <>
+                  <h2 className="formulario-login__h2">Pedidos Pendentes:</h2>
+                  {solicitacoesPendentes.map((solicitacao) => (
                   <form key={solicitacao.id} className="formulario-pedidos">
                     <div className="container-pedidos">
                       <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
@@ -201,10 +190,70 @@ const buscarSolicitacoesRecusadas = async () => {
                           Recusar
                         </button>
                       </div>
-
                     </div>
                   </form>
-                ))
+                  ))}
+                  </>
+                )}
+              {/* Seção de Pedidos Aceitos */}
+              {solicitacoesAceitas.length > 0 && (
+                <>
+                  <h2 className="formulario-login__h2">Pedidos Aceitos:</h2>
+                  {solicitacoesAceitas.map((solicitacao) => (
+                    <form key={solicitacao.id} className="formulario-pedidos">
+                    <div className="container-pedidos">
+                      <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
+                        <div className="container-texto">
+                          <p>Nome: {solicitacao.nomeEstudante}</p>
+                          <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                          <p>Chave: {solicitacao.nomeChave} </p>
+                          <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                        </div>
+                      </label>
+                      <div className="radio-buttons-container">
+                        <button
+                          className="boton-form-recusar"
+                          type="button"
+                          onClick={() => handleRecusar(solicitacao.id_permissao)}
+                        >
+                          Remover permissão
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  ))}
+                </>
+              )}
+
+              {/* Seção de Pedidos Recusados */}
+              {solicitacoesRecusadas.length > 0 && (
+                <>
+                  <h2 className="formulario-login__h2">Pedidos Recusados:</h2>
+                  {solicitacoesRecusadas.map((solicitacao) => (
+                    <form key={solicitacao.id} className="formulario-pedidos">
+                      {/* Renderize as informações da solicitação aqui */}
+                      <div className="container-pedidos">
+                      <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
+                        <div className="container-texto">
+                          <p>Nome: {solicitacao.nomeEstudante}</p>
+                          <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                          <p>Chave: {solicitacao.nomeChave} </p>
+                          <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                        </div>
+                      </label>
+                      <div className="radio-buttons-container">
+                        <button
+                          className="boton-form-aceitar"
+                          type="button"
+                          onClick={() => handleAceitar(solicitacao.id_permissao)}
+                        >
+                          Reconsiderar pedido
+                        </button>
+                      </div>
+                      </div>
+                    </form>
+                  ))}
+                </>
               )}
             </div>
           </div>

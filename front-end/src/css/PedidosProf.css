@@ -4,6 +4,9 @@ body {
   
   font-family: 'Raleway', sans-serif;
 }
+.formulario-login__h2{
+	font-size: 1.5rem;
+}
 .radio-buttons-container {
 	display: lex;
 	flex-direction: row;
