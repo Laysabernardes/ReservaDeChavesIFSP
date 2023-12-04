@@ -108,30 +108,32 @@ class PermissaoController {
         }
     };
     
+    //MUDEI O UPDATE POR CAUSA DO FRONT SE VOCE MEXER EU TE MATO LUCAS 
     // Método para atualizar o status de uma permissão
     update = async (req, res) => {
         try {
             // Extrai dados do corpo da requisição
             const { id_permissao, ds_status } = req.body;
-
+    
             // Verifica se todos os campos necessários foram fornecidos
             if (!id_permissao || !ds_status) {
-                res.status(400).send({ message: "Preencha os campos!" });
+                return res.status(400).send({ message: "Preencha os campos!" });
             }
-
+    
             // Chama o serviço para atualizar o status da permissão
             await services.update(id_permissao, ds_status);
-
+    
             // Retorna uma resposta de sucesso
-            res.status(201).send({
+            return res.status(201).send({
                 message: "Permissão Status Update:",
                 status: ds_status
             });
         } catch (err) {
             // Retorna uma resposta de erro em caso de falha
-            res.status(500).send({ message: err });
+            return res.status(500).send({ message: err });
         }
     };
+    
 };
 
 // Exporta a classe PermissaoController para ser utilizada em outros módulos

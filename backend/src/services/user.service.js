@@ -39,6 +39,21 @@ class UserServices {
       });
     });
   }
+
+  
+  findNome = (cd_matricula_usuario) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM Usuario WHERE cd_matricula_usuario = ?;', cd_matricula_usuario, (err, results) => {
+        if (results.length === 0) {
+          console.error('Erro na busca', err);
+          reject(err);
+        } else {
+          console.log('Busca concluida:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
 }
 
 // Exporta a classe UserServices para ser utilizada em outros módulos
