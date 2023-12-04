@@ -18,7 +18,7 @@ import Footer from './footer';
 
 // Define o componente funcional LoginForm
 function LoginForm() {
-  
+
   // Estados para controlar os campos de login e senha
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
@@ -46,10 +46,10 @@ function LoginForm() {
       // Atualiza os estados com os dados do usuário e o estado de login
       setIsLoggedIn(true);
       setUserData(user);
-      
+
       const userData = {
         cd_cargo: response.data.user[0].cd_cargo,
-        cd_matricula_usuario:response.data.user[0].cd_matricula_usuario,
+        cd_matricula_usuario: response.data.user[0].cd_matricula_usuario,
         cd_senha_usuario: response.data.user[0].cd_senha_usuario,
         nm_usuario: response.data.user[0].nm_usuario,
       };
@@ -64,17 +64,22 @@ function LoginForm() {
         case 'A0001':
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/perfil',{ state: { userData } }); // Redireciona para a página específica para alunos
+          navigate('/perfil', { state: { userData } }); // Redireciona para a página específica para alunos
           break;
         case '707001':
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/cadastro',{ state: { userData } });
+          navigate('/cadastro', { state: { userData } });
+          break;
+        case '701060':
+          setIsLoggedIn(true);
+          setLoginError(false);
+          navigate('/pedidos', { state: { userData } });
           break;
         default:
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/main',{ state: { userData } }); // Redireciona para a página principal padrão
+          navigate('/main', { state: { userData } }); // Redireciona para a página principal padrão
       }
 
     } catch (error) {
