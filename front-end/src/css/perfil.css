@@ -18,7 +18,7 @@
   }
   
   button {
-    background-color: #007bff;
+    background-color:darkslategray;
     color: #fff;
     padding: 10px 15px;
     margin-top: 10px;
@@ -28,7 +28,7 @@
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: darkslategray;
   }
   
   /* Estilos para o formulário de troca de senha */
