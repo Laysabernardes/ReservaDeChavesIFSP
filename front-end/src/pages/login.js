@@ -53,6 +53,7 @@ function LoginForm() {
         cd_senha_usuario: response.data.user[0].cd_senha_usuario,
         nm_usuario: response.data.user[0].nm_usuario,
       };
+      localStorage.setItem('userData', JSON.stringify(user));
 
       // Imprime informações para depuração
       console.log('Login:', login);

@@ -39,7 +39,7 @@ const buscaLocais = async (categoria) => {
 // Componente principal do main
 const Main = () => {
   
-  const { userData } = useUser();
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -79,7 +79,7 @@ const Main = () => {
     console.log('Dados do pedido em Main:', temSolicitacoesPendentes);
     // Executa a função de busca ao montar o componente
     fetchData();
-  }, [userData]); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
+  }, []); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
 
   // Renderização do componente principal
   return (
