@@ -1,11 +1,21 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
 body {
   
   font-family: 'Raleway', sans-serif;
 }
+.formulario-prof{
+	width: 100%;
+    background-color: var(--cor-de-fundo);
+    /* padding-top: 5rem; */
+    padding-bottom: 5rem;
+}
 .formulario-login__h2{
 	font-size: 1.5rem;
+}
+.formulario_titulo {
+    margin-bottom: 2.5rem;            /* Margem inferior de 3 unidades de medida */
+    font-weight: 800;               /* Peso da fonte 800 (negrito) */
+    font-size: 1.5rem;               /* Tamanho da fonte 1.5 unidades de medida */
 }
 .sem-pedido{
 	margin: 2rem 2rem 2rem 0;
@@ -105,7 +115,24 @@ body {
   .container-texto {
 	margin-bottom:  1.5rem;; /* Adicione um espaço na parte inferior do container de texto */
   }
-  /* Adicione estilos conforme necessário */
+ 
+.container-botao{
+	text-align:right;
+	width: 100%;
+	margin: 2rem;
+}
+  .local_botao{
+    color: var( --cor-de-destaque);
+    font-weight: 800;
+	
+	
+}
+
+.local_botao::after {
+    content: '🡪';
+    color:var( --cor-de-destaque);
+    margin-left: 0.6rem;
+}
   
 /* Mídia para telas menores (por exemplo, até 768 pixels) */
 @media only screen and (max-width: 768px) {

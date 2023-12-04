@@ -17,8 +17,9 @@ function PedidosProf() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = location.state ? location.state.userData : null;
-  console.log('Dados do Usuário em pedidos:', userData);
+  // const userData = location.state ? location.state.userData : null;
+  // console.log('Dados do Usuário em pedidos:', userData);
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
   const userName = userData ? userData.nm_usuario : 'Usuário';
@@ -170,9 +171,16 @@ function PedidosProf() {
     <div className="App">
       <Header />
       <div className="main-content">
-        <div className="formulario">
+        <div className="formulario-prof">
           <div className="formulario-login container">
-            <h2 className="formulario-login__titulo">Pedidos para {userName}!</h2>
+            <div className='container-botao'>
+            <a className="local_botao" href="/main"
+                onClick={(e) => {
+                e.preventDefault();
+                navigate('/main', { state: { user: userData } })
+              }}>Voltar:</a>
+            </div>
+            <h2 className="formulario_titulo">Pedidos para {userName}!</h2>
             <div className="formulario-login_form">
               {/* Seção de Pedidos Pendentes */}
               {/* Seção de Pedidos Pendentes */}
