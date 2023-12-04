@@ -95,6 +95,26 @@ class UserController {
             res.status(404).send({ message: "Não há usuarios" });
         }
     };
+
+    findCargo = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const { cd_cargo } = req.params;
+
+            if (!cd_cargo) {
+                res.status(400).send({ message: "Adicione o Código do Usuario" });
+            }
+
+            //await é usado junto com async
+            let usuario = await services.findCargo(cd_cargo);
+
+            res.status(201).send({
+                message: "Resultado da busca:",
+                usuarios: usuario
+            });
+        } catch (err) {
+            res.status(404).send({ message: "Não há usuarios" });
+        }
+    };
 }
 
 // Exporta a classe UserController para ser utilizada em outros módulos
