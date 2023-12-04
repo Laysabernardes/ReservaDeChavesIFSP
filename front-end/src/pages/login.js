@@ -74,7 +74,7 @@ function LoginForm() {
         case '701060':
           setIsLoggedIn(true);
           setLoginError(false);
-          navigate('/pedidos', { state: { userData } });
+          navigate('/main', { state: { userData } });
           break;
         default:
           setIsLoggedIn(true);

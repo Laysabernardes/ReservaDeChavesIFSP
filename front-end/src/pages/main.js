@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { renderizarLocais } from '../renderizar.js';
 import { useNavigate, useLocation } from 'react-router-dom'; // Importa useNavigate
 import { useUser } from '../UserContext.js';
+import { useSolicitacoes } from '../SolicitacoesContext';
 import api from '../api'; // Importe a instância do Axios
 
 import '../css/main.css'; // Importa o estilo CSS para o componente main
@@ -49,6 +50,7 @@ const Main = () => {
   const [locaisSalas, setLocaisSalas] = useState([]);
   const [locaisLabs, setLocaisLabs] = useState([]);
   const [locaisDiversos, setLocaisDiversos] = useState([]);
+  const { temSolicitacoesPendentes } = useSolicitacoes();
 
   // Efeito que é executado ao montar o componente
   useEffect(() => {
@@ -70,6 +72,7 @@ const Main = () => {
       }
     };
     console.log('Dados do Usuário em Main:', userData);
+    console.log('Dados do pedido em Main:', temSolicitacoesPendentes);
     // Executa a função de busca ao montar o componente
     fetchData();
   }, [userData]); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
@@ -81,6 +84,12 @@ const Main = () => {
       <Header />
       <Banner />
       {/* Seção de produtos */}
+      {temSolicitacoesPendentes === true && (
+        <div>
+          <p>Você tem solicitações de pedido pendentes. Clique aqui para ver.</p>
+          {/* Adicione o link ou botão para redirecionar para a página de solicitações pendentes */}
+        </div>
+      )}
       <section className="section__produtos">
         <div className="produtos container">
           {/* Categoria de Salas */}
