@@ -12,6 +12,7 @@ function PedidosProf() {
   const [solicitacoesPendentes, setSolicitacoesPendentes] = useState([]);
   const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
   const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
+  const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
 
   const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
   const userName = userData ? userData.nm_usuario : 'Usuário';
@@ -95,6 +96,9 @@ function PedidosProf() {
         setSolicitacoesAceitas(aceitas);
         setSolicitacoesRecusadas(recusadas);
 
+        // Atualiza a variável de estado para indicar se há solicitações pendentes
+        setTemSolicitacoesPendentes(pendentes.length > 0);
+        
         // Exiba mensagens para categorias sem solicitações
         if (pendentes.length === 0) {
           console.warn('Não há solicitações pendentes disponíveis para processamento.');
@@ -108,6 +112,10 @@ function PedidosProf() {
       } else {
         console.error('Os dados da API não contêm um array de pedidos:', dadosDaAPI);
         // Trate aqui o caso em que os dados não são como esperado
+
+        if (!temSolicitacoesPendentes) {
+          console.warn('Não há solicitações pendentes disponíveis para processamento.');
+        }
       }
     } catch (error) {
       console.error('Erro ao buscar solicitações:', error);
@@ -148,7 +156,9 @@ function PedidosProf() {
   // Efeito para buscar as solicitações ao montar o componente
   useEffect(() => {
     buscarSolicitacoes();
-  }, []);
+    
+      console.log('tem?', temSolicitacoesPendentes);
+    }, [temSolicitacoesPendentes]); // Este efeito será acionado sempre que temSo
 
   return (
     <div className="App">
@@ -235,7 +245,7 @@ function PedidosProf() {
                 </>
               )}
               <h2 className="formulario-login__h2">Pedidos Recusados:</h2>
-              {solicitacoesRecusadas.length  === 0 && (
+              {solicitacoesRecusadas.length === 0 && (
                 <>
                   <p className='sem-pedido'>Não há pedidos Recusados!</p>
                 </>
