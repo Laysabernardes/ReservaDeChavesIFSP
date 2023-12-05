@@ -9,6 +9,7 @@ import PaginaDeSolicitacao from './pages/solicitacao.js';
 import Adm from './pages/adm-page.js';
 import Perfil from '../src/pages/perfil.js';
 import PedidosProf from './pages/pedidosProf.js';
+import PedidosEstudante from './pages/pedidosEstudante.js';
 
 function Routes() {
   return (
@@ -22,6 +23,7 @@ function Routes() {
       <Route path="/adm" element={<Adm />} />
       <Route path="/perfil" element={<Perfil/>}/>
       <Route path="/pedidos" element={<PedidosProf/>}/>
+      <Route path="/pedidosEstudante" element={<PedidosEstudante/>}/>
     </RouterRoutes>
 
   );

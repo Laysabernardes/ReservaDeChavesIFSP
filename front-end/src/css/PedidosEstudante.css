@@ -65,6 +65,7 @@ body {
   /* Alinha os itens na extremidade inferior do contêiner */
   box-sizing: border-box;
   /* Configura a caixa para incluir bordas e preenchimento no tamanho total */
+  width: 100%;
 }
 
 /* Estilo para o campo de entrada de texto */
@@ -193,7 +194,6 @@ body {
   /* Define o tamanho da fonte como 1rem */
   width: 100%;
   /* Define a largura do botão como 100% */
-  transition: all 0.2s ease;
 }
 
 /* Efeito de sombra quando o mouse passa sobre o botão de formulário */
@@ -229,6 +229,11 @@ body {
   /* Adiciona uma sombra suave com cor de realce */
   cursor: pointer;
   /* Muda o cursor para uma mão indicando que o botão é clicável */
+}
+
+.formulario-login__h2{
+	font-size: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
 /* ------------------------------------ */
