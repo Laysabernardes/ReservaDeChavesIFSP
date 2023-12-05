@@ -112,87 +112,78 @@ function ReservaForm(props) {
 
   const verificarPermissaoReserva = async (matricula, cdChaveDesejada) => {
     try {
-      // Busca as permissões associadas ao aluno
       const response = await api.get(`/permissao/estudante/${matricula}`);
       const dadosPermissao = response.data;
-      // Verifica se a resposta da API contém dados do usuário
-      if (dadosPermissao.usuarios && dadosPermissao.usuarios.length > 0) {
-        // Obtém o nome do professor
-        var permissao = dadosPermissao.usuarios[0].cd_permissao;
-        // Imprime o nome do professor
-        console.log("nome:", permissao);
-        // Retorna o nome do estudante
-        return dadosPermissao.usuarios;
-      }
-      // Verifica se há uma permissão associada ao aluno
-      if (!permissao) {
-        setMensagem(`Você não tem permissões associadas.`);
+  
+      if (dadosPermissao.pedidos.length === 0) {
+        setMensagem(`Aluno, você não tem permissões associadas a este local. Faça o pedido a um professor!`);
         return setpermitir(false);
       }
-
-      // Verifica se o código da chave desejada é o mesmo na permissão
+  
+      const permissao = dadosPermissao.pedidos[0];
+  
       if (permissao.cd_chave !== cdChaveDesejada) {
-        setMensagem(`Você não tem permissão para reservar essa chave.`);
+        setMensagem(`Aluno, você não tem permissão para reservar essa chave. Faça o pedido a um professor!`);
         return setpermitir(false);
       }
-
-      // Verifica se a permissão está ACEITA
+  
       if (permissao.ds_status !== 'ACEITO') {
-        setMensagem(`Sua permissão não foi aprovada`);
+        setMensagem(`Aluno, sua permissão não foi aprovada. Verifique seu pedido!`);
         return setpermitir(false);
       }
-      // Verifica se o código de permissão é válido
-      if (!permissao.cd_permissao) {
-        setMensagem(`O código de permissão é inválido.`);
+  
+      if (!permissao.id_permissao) {
+        setMensagem(`Aluno, seu código de permissão é inválido. Verifique seu pedido!`);
         return setpermitir(false);
       }
+  
       setpermitir(true);
+      setMensagem('Permissão de reserva aprovada pelo professor!');
       setCodigoPermissao(permissao.id_permissao);
     } catch (error) {
       console.error('Erro ao verificar permissão para reserva:', error);
-      setMensagem(
-        ` ao verificar permissão para reserva. Tente novamente mais tarde.`);
+      setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
     }
   };
-
+  
   // Renderiza o componente JSX
   return (
     <div>
       {/* Componentes de cabeçalho e rodapé */}
       <Header />
       <section className="sessao__chave">
-        <div className="chave container" data-chave="">
-          <div className='container-botao'>
+      <div className='container_botao'>
             <a className="local_botao" href="/main"
               onClick={(e) => {
                 e.preventDefault();
                 navigate('/main', { state: { user: userData } })
               }}>Voltar:</a>
           </div>
-          <img className="chave__imagem" src="https://www.pontoxtecidos.com.br/static/567/sku/155904889647122.jpg" alt="Imagem da chave" />
+        <div className="chave container" data-chave="">
           <div className="chave__info">
             <div className="chave__info__descricao">
               <div className="formulario">
                 <div className="formulario-login container">
-
-                  {/* Título do formulário */}
-                  <h3 className="formulario-login__titulo">Nome da sala</h3>
-
-                  {mensagem && <p className='mensagem'>{mensagem}</p>}
-                  {permitir===false && (
-                    <button
-                      className="banner__botao"
-                      onClick={() => {
-                        setTimeout(() => {
-                          navigate('/pedidos');
-                        }, 100);
-                      }}
-                    >
-                      faça o pedido
-                    </button>
-                  )}
-
                   <form className="formulario-login_form">
+
+                    {/* Título do formulário */}
+                  <h3 className="titulo">Reservar: {chave.nm_chave}</h3>
+                  <div className='container-mensagem'>
+                    {mensagem && <p className='mensagem_reserva'>{mensagem}</p>}
+                    {permitir === false && (
+                      <button
+                        className="boton-formulario-login"
+                        onClick={() => {
+                          setTimeout(() => {
+                            navigate('/pedidos');
+                          }, 100);
+                        }}
+                      >
+                        faça o pedido
+                      </button>
+                    )}
+                  </div>
+
                     {/* Campo de entrada para a situação (readonly) */}
                     <div className="formulario-login__input-container">
                       <input
@@ -214,28 +205,6 @@ function ReservaForm(props) {
                         Este campo não é válido
                       </span>
                     </div>
-
-                    {/* Campo de entrada para o código de permissão (condicional)
-                    {user.cd_cargo === 'A0001' && (
-                      <div className="formulario-login__input-container">
-                        <input
-                          name="codigoPermissao"
-                          id="codigoPermissao"
-                          className="input inputs"
-                          type="text"
-                          placeholder="Código de Permissão"
-                          required
-                          value={codigoPermissao}
-                          onChange={(e) => setCodigoPermissao(e.target.value)}
-                        />
-                        <label className="input-label" htmlFor="codigoPermissao">
-                          Código de Permissão:
-                        </label>
-                        <span className="input-message-error">
-                          Este campo não é válido
-                        </span>
-                      </div>
-                    )} */}
 
                     {/* Campo de entrada para a data e horário */}
                     <div id="previsao" className="formulario-login__input-container">
