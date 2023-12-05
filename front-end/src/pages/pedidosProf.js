@@ -73,7 +73,6 @@ function PedidosProf() {
     }
   };
 
-
   //É uma Função para buscar informações de uma chave
   //Argumentos:cd_chave: Código da chave a ser buscada
   //Retorno:Um objeto com as informações da chave, ou null se a chave não for encontrada
@@ -252,7 +251,7 @@ function PedidosProf() {
                   <p className='sem-pedido'>Não há pedidos Pendentes!</p>
                 </>
               )}
-              
+
               {solicitacoesPendentes.length > 0 && (
                 <>
                   {solicitacoesPendentes.map((solicitacao) => (
