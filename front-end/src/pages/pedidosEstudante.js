@@ -27,6 +27,7 @@ function PedidosEstudante() {
   const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
   const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
   const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
+  const [mensagem, setMensagem] = useState('');
   const [prof, setProf] = useState('');
   const [local, setLocal] = useState('');
 
@@ -48,30 +49,30 @@ function PedidosEstudante() {
   //Argumentos:matricula: Matrícula do estudante a ser buscado
   // Retorno: O nome do estudante, ou Nome não encontrado se o estudante não for encontrado
   // Função para buscar o nome do estudante com base na matrícula
-  const buscarNomeEstudante = async (matricula) => {
+  const buscarNomeProf = async (matricula) => {
     // Tentativa de fazer a chamada à API
     try {
       // Faz uma chamada à API, passando a matrícula como parâmetro
       const response = await api.get(`/user/nome/${matricula}`);
       // Obtém os dados da resposta da API
-      const dadosEstudante = response.data;
+      const dadosProfessor = response.data;
       // Verifica se a resposta da API contém dados do usuário
-      if (dadosEstudante.usuarios && dadosEstudante.usuarios.length > 0) {
+      if (dadosProfessor.usuarios && dadosProfessor.usuarios.length > 0) {
         // Obtém o nome do estudante
-        const nomeEstudante = dadosEstudante.usuarios[0].nm_usuario;
+        const nomeprofessor = dadosProfessor.usuarios[0].nm_usuario;
         // Imprime o nome do estudante
-        console.log("nome:", nomeEstudante);
+        console.log("nome:", nomeprofessor);
         // Retorna o nome do estudante
-        return nomeEstudante;
+        return nomeprofessor;
       } else {
         // Erro: a resposta da API não contém dados do usuário
-        console.error('Resposta da API não contém dados de usuário:', dadosEstudante);
+        console.error('Resposta da API não contém dados de usuário:', dadosProfessor);
         // Retorna 'Nome não encontrado'
         return 'Nome não encontrado';
       }
     } catch (error) {
       // Erro ao fazer a chamada à API
-      console.error('Erro ao buscar nome do estudante:', error);
+      console.error('Erro ao buscar nome do Professor:', error);
       // Retorna 'Nome não encontrado'
       return 'Nome não encontrado';
     }
@@ -113,8 +114,8 @@ function PedidosEstudante() {
   const buscarSolicitacoes = async () => {
     // Tentativa de fazer a chamada à API
     try {
-      // Faz uma chamada à API, passando o prontuário do funcionário como parâmetro
-      const response = await api.get(`/permissao/funcionario/${prontuario}`);
+      // Faz uma chamada à API, passando o prontuário do estudante como parâmetro
+      const response = await api.get(`/permissao/estudante/${prontuario}`);
       // Obtém os dados da resposta da API
       const dadosDaAPI = response.data;
       // Verifica se a resposta da API contém um array de solicitações
@@ -128,9 +129,9 @@ function PedidosEstudante() {
         // Itera sobre as solicitações da resposta da API
         for (const solicitacao of dadosDaAPI.pedidos) {
           // Chama a função `buscarNomeEstudante()` para obter o nome do estudante
-          const nomeEstudante = await buscarNomeEstudante(solicitacao.cd_matricula_estudante);
+          const nomeprofessor = await buscarNomeProf(solicitacao.cd_matricula_funcionario);
           // Atualiza o objeto `solicitacao` com o nome do estudante
-          solicitacao.nomeEstudante = nomeEstudante;
+          solicitacao.nomeprofessor = nomeprofessor;
           // Chama a função `buscarInformacoesChave()` para obter as informações da chave
           const informacoesChave = await buscarInformacoesChave(solicitacao.cd_chave);
           // Se as informações da chave forem encontradas, atualiza o objeto `solicitacao` com as informações da chave
@@ -212,7 +213,7 @@ function PedidosEstudante() {
     }
   };
 
-  const buscarNomeProfessores = async () =>{
+  const buscarNomeProfessores = async () => {
     try {
       // Faz uma chamada à API, com o código padrão de professores como parâmetro
       const response = await api.get(`/user/cargo/707001`);
@@ -244,27 +245,27 @@ function PedidosEstudante() {
     try {
       // Chama a função para buscar os nomes dos professores na API
       const arrayProfessores = await buscarNomeProfessores();
-  
+
       // Obtém a referência ao elemento select
       const selectProf = document.querySelector('select[name="select-prof"]');
-  
+
       // Limpa as opções existentes no select
       selectProf.innerHTML = "";
-  
+
       // Adiciona uma opção padrão
       const defaultOption = document.createElement("option");
       defaultOption.value = "";
       defaultOption.text = "Selecione um professor";
       selectProf.appendChild(defaultOption);
-  
+
       // Adiciona as opções com os nomes dos professores
       arrayProfessores.forEach((professor) => {
         const option = document.createElement("option");
-        option.value = professor.nm_usuario;
+        option.value = professor.cd_matricula_usuario;
         option.text = professor.nm_usuario;
         selectProf.appendChild(option);
-  });   
-  
+      });
+
       // Adiciona um ouvinte de evento para capturar a matrícula selecionada
       selectProf.addEventListener('change', function () {
         // Obtém a matrícula do professor selecionado
@@ -277,34 +278,34 @@ function PedidosEstudante() {
       console.error('Erro ao preencher as opções do combo box:', error);
     }
   }
-  
+
   const optionComboBoxLocal = async () => {
     try {
       // Chama a função para buscar todos os nomes de locais na API
       const response = await api.get('/chaves/');
       const arrayLocais = response.data;
       console.log(arrayLocais)
-      console.log(typeof(arrayLocais))
-  
+      console.log(typeof (arrayLocais))
+
       // Obtém a referência ao elemento select
       const selectLocal = document.querySelector('select[name="select-local"]');
-  
+
       // Limpa as opções existentes no select
       selectLocal.innerHTML = "";
-  
+
       // Adiciona uma opção padrão
       const defaultOption = document.createElement("option");
       defaultOption.value = "";
       defaultOption.text = "Selecione um local";
       selectLocal.appendChild(defaultOption);
-  
+
       // Adiciona as opções com os nomes dos locais
       arrayLocais.forEach((local) => {
         const option = document.createElement("option");
-        option.value = local.nm_chave;
+        option.value = local.cd_chave;
         option.text = local.nm_chave;
         selectLocal.appendChild(option);
-  });    
+      });
     } catch (error) {
       // Trate os erros, se necessário
       console.error('Erro ao preencher as opções do combo box:', error);
@@ -316,15 +317,17 @@ function PedidosEstudante() {
     cd_matricula_estudante: prontuario,
     cd_chave: local
   };
+  console.log('cpntecudo', payload);
 
   const gerarPedido = async () => {
     const response = await api.post('/permissao', payload);
+    setMensagem('Pedido enviado ao professor com sucesso!');
     console.log(response.data);
   }
 
   // Função para lidar com o clique no botão de Aceitar
   const handleAceitar = async (idPermissao) => {
-    await atualizarSolicitacao(idPermissao, 'ACEITO');
+    await atualizarSolicitacao(idPermissao, 'SOLICITADO');
   };
   // Função para lidar com o clique no botão de Recusar
   const handleRecusar = async (idPermissao) => {
@@ -359,43 +362,45 @@ function PedidosEstudante() {
                 }}>Voltar:</a>
             </div>
             <div className='formulario-login_form'>
-                <h2 className="formulario_titulo">Seus pedidos, {userName}!</h2>
-                <div className='formulario-pedidos'>
-                    <h2 className="formulario-login__h2">Faça seu pedido!</h2>
-                    <form className="formulario-approved container">
-                        <div className='formulario-approved__input-container'>
-                            <label for="select-prof" className='input-label'>Professor:</label>
-                            <select name="select-prof" className="input inputs" 
-                            onChange={(e) => setProf(e.target.value)}>
-                                <option value="professor">Professor X</option>
-                            </select>
-                        </div>
-                        <div className='formulario-approved__input-container'>
-                            <label for="select-local" className='input-label'>Local:</label>
-                            <select name="select-local" className="input inputs"
-                            onChange={(e) => setLocal(e.target.value)}>
-                                <option value="sala">Sala X</option>
-                            </select>
-                        </div>
-                        <button
-                                className="boton-formulario-approved"
-                                type="button"
-                                onClick={gerarPedido}
-                            >
-                                Aceitar
-                            </button>  
-                    </form>
-                </div>
+              <h2 className="formulario_titulo">Seus pedidos, {userName}!</h2>
+              <div className='formulario-pedidos'>
+                <h2 className="formulario-login__h2">Faça seu pedido!</h2>
+                <form className="formulario-approved container">
+                  <div className='formulario-approved__input-container'>
+                    <label for="select-prof" className='input-label'>Professor:</label>
+                    <select name="select-prof" className="input inputs"
+                      onChange={(e) => setProf(e.target.value)}>
+                      <option value="professor">Professor X</option>
+                    </select>
+                  </div>
+                  <div className='formulario-approved__input-container'>
+                    <label for="select-local" className='input-label'>Local:</label>
+                    <select name="select-local" className="input inputs"
+                      onChange={(e) => setLocal(e.target.value)}>
+                      <option value="sala">Sala X</option>
+                    </select>
+                  </div>
+                  <button
+                    className="boton-formulario-approved"
+                    type="button"
+                    onClick={gerarPedido}
+                  >
+                    Aceitar
+                  </button>
+                  {/* Exibe mensagens relacionadas à alteração de senha, se houver */}
+                  {mensagem && <p className='mensagem'>{mensagem}</p>}
+                </form>
+              </div>
             </div>
             <div className="formulario-login_form">
               {/* Seção de Pedidos Pendentes */}
               {/* Seção de Pedidos Pendentes */}
-              <h2 className="formulario-login__h2">Pedidos Pendentes:</h2>
+              <h2 className="formulario-login__h2">Pedidos Enviados:</h2>
               {solicitacoesPendentes.length === 0 && (
                 <>
-                  <p className='sem-pedido'>Não há pedidos Pendentes!</p>
+                  <p className='sem-pedido'>Não há pedidos Enviados!</p>
                 </>
-              )}        
+              )}
               {solicitacoesPendentes.length > 0 && (
                 <>
                   {solicitacoesPendentes.map((solicitacao) => (
@@ -403,27 +408,12 @@ function PedidosEstudante() {
                       <div className="container-pedidos">
                         <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
                           <div className="container-texto">
-                            <p>Nome: {solicitacao.nomeEstudante}</p>
-                            <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                            <p>Professor: {solicitacao.nomeprofessor}</p>
                             <p>Chave: {solicitacao.nomeChave} </p>
                             <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
                           </div>
                         </label>
                         <div className="radio-buttons-container">
-                          <button
-                            className="boton-form-aceitar"
-                            type="button"
-                            onClick={() => handleAceitar(solicitacao.id_permissao)}
-                          >
-                            Aceitar
-                          </button>
-                          <button
-                            className="boton-form-recusar"
-                            type="button"
-                            onClick={() => handleRecusar(solicitacao.id_permissao)}
-                          >
-                            Recusar
-                          </button>
                         </div>
                       </div>
                     </form>
@@ -432,7 +422,7 @@ function PedidosEstudante() {
               )}
 
               {/* Seção de Pedidos Aceitos */}
-              <h2 className="formulario-login__h2">Pedidos Aceitos:</h2>
+              <h2 className="formulario-login__h2">Pedidos Aprovados:</h2>
               {solicitacoesAceitas.length === 0 && (
                 <>
                   <p className='sem-pedido'>Não há pedidos Aceitos!</p>
@@ -445,20 +435,12 @@ function PedidosEstudante() {
                       <div className="container-pedidos">
                         <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
                           <div className="container-texto">
-                            <p>Nome: {solicitacao.nomeEstudante}</p>
-                            <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                            <p>Professor: {solicitacao.nomeprofessor}</p>
                             <p>Chave: {solicitacao.nomeChave} </p>
                             <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
                           </div>
                         </label>
                         <div className="radio-buttons-container">
-                          <button
-                            className="boton-form-recusar"
-                            type="button"
-                            onClick={() => handleRecusar(solicitacao.id_permissao)}
-                          >
-                            Remover permissão
-                          </button>
                         </div>
                       </div>
                     </form>
@@ -480,8 +462,7 @@ function PedidosEstudante() {
                       <div className="container-pedidos">
                         <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
                           <div className="container-texto">
-                            <p>Nome: {solicitacao.nomeEstudante}</p>
-                            <p>Matrícula: {solicitacao.cd_matricula_estudante}</p>
+                            <p>Professor: {solicitacao.nomeprofessor}</p>
                             <p>Chave: {solicitacao.nomeChave} </p>
                             <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
                           </div>
@@ -492,7 +473,7 @@ function PedidosEstudante() {
                             type="button"
                             onClick={() => handleAceitar(solicitacao.id_permissao)}
                           >
-                            Reconsiderar pedido
+                            Reenviar pedido
                           </button>
                         </div>
                       </div>

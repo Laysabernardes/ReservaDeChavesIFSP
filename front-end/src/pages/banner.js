@@ -7,6 +7,7 @@ import '../css/banner.css';
 
 function Banner() {
   const [mostraProf, setMostraProf] = useState(true);
+  const [mostraAluno, setmostraAluno] = useState(true);
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem('userData'));
   const cargo = userData.cd_cargo;
@@ -15,9 +16,11 @@ function Banner() {
     switch (cargo) {
       case 'A0001':
         setMostraProf(false);
+        setmostraAluno(true);
         break;
       default:
         setMostraProf(true);
+        setmostraAluno(false);
     }
   }, [cargo]);
 
@@ -38,6 +41,19 @@ function Banner() {
             }}
           >
             Pedidos de acesso de Alunos
+          </button>
+        )}
+        {/* Renderiza o botão somente se mostraProf for true */}
+        {mostraAluno && (
+          <button
+            className="banner__botao"
+            onClick={() => {
+              setTimeout(() => {
+                navigate('/pedidosEstudante');
+              }, 100);
+            }}
+          >
+            Verificar seus pedidos
           </button>
         )}
       </div>

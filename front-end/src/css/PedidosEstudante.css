@@ -17,6 +17,10 @@ body {
   /* Espaçamento inferior de 5 unidades de medida */
 }
 
+.mensagem{
+  margin: 2rem 0rem 1.5rem 0rem;
+}
+
 /* Estilo para o formulário de login */
 .formulario-approved {
   display: flex;
