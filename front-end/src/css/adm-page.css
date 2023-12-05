@@ -193,6 +193,7 @@ body {
   /* Define o tamanho da fonte como 1rem */
   width: 100%;
   /* Define a largura do botão como 100% */
+  transition: all 0.2s ease;
 }
 
 /* Efeito de sombra quando o mouse passa sobre o botão de formulário */
