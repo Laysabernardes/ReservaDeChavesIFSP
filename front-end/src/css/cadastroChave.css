@@ -16,6 +16,11 @@ body {
   margin-right: 0.5rem;
 }
 
+.centralizar{
+  display: flex;
+  align-items: center;
+}
+
 /* Estilo para o formulário principal */
 .formulario_cadastro_area {
   width: 100%;
