@@ -3,21 +3,21 @@ const services = new ReservaServicesServices();
 class ReservaController {
   create = async (req, res) => {
     try {//constante que verifica todos os campos
-      const { cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega } = req.body;
+      const { cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status } = req.body;
 
-      if (!cd_solicitante || !cd_cargo || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status || !ds_tempo_entrega) {
+      if (!cd_matricula_solicitante || !cd_cargo || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status) {
         res.status(400).send({ message: "Preencha todos os espaços" });
       }
 
       //await é usado junto com async
-      await services.create(cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega);
+      await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status);
 
       // Verifique se a resposta já foi enviada
       if (!res.headersSent) {
         res.status(201).send({
           message: "Reserva criada com sucesso!",
           reserva: {
-            cd_solicitante, cd_cargo, cd_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, ds_tempo_entrega
+            cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status
           }
         });
       }
@@ -101,6 +101,32 @@ class ReservaController {
       res.status(500).send({ message: err });
     }
   }
+  adicionarDetalhesReserva = async (req, res) => {
+    try {
+      const { id_reserva, horariosSelecionados } = req.body;
+
+      if (!id_reserva || !horariosSelecionados) {
+        res.status(400).send({ message: "Preencha todos os espaços" });
+      }
+      await services.adicionarDetalhesReserva(id_reserva, horariosSelecionados);
+
+      res.status(200).json({ mensagem: 'Detalhes da reserva adicionados com sucesso.' });
+      if (!res.headersSent) {
+        res.status(201).send({
+          message: "Detalhes da reserva adicionados com sucesso",
+          reserva: {
+            id_reserva, horariosSelecionados
+          }
+        });
+      }
+    } catch (error) {
+      if (!res.headersSent) {
+        res.status(500).send({ message: err.message });
+      }
+
+    }
+  };
+
 }
 
 module.exports = ReservaController;
