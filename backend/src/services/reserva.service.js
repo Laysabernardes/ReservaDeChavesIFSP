@@ -1,10 +1,10 @@
-const connection =  require("../database/db.js");
+const connection = require("../database/db.js");
 
-class ReservaServices{
-  
+class ReservaServices {
+
   create = (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status) => {
     return new Promise((resolve, reject) => {
-      connection.query("INSERT INTO Reservas (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status) VALUES (?, ?, ?, ?, ?, ? ,? )",  [cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status], (err, results) => {
+      connection.query("INSERT INTO Reservas (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status) VALUES (?, ?, ?, ?, ?, ? ,? )", [cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status], (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
@@ -18,7 +18,7 @@ class ReservaServices{
 
   find = (id_reserva) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM Reservas WHERE id_reserva = ?;',  id_reserva, (err, results) => {
+      connection.query('SELECT * FROM Reservas WHERE id_reserva = ?;', id_reserva, (err, results) => {
         if (results.length === 0) {
           console.error('Reserva não encontrada:', err);
           reject(err);
@@ -71,12 +71,12 @@ class ReservaServices{
       });
     });
   }
-  
-  adicionarDetalhesReserva = (id_reserva, horariosSelecionados) => {
+
+  adicionarDetalhesReserva = (id_reserva, horariosSelecionados, dt_reserva) => {
     return new Promise((resolve, reject) => {
-      const values = horariosSelecionados.map(horario => [id_reserva, horario]);
-  
-      connection.query("INSERT INTO detalhes_reserva (id_reserva, horario_reservado) VALUES ?", [values], (err, results) => {
+      const values = horariosSelecionados.map(horario => [id_reserva, horario, dt_reserva]);
+
+      connection.query("INSERT INTO detalhes_reserva (id_reserva, horario_reservado, dt_reserva) VALUES ?", [values], (err, results) => {
         if (err) {
           console.error('Erro ao adicionar detalhes da reserva:', err);
           reject(err);
@@ -87,6 +87,21 @@ class ReservaServices{
       });
     });
   };
+
+  findByDataReserva = (dt_reserva) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM detalhes_reserva WHERE dt_reserva = ?;', [dt_reserva], (err, results) => {
+        if (err) {
+          console.error('Erro ao buscar detalhes da reserva por data:', err);
+          reject(err);
+        } else {
+          console.log('Detalhes da reserva encontrados com sucesso:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
+
 }
 
 module.exports = ReservaServices;

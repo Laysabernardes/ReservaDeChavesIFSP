@@ -12,5 +12,6 @@ reservaRouter.get("/", controller.findAll);
 reservaRouter.patch("/", controller.update);
 reservaRouter.delete("/:id_reserva", controller.delete);
 reservaRouter.post("/detalhes", controller.adicionarDetalhesReserva);
+reservaRouter.get("/detalhes/data", controller.findByDataReserva);
 
 module.exports = reservaRouter;
