@@ -1,5 +1,5 @@
 // Importando as bibliotecas e componentes necessários do React e do React Router
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../UserContext.js';
 import { useNavigate, useLocation } from 'react-router-dom';
 // Importando a API e componentes adicionais
@@ -26,187 +26,330 @@ function ReservaForm(props) {
   const { state } = location || {};
   const chave = state ? state.chave : null;
   const user = state ? state.user : null;
-  
+
   // Hooks de estado para gerenciar dados do formulário
   // const [armazena o valor, usado para alterar o valor] ...
   const [situacao, setSituacao] = useState(chave ? chave.ds_status : '');
   const [codigoPermissao, setCodigoPermissao] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [permitir, setpermitir] = useState(false);
+  const [dataSelecionada, setDataSelecionada] = useState('');
+  const [horariosReservados, setHorariosReservados] = useState([]);
+  const [horariosSelecionados, setHorariosSelecionados] = useState([]);
+
+  const [horarioInicial, setHorarioInicial] = useState([]);
+  const [horarioFinal, setHorarioFinal] = useState([]);
+
+  const [horariosDisponiveisSegundoSelect, setHorariosDisponiveisSegundoSelect] = useState([]);
+
   const [data, setData] = useState('');
 
-  // Exibindo informações no console para depuração
-  console.log('RESERVA - Nome do usuário:', user ? user.nm_solicitante : 'N/A');
-  console.log('RESERVA - ds_chave:', chave ? chave.ds_chave : 'N/A');
-  console.log('RESERVA - cd_chave:', chave ? chave.cd_chave : 'N/A');
-  console.log('RESERVA - nm_chave:', chave ? chave.nm_chave : 'N/A');
-  console.log('RESERVA - ds_status:', chave ? chave.ds_status : 'N/A');
+  const userData = JSON.parse(localStorage.getItem('userData'));
+
+  const matricula = userData.cd_matricula_usuario;
+
+  useEffect(() => {
+    if (userData) {
+      verificarPermissaoReserva(userData.cd_matricula_usuario, chave.cd_chave);
+    }
+  }, [userData, chave, matricula]);
+
+
+  const verificarPermissaoReserva = async (matricula, cdChaveDesejada) => {
+    try {
+      const response = await api.get(`/permissao/estudante/${matricula}`);
+      const dadosPermissao = response.data;
+
+      if (dadosPermissao.pedidos.length === 0) {
+        setMensagem(`Aluno, você não tem permissões associadas a este local. Faça o pedido a um professor!`);
+        return setpermitir(false);
+      }
+
+      const permissao = dadosPermissao.pedidos[0];
+
+      if (permissao.cd_chave !== cdChaveDesejada) {
+        setMensagem(`Aluno, você não tem permissão para reservar essa chave. Faça o pedido a um professor!`);
+        return setpermitir(false);
+      }
+
+      if (permissao.ds_status !== 'ACEITO') {
+        setMensagem(`Aluno, sua permissão não foi aprovada. Verifique seu pedido!`);
+        return setpermitir(false);
+      }
+
+      if (!permissao.id_permissao) {
+        setMensagem(`Aluno, seu código de permissão é inválido. Verifique seu pedido!`);
+        return setpermitir(false);
+      }
+
+      setpermitir(true);
+      setMensagem('Permissão de reserva aprovada pelo professor!');
+      setCodigoPermissao(permissao.id_permissao);
+    } catch (error) {
+      console.error('Erro ao verificar permissão para reserva:', error);
+      setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
+    }
+  };
 
   // Função assíncrona para lidar com a reserva
   const handleReservarSala = async (e) => {
     //e.preventDefault() cancela a ação padrão do evento
     e.preventDefault();
-  
+
+    verificarPermissaoReserva(matricula, chave.cd_chave);
+
     try {
       // Verifica se o usuário está presente
       if (!user) {
         console.error('Usuário não encontrado.');
         return;
       }
-      // Obtém a data atual para a reserva
-      const dt_reserva = new Date().toISOString().split('T')[0];
-      
-      // Define cd_permissao_estudante como null se não estiver definido
-      let cd_permissao_estudante = codigoPermissao || null; 
-  
-      // Cria um payload com os dados da reserva
+
+      verificarPermissaoReserva(user.cd_matricula_usuario, chave.cd_chave);
+
+      if (!permitir) {
+        setMensagem('Permissão negada. Não é possível fazer a reserva.');
+        return;
+      }
+
+      // Criar um payload com os dados da reserva
       const payload = {
-        cd_solicitante: user.cd_solicitante,
+        cd_matricula_usuario: user.cd_solicitante,
         cd_cargo: user.cd_cargo,
-        cd_permissao_estudante: cd_permissao_estudante,
         cd_chave: chave.cd_chave,
-        dt_reserva: data,
-        dt_devolucao: dt_reserva,
-        ds_status: 'solicitacao0',
-        ds_tempo_entrega: '01:00'
+        dt_reserva: dataSelecionada,
+        dt_devolucao: new Date().toISOString().split('T')[0],
+        ds_status: 'SOLICITADO',
       };
-  
+
+      if (permitir === true) {
+        payload.cd_permissao = codigoPermissao;
+        return;
+      }
+
       // Verifica se o usuário tem o cargo A0001 (categoria Aluno)
       if (user.cd_cargo === 'A0001') {
-        // Adiciona um campo para o código de permissão
-        if (!codigoPermissao) {
-          console.error('ID da permissão não fornecido.');
-          return;
-        }
-  
-        try {
-          //
-          // Verifique se a permissão existe
-          const responsePermissao = await api.get(`/solicitacao/${codigoPermissao}`);
-          console.log(responsePermissao.data);
-  
-          // Se a permissão existe, permitir a reserva
-          payload.cd_permissao = codigoPermissao;
-
-          // Envia uma solicitação POST para a API para criar a reserva
-          const response = await api.post('/reserva', payload);
-          console.log('Reserva bem-sucedida:', response.data);
-  
-          // Navega para a página de solicitação com a chave da reserva
-          navigate('/solicitacao', { state: { chave: response.data } });
-        } catch (error) {
-          // Se a permissão não existe, exibir mensagem de erro
-          console.error('Permissão não encontrada:', error);
-        }
-      } else {
-        // Se o usuário não é da categoria A0001, faça a reserva diretamente
+        payload.cd_permissao_estudante = codigoPermissao || null;
+      }
+      try {
+        // Envia uma solicitação POST para a API para criar a reserva
         const response = await api.post('/reserva', payload);
         console.log('Reserva bem-sucedida:', response.data);
-  
-        // Navega para a página de solicitação com a chave da reserva
-        navigate('/solicitacao', { state: { chave: response.data } });
+        setMensagem('Solicitação de reserva enviada, acompanhe em:')
+
+        // Obter o ID da reserva recém-criada
+        const idReserva = response.data.id_reserva;
+        // Criar um payload para os detalhes da reserva
+        const detalhesPayload = {
+          id_reserva: idReserva,
+          horarios_reservados: horariosSelecionados,
+        };
+        // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
+        const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
+        console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
+
+        // navigate('/solicitacao', { state: { chave: response.data } });
+      } catch (error) {
+        console.error('Erro ao criar reserva:', error);
+        setMensagem('ERRO: Solicitação de reserva não criada, tente novamente!')
       }
-    } catch (error) {
-      // Exibe mensagem de erro em caso de falha na reserva
-      console.error('Erro ao reservar sala:', error.message);
-    }
-  };
+  } catch (error) {
+    console.error('Erro ao criar reserva:', error);
+    setMensagem('ERRO: Solicitação de reserva não criada, tente novamente!')
+  }
+};
+
+const todosOsHorarios = [
+  '07:15', '08:00', '08:45', '09:30', '09:45', '10:30', '11:15',
+  // '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
+  // '19:00', '19:45', '20:30', '21:30', '22:15'
+];
+
+// Função para filtrar os horários disponíveis com base na data selecionada
+const obterHorariosDisponiveis = (dataSelecionada, chave) => {
+  // Adicione aqui a lógica para obter os horários reservados para a data selecionada, se necessário
+  // Por enquanto, retornaremos todos os horários, pois não temos essa lógica implementada ainda
+  return todosOsHorarios;
+};
+
+// Função para filtrar os horários disponíveis com base na data e hora selecionadas
+const obterHorariosFiltrados = (dataSelecionada, horaSelecionada) => {
+  const horasDisponiveis = todosOsHorarios.filter(horario => horario > horaSelecionada);
+
+  return horasDisponiveis;
+};
+
+//LOGICA COM ERRO
+// const obterHorariosDisponiveis = async (dataSelecionada) => {
+//   try {
+//     // Chama a API para obter os detalhes das reservas para a data
+//     const response = await api.get('/reserva/detalhes/data', { params: { 'dt_reserva': dataSelecionada } });
+
+//     // Verifica se a resposta possui detalhes
+//     if (!response.data || typeof response.data !== 'object' || !response.data.detalhes || !Array.isArray(response.data.detalhes)) {
+//       console.error('Resposta inválida:', response.data);
+//       return [];
+//     }
+
+//     // Extrai os horários reservados da resposta
+//     const horariosReservados = response.data.detalhes.map(detalhe => detalhe.horario_reservado);
+
+//     // Filtra os horários disponíveis
+//     const horariosDisponiveis = todosOsHorarios.filter(horario => {
+//       // Verifica se o horário está reservado para a data selecionada
+//       return !horariosReservados.includes(horario);
+//     });
+
+//     return horariosDisponiveis;
+//   } catch (error) {
+//     console.error('Erro ao obter horários disponíveis:', error);
+//     // Trate o erro de acordo com sua lógica de aplicação
+//     return [];
+//   }
+// };
+
+// Função para lidar com a reserva dos horários selecionados
+
+const handleReservar = () => {
+  // Adicione aqui a lógica para reservar os horários selecionados, se necessário
+  console.log('Horários selecionados para reserva:', horariosSelecionados);
+  if (horariosSelecionados.some(horario => horariosReservados.includes(horario))) {
+    setMensagem('O horário selecionado não está disponível. Por favor, escolha outro horário.');
+    return;
+  }
+};
+
+// Função para lidar com a mudança na data
+const handleDateChange = (event) => {
+  setDataSelecionada(event.target.value);
+};
+
+const handleHoraInicialChange = (event) => {
+  const horaSelecionada = event.target.value;
+  const horasDisponiveis = obterHorariosFiltrados(dataSelecionada, horaSelecionada);
   
-  // Renderiza o componente JSX
-  return (
-    <div>
-      {/* Componentes de cabeçalho e rodapé */}
-      <Header />
-      <section className="sessao__chave">
-        <div className="chave container" data-chave="">
-          <img className="chave__imagem" src="https://www.pontoxtecidos.com.br/static/567/sku/155904889647122.jpg" alt="Imagem da chave" />
-          <div className="chave__info">
-            <div className="chave__info__descricao">
-              <div className="formulario">
-                <div className="formulario-login container">
+  // Define a hora inicial
+  setHorarioInicial(horaSelecionada);
+
+  // Definir as horas disponíveis para o segundo select
+  setHorariosDisponiveisSegundoSelect(horasDisponiveis);
+};
+
+// Obter todos horários disponíveis com base na data selecionada
+const horariosDisponiveis = obterHorariosDisponiveis();
+
+console.log('das', horarioInicial);
+console.log('até às', horarioFinal);
+
+return (
+  <div>
+    {/* Componentes de cabeçalho e rodapé */}
+    <Header />
+    <section className="sessao__chave">
+      <div className='container_botao'>
+        <a className="local_botao" href="/main"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/main', { state: { user: userData } })
+          }}>Voltar:</a>
+      </div>
+      <div className="chave container" data-chave="">
+        <div className="chave__info">
+          <div className="chave__info__descricao">
+            <div className="formulario">
+              <div className="formulario-login container">
+                <form className="formulario-login_form">
+
                   {/* Título do formulário */}
-                  <h3 className="formulario-login__titulo">Nome da sala</h3>
-                  <form className="formulario-login_form">
-                    {/* Campo de entrada para a situação (readonly) */}
-                    <div className="formulario-login__input-container">
-                      <input
-                        name="situacao"
-                        id="situacao"
-                        className="input inputs"
-                        type="text"
-                        placeholder="Situação"
-                        required
-                        data-tipo="situacao"
-                        value={situacao}
-                        onChange={(e) => setSituacao(e.target.value)}
-                        readOnly
-                      />
-                      <label className="input-label" htmlFor="situacao">
-                        Situação:
-                      </label>
-                      <span className="input-message-error">
-                        Este campo não é válido
-                      </span>
-                    </div>
-
-                    {/* Campo de entrada para o código de permissão (condicional) */}
-                    {user.cd_cargo === 'A0001' && (
-                      <div className="formulario-login__input-container">
-                        <input
-                          name="codigoPermissao"
-                          id="codigoPermissao"
-                          className="input inputs"
-                          type="text"
-                          placeholder="Código de Permissão"
-                          required
-                          value={codigoPermissao}
-                          onChange={(e) => setCodigoPermissao(e.target.value)}
-                        />
-                        <label className="input-label" htmlFor="codigoPermissao">
-                          Código de Permissão:
-                        </label>
-                        <span className="input-message-error">
-                          Este campo não é válido
-                        </span>
-                      </div>
+                  <h3 className="titulo">Reservar: {chave.nm_chave}</h3>
+                  <div className='container-mensagem'>
+                    {mensagem && <p className='mensagem_reserva'>{mensagem}</p>}
+                    {permitir === false && (
+                      <button
+                        className="boton-formulario-login"
+                        onClick={() => {
+                          setTimeout(() => {
+                            navigate('/pedidosEstudante');
+                          }, 100);
+                        }}
+                      >
+                        faça o pedido
+                      </button>
                     )}
+                  </div>
 
-                    {/* Campo de entrada para a data e horário */}
-                    <div id="previsao" className="formulario-login__input-container">
-                      <input
-                        name="data"
-                        id="data"
-                        className="input inputs input-contraseña"
-                        type="datetime-local"
-                        placeholder="date"
-                        required
-                        data-tipo="date"
-                        value={data}
-                        onChange={(e) => setData(e.target.value)}
-                      />
-                      <label className="input-label" htmlFor="data">
-                        Data e Horário:
-                      </label>
-                      <span className="input-message-error">
-                        Este campo não é válido
-                      </span>
-                    </div>
+                  {/* Campo de entrada para a situação (readonly) */}
+                  <div className="formulario-login__input-container">
+                    <input
+                      name="situacao"
+                      id="situacao"
+                      className="input inputs"
+                      type="text"
+                      placeholder="Situação"
+                      required
+                      data-tipo="situacao"
+                      value={situacao}
+                      onChange={(e) => setSituacao(e.target.value)}
+                      readOnly
+                    />
+                    <label className="input-label" htmlFor="situacao">
+                      Situação:
+                    </label>
+                    <span className="input-message-error">
+                      Este campo não é válido
+                    </span>
+                  </div>
 
-                    {/* Botão para reservar a sala */}
-                    <button
-                      className="boton-formulario-login"
-                      onClick={handleReservarSala}
-                    >
-                      Reservar Sala
-                    </button>
-                  </form>
-                </div>
+                  {/* Campo de entrada para a data e horário */}
+                  <div id="previsao" className="formulario-login__input-container">
+                  
+                  {/* Captura o dia */}
+                    <input type="date" onChange={handleDateChange} />
+
+                  {/* Captura a hora inicial */}
+                  <div className='formulario-approved__input-container'>
+                    <label for="select-horario1" className='input-label'>Horário inicial:</label>
+                    <select name="select-horario1" className="input inputs" required 
+                    onChange={handleHoraInicialChange}>
+                      {todosOsHorarios.map(horario => (
+                          <option
+                            id={horario}
+                            value={horario}
+                          >{horario}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {/* Captura a hora final */}
+                  <div className='formulario-approved__input-container'>
+                    <label htmlFor="select-horario2" className='input-label'>Horário final:</label>
+                    <select name="select-horario2" className="input inputs" required
+                     onChange={(e) => setHorarioFinal(e.target.value)}>
+                      {horariosDisponiveisSegundoSelect.map(horario => (
+                        <option key={horario} value={horario}>{horario}</option>
+                      ))}
+                    </select>
+                  </div>                
+                    {/* Botão para reservar os horários selecionados */}
+                    <button onClick={handleReservar}>Reservar</button>
+                  </div>
+
+                  {/* Botão para reservar a sala */}
+                  <button
+                    className="boton-formulario-login"
+                    onClick={handleReservarSala}
+                  >
+                    Reservar Sala
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <Footer />
-    </div>
-  );
+      </div>
+    </section>
+    <Footer />
+  </div>
+);
 }
 
 export default ReservaForm;

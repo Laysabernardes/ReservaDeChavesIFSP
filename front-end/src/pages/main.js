@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { renderizarLocais } from '../renderizar.js';
 import { useNavigate, useLocation } from 'react-router-dom'; // Importa useNavigate
 import { useUser } from '../UserContext.js';
+import { useSolicitacoes } from '../SolicitacoesContext';
 import api from '../api'; // Importe a instância do Axios
 
 import '../css/main.css'; // Importa o estilo CSS para o componente main
@@ -23,9 +24,6 @@ const buscaLocais = async (categoria) => {
 
     // Filtra os locais com base na categoria
     const locais = data.filter(local => local.ds_chave === categoria);
-
-
-
     // Retorna a lista de locais
     return locais;
   } catch (error) {
@@ -37,10 +35,12 @@ const buscaLocais = async (categoria) => {
 
 // Componente principal do main
 const Main = () => {
+  
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = location.state ? location.state.userData : null;
+  //const userData = location.state ? location.state.userData : null;
 
   console.log('Dados do Usuário em Main:', userData);
 
@@ -49,9 +49,12 @@ const Main = () => {
   const [locaisSalas, setLocaisSalas] = useState([]);
   const [locaisLabs, setLocaisLabs] = useState([]);
   const [locaisDiversos, setLocaisDiversos] = useState([]);
+  const { temSolicitacoesPendentes, buscarSolicitacoes } = useSolicitacoes();
 
   // Efeito que é executado ao montar o componente
   useEffect(() => {
+
+
     // Função assíncrona para buscar os locais
     const fetchData = async () => {
       try {
@@ -70,9 +73,10 @@ const Main = () => {
       }
     };
     console.log('Dados do Usuário em Main:', userData);
+    console.log('Dados do pedido em Main:', temSolicitacoesPendentes);
     // Executa a função de busca ao montar o componente
     fetchData();
-  }, [userData]); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
+  }, []); // O segundo argumento vazio significa que o efeito ocorre apenas uma vez na montagem do componente
 
   // Renderização do componente principal
   return (

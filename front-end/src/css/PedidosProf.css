@@ -1,0 +1,148 @@
+
+body {
+  
+  font-family: 'Raleway', sans-serif;
+}
+.formulario-prof{
+	width: 100%;
+    background-color: var(--cor-de-fundo);
+    /* padding-top: 5rem; */
+    padding-bottom: 5rem;
+}
+.formulario-login__h2{
+	font-size: 1.5rem;
+}
+.formulario_titulo {
+    margin-bottom: 2.5rem;            /* Margem inferior de 3 unidades de medida */
+    font-weight: 800;               /* Peso da fonte 800 (negrito) */
+    font-size: 1.5rem;               /* Tamanho da fonte 1.5 unidades de medida */
+}
+.sem-pedido{
+	margin: 2rem 2rem 2rem 0;
+	font-weight: bold;
+}
+.radio-buttons-container {
+	display: lex;
+	flex-direction: row;
+	gap: 1rem;
+	justify-content: center;
+  }
+  
+  .radio-buttons-container input {
+	margin: 0.5rem;
+  }
+.boton-form-aceitar {
+	border-radius: 5px; /* Arredonda os cantos do botão */
+	padding: 1rem 2rem; /* Adiciona preenchimento interno ao botão */
+	color: var(--branco); /* Define a cor do texto do botão como branco */
+	background-color: var(--cor-de-destaque); /* Define a cor de fundo do botão com uma variável específica */
+	font-weight: 500; /* Define a espessura da fonte do botão */
+	border: none; /* Remove a borda padrão do botão */
+    transition: all 0.2s ease; /* Adiciona um tempo para a transição ao passar o mouse */
+	width: 100%;
+}
+.boton-form-recusar{
+	border-radius: 5px; /* Arredonda os cantos do botão */
+	padding: 1rem 2rem; /* Adiciona preenchimento interno ao botão */
+	color: var(--branco); /* Define a cor do texto do botão como branco */
+	background-color: red; /* Define a cor de fundo do botão com uma variável específica */
+	font-weight: 500; /* Define a espessura da fonte do botão */
+	border: none; /* Remove a borda padrão do botão */
+    transition: all 0.2s ease; /* Adiciona um tempo para a transição ao passar o mouse */
+	width: 100%;
+	
+}
+
+
+/* Efeito de sombra quando o cursor passa sobre o botão no formulário */
+.boton-form:hover {
+	box-shadow: 1px 1px 8px 0px var(--cor-de-destaque); /* Adiciona uma sombra sutil ao botão ao passar o cursor sobre ele */
+	cursor: pointer; /* Muda o cursor para uma mão quando está sobre o botão, indicando que é clicável */
+}
+
+.formulario-pedidos {
+    width: 100%;                    /* Largura total */
+    background-color:white;  /* Cor de fundo personalizada */
+    padding-top: 0.5rem;              /* Espaçamento superior de 5 unidades de medida */
+    padding-bottom: 0.5rem;           /* Espaçamento inferior de 5 unidades de medida */
+	display: flex;                  /* Configuração de exibição flexível para os itens do contêiner */
+    flex-direction: column;         /* Organização dos itens em coluna */
+    justify-content: center;        /* Centralização vertical dos itens */
+    align-items: center;            /* Centralização horizontal dos itens */
+	border-radius: 1.5rem;
+}
+
+
+.container-pedidos{
+	position: relative;                /* Define a posição do contêiner em relação ao elemento pai */
+	margin-bottom: 1rem;               /* Adiciona uma margem na parte inferior do contêiner */
+	display: flex;                     /* Configuração de exibição flexível para os itens do contêiner */
+	flex-direction: column;            /* Organização dos itens em coluna */
+	justify-content: flex-end;         /* Alinha os itens na extremidade inferior do contêiner */
+	box-sizing: border-box;            /* Configura a caixa para incluir bordas e preenchimento no tamanho total */
+	width: 100%;
+	
+}
+
+.formulario-pedidos {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin: 10px 0;
+  }
+  
+  .container-pedidos {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+  }
+  
+  
+  .radio-buttons-container {
+	display: flex;
+	gap: 10px;
+	width: 100%;
+  }
+  
+  .boton-form-aceitar,
+  .boton-form-recusar {
+	margin-top: 1.5rem;
+	padding: 10px;
+	font-size: 14px;
+	cursor: pointer;
+  }
+
+  .container-texto {
+	margin-bottom:  1.5rem;; /* Adicione um espaço na parte inferior do container de texto */
+  }
+ 
+.container-botao{
+	text-align:right;
+	width: 100%;
+	margin: 2rem;
+}
+  .local_botao{
+    color: var( --cor-de-destaque);
+    font-weight: 800;
+	
+	
+}
+
+.local_botao::after {
+    content: '🡪';
+    color:var( --cor-de-destaque);
+    margin-left: 0.6rem;
+}
+  
+/* Mídia para telas menores (por exemplo, até 768 pixels) */
+@media only screen and (max-width: 768px) {
+	.formulario-pedidos {
+	  padding: 1rem;
+	}
+  
+	.boton-form-aceitar,
+	.boton-form-recusar {
+	  padding: 0.8rem;
+	  font-size: 12px;
+	}
+  }

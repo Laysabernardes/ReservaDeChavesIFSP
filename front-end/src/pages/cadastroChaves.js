@@ -1,10 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './header.js';
 import Footer from './footer.js';
 import '../css/cadastroChave.css';
 
+import { useNavigate, useLocation } from 'react-router-dom'; // Importa useNavigate
+
+import api from '../api';
 
 function Cadastro() {
+
+  const [mensagem, setMensagem] = useState('');
+  const [nmChave, setNmChave] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [dsObs, setDsObs] = useState('');
+
+  // Obtém a função navigate do React Router para redirecionamento
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // const userData = location.state ? location.state.userData : null;
+  // console.log('Dados do Usuário em pedidos:', userData);
+
+  // Obtém dados do usuário do armazenamento local (localStorage)
+  const userData = JSON.parse(localStorage.getItem('userData'));
+
+  // Define o prontuário e o nome do usuário com base nos dados do usuário, se disponíveis
+  const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
+  const userName = userData ? userData.nm_usuario : 'Usuário';
+
+  const payload = {
+    nm_chave: nmChave,
+    ds_chave: categoria,
+    ds_status: "livre",
+    ds_obs_chave: dsObs
+  };
+
+  const criarChave = async () => {
+    const response = await api.post('/chaves', payload);
+    setMensagem('Chave Criada com sucesso!');
+    alert("Chave criada!")
+    console.log("Criada a chave:", response.data);
+  }
+
   return (
     <div>
       <Header />
@@ -20,6 +57,7 @@ function Cadastro() {
                 type="number"
                 placeholder=""
                 required
+                onChange={(e) => setNmChave(e.target.value)}
               />
               <label className="input-label" htmlFor="reservaName">
                 Número da chave:
@@ -32,32 +70,41 @@ function Cadastro() {
                 Tipo de sala:
               </label>
               <div className="radio-buttons-container">
-                <input
-                  type="radio"
-                  id="sala"
-                  name="categoria"
-                  value="Sala"
-                  required
-                />
-                <label htmlFor="sala">Sala</label>
+                <div className='centralizar'>
+                  <input
+                    type="radio"
+                    id="sala"
+                    name="categoria"
+                    value="sala"
+                    required
+                    onChange={(e) => setCategoria(e.target.value)}
+                  />
+                  <label htmlFor="sala">Sala</label>
+                </div>
+                <div className='centralizar'>
+                  <input
+                    type="radio"
+                    id="laboratorio"
+                    name="categoria"
+                    value="laboratorio"
+                    required
+                    onChange={(e) => setCategoria(e.target.value)}
+                  />
+                  <label htmlFor="laboratorio">Laboratório</label>
+                </div>
 
-                <input
-                  type="radio"
-                  id="laboratorio"
-                  name="categoria"
-                  value="Laboratório"
-                  required
-                />
-                <label htmlFor="laboratorio">Laboratório</label>
+                <div className='centralizar'>
+                  <input
+                    type="radio"
+                    id="outro"
+                    name="categoria"
+                    value="outro"
+                    required
+                    onChange={(e) => setCategoria(e.target.value)}
+                  />
+                  <label htmlFor="outro">Outro</label>
+                </div>
 
-                <input
-                  type="radio"
-                  id="outro"
-                  name="categoria"
-                  value="Outro"
-                  required
-                />
-                <label htmlFor="outro">Outro</label>
               </div>
             </div>
             <div className="formulario-cadastro__input-container">
@@ -67,6 +114,7 @@ function Cadastro() {
                 className="input inputs"
                 type="text"
                 placeholder=""
+                onChange={(e) => setDsObs(e.target.value)}
               />
 
               <label className="input-label" htmlFor="aprovadorPor">
@@ -74,17 +122,13 @@ function Cadastro() {
               </label>
             </div>
 
-            <input
-              className="boton-formulario-cadastro"
-              type="submit"
-              name="aprovar"
-              id="enviar-aprovado"
-              value="Cadastrar"
-              onClick={(e) => {
-                // Redireciona o usuário para a página principal
-                window.location.replace("/main");
-              }}
-            />
+            <button
+                    className="boton-formulario-approved"
+                    type="button"
+                    onClick={criarChave}
+                  >
+                    Aceitar
+            </button>
 
           </form>
         </div>

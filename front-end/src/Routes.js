@@ -6,7 +6,10 @@ import Reserva from './pages/Reserva.js';
 import Cadastro from './pages/cadastroChaves.js';
 import MostraChave from './pages/mostraChaves.js';
 import PaginaDeSolicitacao from './pages/solicitacao.js';
-import Adm from './pages/adm-page.js'
+import Adm from './pages/adm-page.js';
+import Perfil from '../src/pages/perfil.js';
+import PedidosProf from './pages/pedidosProf.js';
+import PedidosEstudante from './pages/pedidosEstudante.js';
 
 function Routes() {
   return (
@@ -18,6 +21,9 @@ function Routes() {
       <Route path="/mostraChave" element={<MostraChave />} />
       <Route path="/solicitacao" element={<PaginaDeSolicitacao />} />
       <Route path="/adm" element={<Adm />} />
+      <Route path="/perfil" element={<Perfil/>}/>
+      <Route path="/pedidos" element={<PedidosProf/>}/>
+      <Route path="/pedidosEstudante" element={<PedidosEstudante/>}/>
     </RouterRoutes>
 
   );

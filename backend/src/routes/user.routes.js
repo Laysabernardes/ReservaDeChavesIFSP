@@ -9,6 +9,11 @@ const router = Router();
 // Cria uma instância do Router para definir as rotas.
 
 router.post("/", controller.login);
+router.patch("/senha", controller.updateSenha);
+// Rota para encontrar pedidos associados a um estudante (método HTTP GET)
+router.get("/nome/:cd_matricula_usuario", controller.findNome);
+router.get("/cargo/:cd_cargo", controller.findCargo);
+
 // Define uma rota POST no endpoint raiz ("/") que será acessada quando uma solicitação POST for feita para o servidor.
 // Quando essa rota é acessada, a função "login" do controlador será chamada para processar a solicitação.
 
