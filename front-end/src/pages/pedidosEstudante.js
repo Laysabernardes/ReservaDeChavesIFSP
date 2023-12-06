@@ -385,7 +385,7 @@ function PedidosEstudante() {
                     type="button"
                     onClick={gerarPedido}
                   >
-                    Aceitar
+                    Enviar Pedido
                   </button>
                   {/* Exibe mensagens relacionadas à alteração de senha, se houver */}
                   {mensagem && <p className='mensagem'>{mensagem}</p>}
