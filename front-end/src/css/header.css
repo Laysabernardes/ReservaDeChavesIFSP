@@ -88,7 +88,7 @@ a {
     .nav__menu {
         margin-top: 4vh;
         margin-bottom: 1vh;
-        position: fixed;
+        position: absolute;
         top: 8vh;
         bottom: 0vh;
         right: 0;
@@ -118,6 +118,8 @@ a {
 /* Aplica estilos quando a classe 'nav__active' está presente (menu expandido) */
 .nav__active {
     transform: translateX(0%);
+    z-index: 100;
+    height: 165vh;
 }
 
 /* Estiliza as linhas do botão de alternância quando a classe 'toggle' está presente */
