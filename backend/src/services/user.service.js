@@ -69,6 +69,19 @@ class UserServices {
       });
     });
   }
+  findTabelaCargo = (cd_cargo) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM Cargo WHERE cd_cargo = ?;', cd_cargo, (err, results) => {
+        if (results.length === 0) {
+          console.error('Erro na busca', err);
+          reject(err);
+        } else {
+          console.log('Busca concluida:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
 }
 
 // Exporta a classe UserServices para ser utilizada em outros módulos
