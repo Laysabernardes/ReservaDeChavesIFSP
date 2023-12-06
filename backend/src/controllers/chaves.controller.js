@@ -9,6 +9,11 @@ class ChavesController {
             if (!nm_chave || !ds_chave || !ds_status || !ds_obs_chave) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
+            
+            const chaveExistente = await services.findByCategoria(nm_chave);
+            if (chaveExistente) {
+                return res.status(400).send({ message: `A chave '${nm_chave}' já está registrada no banco de dados.` });
+            }
 
             //await é usado junto com async
             await services.create(nm_chave, ds_chave, ds_status, ds_obs_chave);
@@ -161,3 +166,5 @@ class ChavesController {
 };
 
 module.exports = ChavesController;
+
+
