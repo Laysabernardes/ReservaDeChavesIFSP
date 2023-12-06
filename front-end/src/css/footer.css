@@ -1,256 +1,131 @@
-
-
 /* Estiliza a seção de rodapé, adicionando espaço interno superior e inferior e definindo 
    a cor de fundo com uma variável de cor específica */
 .footer {
-    padding: 3rem 0; /* 3rem de espaço acima e abaixo do conteúdo dentro do rodapé */
-    background-color: var(--cor-do-fundo-footer); /* Cor de fundo usando uma variável */
+    padding: 3rem 0;
+    /* 3rem de espaço acima e abaixo do conteúdo dentro do rodapé */
+    background-color: var(--cor-do-fundo-footer);
+    /* Cor de fundo usando uma variável */
 }
 
 /* Configuração para o contêiner principal dentro do rodapé, usando flexbox para organizar os elementos */
 .conteudo__footer {
-    display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-    flex-direction: row; /* Alinha os elementos em linha horizontal */
-    justify-content: space-between; /* Distribui os elementos uniformemente ao longo do eixo principal */
-    width: 94%; /* Define a largura do contêiner principal para 94% da largura do elemento pai */
+    display: flex;
+    /* Usa o modelo flexível para organizar os elementos internos */
+    flex-direction: row;
+    /* Alinha os elementos em linha horizontal */
+    justify-content: space-between;
+    /* Distribui os elementos uniformemente ao longo do eixo principal */
+    width: 94%;
+    /* Define a largura do contêiner principal para 94% da largura do elemento pai */
 }
 
 /* Configuração para a seção de informações dentro do rodapé, como links, formulário, etc. */
 .conteudo__footer_info {
-    width: 40%; /* Define a largura dessa seção para 40% do contêiner principal */
-    display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-    flex-direction: row; /* Alinha os elementos em linha horizontal */
-    align-items: flex-start; /* Alinha os itens ao início do eixo transversal (vertical) */
-    justify-content: space-between; /* Distribui os elementos uniformemente ao longo do eixo principal */
+    width: 50%;
+    /* Define a largura dessa seção para 40% do contêiner principal */
+    display: flex;
+    /* Usa o modelo flexível para organizar os elementos internos */
+    flex-direction: row;
+    /* Alinha os elementos em linha horizontal */
+    align-items: flex-start;
+    /* Alinha os itens ao início do eixo transversal (vertical) */
+    justify-content: space-between;
+    /* Distribui os elementos uniformemente ao longo do eixo principal */
 }
+
 /* Configuração para o contêiner do logotipo dentro do rodapé */
 .container__logo {
-    display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-    align-items: center; /* Centraliza os elementos verticalmente dentro do contêiner */
-    margin: 0% 15%; /* Adiciona margem à esquerda e à direita do contêiner (espaço em branco) */
+    display: flex;
+    /* Usa o modelo flexível para organizar os elementos internos */
+    align-items: center;
+    /* Centraliza os elementos verticalmente dentro do contêiner */
 }
 
 /* Configuração para o logotipo dentro do rodapé */
 .footer__logo {
-    width: 80%; /* Define a largura do logotipo para 80% do contêiner do logotipo */
+    width: 80%;
+    /* Define a largura do logotipo para 80% do contêiner do logotipo */
 }
 
 /* Estilo para o título do rodapé, como por exemplo, um slogan ou nome da empresa */
 .footer__titulo {
-    text-align: left; /* Alinha o texto à esquerda dentro do contêiner do título */
+    text-align: center;
+    /* Alinha o texto à esquerda dentro do contêiner do título */
+}
+
+.rodape__texto {
+    text-align: center;
+    margin: .3rem 0;
+    /* Adiciona uma pequena margem na parte superior e inferior do texto no rodapé */
+
+}
+
+.texto_footer {
+    text-align: justify;
+    text-indent: 2em;
 }
 
 /* Configuração para o contêiner de links dentro do rodapé */
 .footer_container_links {
-    height: 100%; /* Define a altura do contêiner de links para ocupar 100% do espaço disponível */
-    display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-    flex-direction: column; /* Organiza os elementos em uma coluna vertical */
-    justify-content: space-between; /* Distribui uniformemente os elementos ao longo do eixo principal (vertical) */
+    height: 100%;
+    /* Define a altura do contêiner de links para ocupar 100% do espaço disponível */
+    display: flex;
+    /* Usa o modelo flexível para organizar os elementos internos */
+    flex-direction: column;
+    /* Organiza os elementos em uma coluna vertical */
+    justify-content: space-between;
+    /* Distribui uniformemente os elementos ao longo do eixo principal (vertical) */
+    margin-left: 5%;
 }
 
 /* Configuração para o formulário dentro do rodapé */
 .footer_formulario {
-    width: 50%; /* Define a largura do formulário para ocupar 50% do espaço disponível */
+    width: 40%;
+    /* Define a largura do formulário para ocupar 50% do espaço disponível */
 }
 
 /* Estilo para o título do formulário dentro do rodapé */
 .footer_formulario__titulo {
-    margin-bottom: 1rem; /* Adiciona margem na parte inferior do título do formulário */
-    font-weight: 800; /* Define a espessura da fonte como negrito */
+    margin-bottom: 1rem;
+    /* Adiciona margem na parte inferior do título do formulário */
+    font-weight: 800;
+    /* Define a espessura da fonte como negrito */
 }
 
-/* Configuração para o contêiner geral que envolve cada campo de entrada do formulário */
-.formulario__input-container {
-    position: relative; /* Define a posição relativa para permitir posicionamento absoluto dos elementos filhos */
-    margin-bottom: 1rem; /* Adiciona margem na parte inferior do contêiner */
-    display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-    flex-direction: column; /* Organiza os elementos em uma coluna vertical */
-    justify-content: flex-end; /* Alinha os elementos na parte inferior do contêiner */
-    box-sizing: border-box; /* Garante que as bordas e o preenchimento não aumentem o tamanho do contêiner */
-}
-
-/* Configuração para o campo de entrada de texto no formulário */
-.input {
-    background-color: var(--branco); /* Define a cor de fundo do campo de entrada como branco */
-    border: none; /* Remove a borda padrão do campo de entrada */
-    box-sizing: border-box; /* Garante que as bordas e o preenchimento não aumentem o tamanho do campo de entrada */
-    border-bottom: 1px solid var(--cor-de-destaque); /* Adiciona uma linha na parte inferior do campo de entrada */
-    padding: 1.375rem 0.5rem 0.5rem; /* Adiciona preenchimento ao redor do campo de entrada */
-    height: 3.25rem; /* Define a altura do campo de entrada */
-    width: 100%; /* Define a largura do campo de entrada para ocupar 100% do contêiner pai */
-}
-
-/* Aplica estilos comuns para ambos os campos de entrada de texto e áreas de texto */
-.input,
-.textarea {
-    font-size: 1rem; /* Define o tamanho da fonte para 1rem (unidade relativa ao tamanho base) */
-    font-family: 'Raleway'; /* Usa a fonte 'Raleway' para os campos de entrada */
-}
-
-/* Esconde o texto de espaço reservado (placeholder) quando o campo de entrada está preenchido */
-.input::placeholder {
-    visibility: hidden; /* Torna o texto de espaço reservado invisível quando o campo de entrada não está vazio */
-    color: var(--cor-de-realce); /* Define a cor do texto de espaço reservado */
-}
-
-/* Remove a borda de foco (outline) ao clicar no campo de entrada */
-.input:focus {
-    outline: none; /* Remove a borda de foco padrão do campo de entrada */
-}
-
-/* Configuração para o rótulo (label) do campo de entrada */
-.input-label {
-    position: absolute; /* Define a posição absoluta para permitir um posicionamento específico */
-    top: 1.375rem; /* Define a distância do topo do contêiner pai */
-    left: 0.5rem; /* Define a distância da esquerda do contêiner pai */
-    transition: all 0.25s; /* Adiciona uma transição suave a todas as propriedades que mudam ao longo do tempo */
-}
-/* Estilos para o rótulo do campo de entrada que aparece acima do campo quando ele é preenchido ou focado */
-.input:not(:placeholder-shown) + .input-label,
-.input:focus + .input-label {
-    font-size: 0.875rem; /* Reduz o tamanho da fonte quando o campo está preenchido ou focado */
-    top: 0.25rem; /* Ajusta a posição do rótulo para cima quando o campo está preenchido ou focado */
-    transition: all 0.25s; /* Adiciona uma transição suave a todas as propriedades que mudam ao longo do tempo */
-}
-
-/* Estilos adicionais para um contêiner de entrada inválido (por exemplo, quando a entrada é incorreta) */
-.input-container--invalid {
-    margin-bottom: 0.5rem; /* Adiciona margem na parte inferior do contêiner inválido */
-}
-
-/* Estilos para o campo de entrada dentro de um contêiner inválido */
-.input-container--invalid .input {
-    border: 1px solid var(--erro); /* Adiciona uma borda vermelha ao redor do campo inválido */
-    border-radius: 7px; /* Arredonda os cantos do campo inválido */
-}
-
-/* Estilos para o rótulo do campo de entrada dentro de um contêiner inválido */
-.input-container--invalid .input-label {
-    color: var(--erro); /* Define a cor do rótulo como vermelho no caso de um contêiner inválido */
-}
-
-/* Esconde a mensagem de erro padrão quando não há erro */
-.input-message-error {
-    display: none; /* Inicialmente, esconde a mensagem de erro */
-}
-
-/* Estilos para a mensagem de erro do campo de entrada dentro de um contêiner inválido */
-.input-container--invalid .input-message-error {
-    color: var(--erro); /* Define a cor da mensagem de erro como vermelho */
-    display: block; /* Exibe a mensagem de erro quando o campo é inválido */
-    margin-top: 0.5rem; /* Adiciona margem na parte superior da mensagem de erro */
-    padding-left: 0.5rem; /* Adiciona preenchimento à esquerda da mensagem de erro */
-}
-
-/* Estilos para a área de texto no formulário */
-.textarea {
-    background-color: var(--branco); /* Define a cor de fundo da área de texto como branco */
-    box-sizing: border-box; /* Garante que as bordas e o preenchimento não aumentem o tamanho da área de texto */
-    border: none; /* Remove a borda padrão da área de texto */
-    border-bottom: 1px solid var(--cor-de-destaque); /* Adiciona uma linha na parte inferior da área de texto */
-    padding: 0.5rem; /* Adiciona preenchimento ao redor da área de texto */
-    border-radius: 7px; /* Arredonda os cantos da área de texto */
-    width: 100%; /* Define a largura da área de texto para ocupar 100% do contêiner pai */
-    min-height: 3rem; /* Define a altura mínima da área de texto */
-    resize: none; /* Impede que os usuários redimensionem a área de texto */
-}
-/* Configuração para o contêiner que envolve a área de texto no formulário */
-.formulario__textarea-container {
-	position: relative; /* Define a posição relativa para permitir posicionamento absoluto dos elementos filhos */
-	margin-top: 2rem; /* Adiciona margem na parte superior do contêiner da área de texto */
-	margin-bottom: 1rem; /* Adiciona margem na parte inferior do contêiner da área de texto */
-}
-
-/* Esconde o texto de espaço reservado (placeholder) da área de texto quando ela está preenchida */
-.textarea::placeholder {
-	visibility: hidden; /* Torna o texto de espaço reservado invisível quando a área de texto não está vazia */
-}
-
-/* Remove a borda de foco (outline) ao clicar na área de texto */
-.textarea:focus {
-	outline: none; /* Remove a borda de foco padrão da área de texto */
-}
 
 /* Configuração para o rótulo (label) da área de texto */
 .input-label {
-	position: absolute; /* Define a posição absoluta para permitir um posicionamento específico */
-	top: 0.5rem; /* Define a distância do topo do contêiner pai */
-	left: 0.5rem; /* Define a distância da esquerda do contêiner pai */
-	transition: all 0.25s; /* Adiciona uma transição suave a todas as propriedades que mudam ao longo do tempo */
-}
-
-/* Estilos para o rótulo da área de texto quando ela está preenchida ou focada */
-.textarea:not(:placeholder-shown) + .input-label,
-.textarea:focus + .input-label {
-	font-size: 0.875rem; /* Reduz o tamanho da fonte quando a área de texto está preenchida ou focada */
-	top: -1.25rem; /* Ajusta a posição do rótulo para cima quando a área de texto está preenchida ou focada */
-	transition: all 0.25s; /* Adiciona uma transição suave a todas as propriedades que mudam ao longo do tempo */
-}
-
-/* Estilos adicionais para um contêiner de área de texto inválido (por exemplo, quando a entrada é incorreta) */
-.textarea-container--invalid {
-	margin-bottom: 0.5rem; /* Adiciona margem na parte inferior do contêiner inválido da área de texto */
-}
-
-/* Estilos para a área de texto dentro de um contêiner inválido */
-.input-container--invalid .textarea {
-	border: 1px solid var(--erro); /* Adiciona uma borda vermelha ao redor da área de texto inválida */
-}
-
-/* Estilos adicionais para o rótulo da área de texto quando ela está em um contêiner inválido (por exemplo, quando a entrada é incorreta) */
-.textarea-container--invalid .input-label {
-	color: var(--erro); /* Define a cor do rótulo como vermelho em um contêiner inválido */
-}
-
-/* Esconde a mensagem de erro padrão da área de texto quando não há erro */
-.textarea-mensagem-erro {
-	display: none; /* Inicialmente, esconde a mensagem de erro da área de texto */
-}
-
-/* Estilos para a mensagem de erro da área de texto dentro de um contêiner inválido */
-.textarea-container--invalid .textarea-mensagem-erro {
-	display: block; /* Exibe a mensagem de erro quando a área de texto é inválida */
-	color: var(--erro); /* Define a cor da mensagem de erro como vermelho */
-	margin-top: 0.5rem; /* Adiciona margem na parte superior da mensagem de erro */
-	padding-left: 0.5rem; /* Adiciona preenchimento à esquerda da mensagem de erro */
-}
-
-/* Estilos para o botão no formulário */
-.boton-form {
-	border-radius: 5px; /* Arredonda os cantos do botão */
-	padding: 1rem 2rem; /* Adiciona preenchimento interno ao botão */
-	color: var(--branco); /* Define a cor do texto do botão como branco */
-	background-color: var(--cor-de-destaque); /* Define a cor de fundo do botão com uma variável específica */
-	font-weight: 500; /* Define a espessura da fonte do botão */
-	border: none; /* Remove a borda padrão do botão */
-    transition: all 0.2s ease; /* Adiciona um tempo para a transição ao passar o mouse */
-}
-
-/* Efeito de sombra quando o cursor passa sobre o botão no formulário */
-.boton-form:hover {
-	box-shadow: 1px 1px 8px 0px var(--cor-de-destaque); /* Adiciona uma sombra sutil ao botão ao passar o cursor sobre ele */
-	cursor: pointer; /* Muda o cursor para uma mão quando está sobre o botão, indicando que é clicável */
+    position: absolute;
+    /* Define a posição absoluta para permitir um posicionamento específico */
+    top: 0.5rem;
+    /* Define a distância do topo do contêiner pai */
+    left: 0.5rem;
+    /* Define a distância da esquerda do contêiner pai */
+    transition: all 0.25s;
+    /* Adiciona uma transição suave a todas as propriedades que mudam ao longo do tempo */
 }
 
 /* Configuração para o rodapé do site */
 .rodape {
-	display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-	flex-direction: column; /* Organiza os elementos em uma coluna vertical */
-	align-items: center; /* Centraliza os elementos horizontalmente no rodapé */
-	justify-content: center; /* Centraliza os elementos verticalmente no rodapé */
-	padding: 1rem 0; /* Adiciona preenchimento ao rodapé, 1rem na parte superior e inferior */
+    display: flex;
+    /* Usa o modelo flexível para organizar os elementos internos */
+    flex-direction: column;
+    /* Organiza os elementos em uma coluna vertical */
+    align-items: center;
+    /* Centraliza os elementos horizontalmente no rodapé */
+    justify-content: center;
+    /* Centraliza os elementos verticalmente no rodapé */
+    padding: 1rem 0;
+    /* Adiciona preenchimento ao rodapé, 1rem na parte superior e inferior */
 }
 
 /* Estilos para o texto no rodapé */
-.rodape__texto {
-	margin: .3rem 0; /* Adiciona uma pequena margem na parte superior e inferior do texto no rodapé */
-}
+
 
 /* ------------------------------------ */
 /* --- Responsividade  ---------------- */
 /* ------------------------------------ */
 
-/* Regras de mídia para telas pequenas (largura máxima de 767 pixels) */
 
 @media only screen and (max-width: 767px) {
 
@@ -261,34 +136,47 @@
 
     /* Organiza o conteúdo do rodapé em uma coluna centralizada */
     .conteudo__footer {
-        display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-        flex-direction: column; /* Organiza os elementos em uma coluna vertical */
-        justify-content: center; /* Centraliza os elementos verticalmente */
-        align-items: center; /* Centraliza os elementos horizontalmente */
+        display: flex;
+        /* Usa o modelo flexível para organizar os elementos internos */
+        flex-direction: column;
+        /* Organiza os elementos em uma coluna vertical */
+        justify-content: center;
+        /* Centraliza os elementos verticalmente */
+        align-items: center;
+        /* Centraliza os elementos horizontalmente */
     }
 
     /* Ajusta a largura e alinhamento do conteúdo de informações no rodapé para telas pequenas */
     .conteudo__footer_info {
-        width: 100%; /* Define a largura para ocupar 100% do contêiner pai */
-        display: flex; /* Usa o modelo flexível para organizar os elementos internos */
-        flex-direction: column; /* Organiza os elementos em uma coluna vertical */
-        align-items: center; /* Centraliza os elementos horizontalmente */
-        text-align: center; /* Centraliza o texto dentro do contêiner */
+        width: 100%;
+        /* Define a largura para ocupar 100% do contêiner pai */
+        display: flex;
+        /* Usa o modelo flexível para organizar os elementos internos */
+        flex-direction: column;
+        /* Organiza os elementos em uma coluna vertical */
+        align-items: center;
+        /* Centraliza os elementos horizontalmente */
+        text-align: center;
+        /* Centraliza o texto dentro do contêiner */
     }
 
     /* Ajusta a margem do contêiner de links no rodapé para telas pequenas */
     .footer_container_links {
-        margin: 1rem 0 2rem 0; /* Adiciona margem na parte superior e inferior, e remove a margem nas laterais */
+        margin: 1rem 0 1rem 0;
+        /* Adiciona margem na parte superior e inferior, e remove a margem nas laterais */
     }
 
     /* Ajusta a margem inferior dos links no rodapé para telas pequenas */
     .footer__link {
-        margin-bottom: 1rem; /* Adiciona margem na parte inferior dos links */
+        margin-bottom: 1rem;
+        align-items: center;
+        /* Adiciona margem na parte inferior dos links */
     }
 
     /* Ajusta a largura do formulário no rodapé para telas pequenas */
     .footer_formulario {
-        width: 90%; /* Define a largura do formulário para ocupar 90% do contêiner pai */
+        width: 90%;
+        /* Define a largura do formulário para ocupar 90% do contêiner pai */
     }
 }
 
@@ -303,21 +191,25 @@
 
     /* Ajusta a direção dos elementos do conteúdo de informações no rodapé para uma coluna em telas médias */
     .contenido__footer_info {
-        flex-direction: column; /* Organiza os elementos em uma coluna vertical */
+        flex-direction: column;
+        /* Organiza os elementos em uma coluna vertical */
     }
 
     /* Ajusta a altura do contêiner de links no rodapé para 75% da altura da tela em telas médias */
     .footer_container_links {
-        height: 75%; /* Define a altura para ocupar 75% da altura da tela */
+        height: 100%;
+        /* Define a altura para ocupar 75% da altura da tela */
     }
 
     /* Ajusta a largura do conteúdo de informações no rodapé para 35% da largura do contêiner pai em telas médias */
     .conteudo__footer_info {
-        width: 35%; /* Define a largura para ocupar 35% do contêiner pai */
+        width: 50%;
+        /* Define a largura para ocupar 35% do contêiner pai */
     }
 
     /* Ajusta a largura do formulário no rodapé para 65% da largura do contêiner pai em telas médias */
     .footer_formulario {
-        width: 65%; /* Define a largura para ocupar 65% do contêiner pai */
+        width: 40%;
+        /* Define a largura para ocupar 65% do contêiner pai */
     }
 }
