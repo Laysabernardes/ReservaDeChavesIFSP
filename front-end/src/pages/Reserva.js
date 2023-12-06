@@ -263,7 +263,7 @@ return (
                         className="boton-formulario-login"
                         onClick={() => {
                           setTimeout(() => {
-                            navigate('/pedidos');
+                            navigate('/pedidosEstudante');
                           }, 100);
                         }}
                       >
