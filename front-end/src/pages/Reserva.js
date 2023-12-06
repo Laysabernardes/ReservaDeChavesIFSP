@@ -157,8 +157,8 @@ function ReservaForm(props) {
 
 const todosOsHorarios = [
   '07:15', '08:00', '08:45', '09:30', '09:45', '10:30', '11:15',
-  '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
-  '19:00', '19:45', '20:30', '21:30', '22:15'
+  // '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
+  // '19:00', '19:45', '20:30', '21:30', '22:15'
 ];
 
 // Função para filtrar os horários disponíveis com base na data selecionada
@@ -296,20 +296,38 @@ return (
 
                   {/* Campo de entrada para a data e horário */}
                   <div id="previsao" className="formulario-login__input-container">
-
+                  
+                  {/* Captura o dia */}
                     <input type="date" onChange={handleDateChange} />
+
+                  {/* Captura a hora inicial */}
+                  <div className='formulario-approved__input-container'>
+                  <label for="select-horario1" className='input-label'>Horário inicial:</label>
+                  <select name="select-horario1" className="input inputs" 
+                  onChange={handleCheckboxChange}>
                     {horariosDisponiveis.map(horario => (
-                      <div key={horario}>
-                        <input
-                          type="checkbox"
+                        <option
                           id={horario}
                           value={horario}
                           checked={horariosSelecionados.includes(horario)}
-                          onChange={handleCheckboxChange}
-                        />
-                        <label htmlFor={horario}>{horario}</label>
-                      </div>
+                        >{horario}</option>
                     ))}
+                  </select>
+                  </div>
+                  {/* Captura a hora final */}
+                  <div className='formulario-approved__input-container'>
+                  <label for="select-horario2" className='input-label'>Horário final:</label>
+                  <select name="select-horario2" className="input inputs" 
+                  onChange={handleCheckboxChange}>
+                    {horariosDisponiveis.map(horario => (
+                      <option
+                        id={horario}
+                        value={horario}
+                        checked={horariosSelecionados.includes(horario)}
+                      >{horario}</option>
+                    ))}
+                  </select>
+                  </div>                  
                     {/* Botão para reservar os horários selecionados */}
                     <button onClick={handleReservar}>Reservar</button>
                   </div>
