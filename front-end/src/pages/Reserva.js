@@ -36,6 +36,10 @@ function ReservaForm(props) {
   const [dataSelecionada, setDataSelecionada] = useState('');
   const [horariosReservados, setHorariosReservados] = useState([]);
   const [horariosSelecionados, setHorariosSelecionados] = useState([]);
+
+  const [horarioInicial, setHorarioInicial] = useState([]);
+  const [horarioFinal, setHorarioFinal] = useState([]);
+
   const [horariosDisponiveisSegundoSelect, setHorariosDisponiveisSegundoSelect] = useState([]);
 
   const [data, setData] = useState('');
@@ -43,7 +47,6 @@ function ReservaForm(props) {
   const userData = JSON.parse(localStorage.getItem('userData'));
 
   const matricula = userData.cd_matricula_usuario;
-  console.log('nosdg', matricula);
 
   useEffect(() => {
     if (userData) {
@@ -221,18 +224,22 @@ const handleDateChange = (event) => {
   setDataSelecionada(event.target.value);
 };
 
-console.log('das',dataSelecionada);
-
 const handleHoraInicialChange = (event) => {
   const horaSelecionada = event.target.value;
   const horasDisponiveis = obterHorariosFiltrados(dataSelecionada, horaSelecionada);
   
+  // Define a hora inicial
+  setHorarioInicial(horaSelecionada);
+
   // Definir as horas disponíveis para o segundo select
   setHorariosDisponiveisSegundoSelect(horasDisponiveis);
 };
 
 // Obter todos horários disponíveis com base na data selecionada
 const horariosDisponiveis = obterHorariosDisponiveis();
+
+console.log('das', horarioInicial);
+console.log('até às', horarioFinal);
 
 return (
   <div>
@@ -303,7 +310,7 @@ return (
                   <div className='formulario-approved__input-container'>
                     <label for="select-horario1" className='input-label'>Horário inicial:</label>
                     <select name="select-horario1" className="input inputs" required 
-                    onChange={handleHoraInicialChange }>
+                    onChange={handleHoraInicialChange}>
                       {todosOsHorarios.map(horario => (
                           <option
                             id={horario}
@@ -315,7 +322,8 @@ return (
                   {/* Captura a hora final */}
                   <div className='formulario-approved__input-container'>
                     <label htmlFor="select-horario2" className='input-label'>Horário final:</label>
-                    <select name="select-horario2" className="input inputs" required>
+                    <select name="select-horario2" className="input inputs" required
+                     onChange={(e) => setHorarioFinal(e.target.value)}>
                       {horariosDisponiveisSegundoSelect.map(horario => (
                         <option key={horario} value={horario}>{horario}</option>
                       ))}
