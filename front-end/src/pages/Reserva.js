@@ -33,12 +33,13 @@ function ReservaForm(props) {
   const [codigoPermissao, setCodigoPermissao] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [permitir, setpermitir] = useState(false);
-  const [dataSelecionada, setDataSelecionada] = useState('');
   const [horariosReservados, setHorariosReservados] = useState([]);
   const [horariosSelecionados, setHorariosSelecionados] = useState([]);
-
+  
+  const [dataSelecionada, setDataSelecionada] = useState('');
   const [horarioInicial, setHorarioInicial] = useState([]);
   const [horarioFinal, setHorarioFinal] = useState([]);
+  const [horariosSelecionadosEntreInicialEFinal, setHorariosSelecionadosEntreInicialEFinal] = useState([]);
 
   const [horariosDisponiveisSegundoSelect, setHorariosDisponiveisSegundoSelect] = useState([]);
 
@@ -224,22 +225,70 @@ const handleDateChange = (event) => {
   setDataSelecionada(event.target.value);
 };
 
-const handleHoraInicialChange = (event) => {
-  const horaSelecionada = event.target.value;
-  const horasDisponiveis = obterHorariosFiltrados(dataSelecionada, horaSelecionada);
-  
-  // Define a hora inicial
-  setHorarioInicial(horaSelecionada);
+// Função para identificar os horários entre o horário inicial e final selecionados
+// const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
+//   const indiceInicial = todosOsHorarios.indexOf(horaInicial);
+//   const indiceFinal = todosOsHorarios.indexOf(horaFinal);
 
-  // Definir as horas disponíveis para o segundo select
-  setHorariosDisponiveisSegundoSelect(horasDisponiveis);
+//   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
+//     const horariosEntre = todosOsHorarios.slice(indiceInicial + 1, indiceFinal);
+//     setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
+//     console.log(setHorariosSelecionadosEntreInicialEFinal(horariosEntre))
+//   } else {
+//     setHorariosSelecionadosEntreInicialEFinal([]);
+//     console.log(setHorariosSelecionadosEntreInicialEFinal([]));
+//   }
+// };
+
+// const handleHoraInicialChange = (event) => {
+//   const horaSelecionada = event.target.value;
+//   const horasDisponiveis = obterHorariosFiltrados(dataSelecionada, horaSelecionada);
+  
+//   // Define a hora inicial
+//   setHorarioInicial(horaSelecionada);
+
+//   // Definir as horas disponíveis para o segundo select
+//   setHorariosDisponiveisSegundoSelect(horasDisponiveis);
+// };
+
+// Função para identificar os horários entre o horário inicial e final selecionados
+const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
+  const indiceInicial = todosOsHorarios.indexOf(horaInicial);
+  const indiceFinal = todosOsHorarios.indexOf(horaFinal);
+
+  if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
+    const horariosEntre = todosOsHorarios.slice(indiceInicial, indiceFinal + 1);
+    setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
+  } else {
+    setHorariosSelecionadosEntreInicialEFinal([]);
+  }
 };
 
-// Obter todos horários disponíveis com base na data selecionada
-const horariosDisponiveis = obterHorariosDisponiveis();
+// Função para lidar com a mudança em ambos os selects de horas (hora inicial e final)
+const handleHoraChange = (event, isHoraInicial) => {
+  const horaInicialSelecionada = isHoraInicial ? event.target.value : horariosDisponiveisSegundoSelect[0]; 
+  // Se for o primeiro select, pega o valor dele; senão, pega o valor do segundo select
+  const horaFinalSelecionada = isHoraInicial ? horariosDisponiveisSegundoSelect[0] : event.target.value; 
+  // Se for o primeiro select, pega o valor do segundo select; senão, pega o valor dele
 
+
+  setHorarioInicial(horaInicialSelecionada);
+  setHorarioFinal(horaFinalSelecionada);
+
+  identificarHorariosSelecionados(horaInicialSelecionada, horaFinalSelecionada);
+
+  if (isHoraInicial) {
+    const horasDisponiveisSegundoSelect = todosOsHorarios.filter(horario => horario > horaInicialSelecionada);
+    setHorariosDisponiveisSegundoSelect(horasDisponiveisSegundoSelect);
+  }
+};
+
+// console.log(identificarHorariosSelecionados(horarioInicial, horarioFinal));
+
+console.log('no dia', dataSelecionada);
 console.log('das', horarioInicial);
 console.log('até às', horarioFinal);
+console.log('total de horas:', horariosSelecionadosEntreInicialEFinal)
 
 return (
   <div>
@@ -310,7 +359,7 @@ return (
                   <div className='formulario-approved__input-container'>
                     <label for="select-horario1" className='input-label'>Horário inicial:</label>
                     <select name="select-horario1" className="input inputs" required 
-                    onChange={handleHoraInicialChange}>
+                    onChange={(e) => handleHoraChange(e, true)}>
                       {todosOsHorarios.map(horario => (
                           <option
                             id={horario}
@@ -323,7 +372,7 @@ return (
                   <div className='formulario-approved__input-container'>
                     <label htmlFor="select-horario2" className='input-label'>Horário final:</label>
                     <select name="select-horario2" className="input inputs" required
-                     onChange={(e) => setHorarioFinal(e.target.value)}>
+                     onChange={(e) => handleHoraChange(e, false)}>
                       {horariosDisponiveisSegundoSelect.map(horario => (
                         <option key={horario} value={horario}>{horario}</option>
                       ))}
