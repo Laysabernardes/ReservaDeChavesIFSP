@@ -36,6 +36,7 @@ function ReservaForm(props) {
   const [dataSelecionada, setDataSelecionada] = useState('');
   const [horariosReservados, setHorariosReservados] = useState([]);
   const [horariosSelecionados, setHorariosSelecionados] = useState([]);
+  const [horariosDisponiveisSegundoSelect, setHorariosDisponiveisSegundoSelect] = useState([]);
 
   const [data, setData] = useState('');
 
@@ -168,6 +169,13 @@ const obterHorariosDisponiveis = (dataSelecionada, chave) => {
   return todosOsHorarios;
 };
 
+// Função para filtrar os horários disponíveis com base na data e hora selecionadas
+const obterHorariosFiltrados = (dataSelecionada, horaSelecionada) => {
+  const horasDisponiveis = todosOsHorarios.filter(horario => horario > horaSelecionada);
+
+  return horasDisponiveis;
+};
+
 //LOGICA COM ERRO
 // const obterHorariosDisponiveis = async (dataSelecionada) => {
 //   try {
@@ -197,9 +205,8 @@ const obterHorariosDisponiveis = (dataSelecionada, chave) => {
 //   }
 // };
 
-
-
 // Função para lidar com a reserva dos horários selecionados
+
 const handleReservar = () => {
   // Adicione aqui a lógica para reservar os horários selecionados, se necessário
   console.log('Horários selecionados para reserva:', horariosSelecionados);
@@ -216,24 +223,16 @@ const handleDateChange = (event) => {
 
 console.log('das',dataSelecionada);
 
-// Função para lidar com a mudança nos checkboxes dos horários
-const handleCheckboxChange = (event) => {
-  const horarioSelecionado = event.target.value;
-
-  if (horariosSelecionados.includes(horarioSelecionado)) {
-    // Desselecionar o horário
-    setHorariosSelecionados(horariosSelecionados.filter(horario => horario !== horarioSelecionado));
-  } else {
-    // Selecionar o horário
-    setHorariosSelecionados([...horariosSelecionados, horarioSelecionado]);
-  }
-
-  // Mostrar os checkboxes selecionados em tempo real no console
-  console.log('Checkboxes selecionados:', horariosSelecionados);
+const handleHoraInicialChange = (event) => {
+  const horaSelecionada = event.target.value;
+  const horasDisponiveis = obterHorariosFiltrados(dataSelecionada, horaSelecionada);
+  
+  // Definir as horas disponíveis para o segundo select
+  setHorariosDisponiveisSegundoSelect(horasDisponiveis);
 };
-// Obter os horários disponíveis com base na data selecionada
-const horariosDisponiveis = obterHorariosDisponiveis();
 
+// Obter todos horários disponíveis com base na data selecionada
+const horariosDisponiveis = obterHorariosDisponiveis();
 
 return (
   <div>
@@ -302,32 +301,26 @@ return (
 
                   {/* Captura a hora inicial */}
                   <div className='formulario-approved__input-container'>
-                  <label for="select-horario1" className='input-label'>Horário inicial:</label>
-                  <select name="select-horario1" className="input inputs" 
-                  onChange={handleCheckboxChange}>
-                    {horariosDisponiveis.map(horario => (
-                        <option
-                          id={horario}
-                          value={horario}
-                          checked={horariosSelecionados.includes(horario)}
-                        >{horario}</option>
-                    ))}
-                  </select>
+                    <label for="select-horario1" className='input-label'>Horário inicial:</label>
+                    <select name="select-horario1" className="input inputs" required 
+                    onChange={handleHoraInicialChange }>
+                      {todosOsHorarios.map(horario => (
+                          <option
+                            id={horario}
+                            value={horario}
+                          >{horario}</option>
+                      ))}
+                    </select>
                   </div>
                   {/* Captura a hora final */}
                   <div className='formulario-approved__input-container'>
-                  <label for="select-horario2" className='input-label'>Horário final:</label>
-                  <select name="select-horario2" className="input inputs" 
-                  onChange={handleCheckboxChange}>
-                    {horariosDisponiveis.map(horario => (
-                      <option
-                        id={horario}
-                        value={horario}
-                        checked={horariosSelecionados.includes(horario)}
-                      >{horario}</option>
-                    ))}
-                  </select>
-                  </div>                  
+                    <label htmlFor="select-horario2" className='input-label'>Horário final:</label>
+                    <select name="select-horario2" className="input inputs" required>
+                      {horariosDisponiveisSegundoSelect.map(horario => (
+                        <option key={horario} value={horario}>{horario}</option>
+                      ))}
+                    </select>
+                  </div>                
                     {/* Botão para reservar os horários selecionados */}
                     <button onClick={handleReservar}>Reservar</button>
                   </div>
