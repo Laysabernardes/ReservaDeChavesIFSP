@@ -48,6 +48,7 @@ function ReservaForm(props) {
   const userData = JSON.parse(localStorage.getItem('userData'));
 
   const matricula = userData.cd_matricula_usuario;
+  console.log('nosdg', matricula);
 
   useEffect(() => {
     if (userData) {
@@ -162,8 +163,8 @@ function ReservaForm(props) {
 
 const todosOsHorarios = [
   '07:15', '08:00', '08:45', '09:30', '09:45', '10:30', '11:15',
-  // '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
-  // '19:00', '19:45', '20:30', '21:30', '22:15'
+  '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
+  '19:00', '19:45', '20:30', '21:30', '22:15'
 ];
 
 // Função para filtrar os horários disponíveis com base na data selecionada
@@ -171,13 +172,6 @@ const obterHorariosDisponiveis = (dataSelecionada, chave) => {
   // Adicione aqui a lógica para obter os horários reservados para a data selecionada, se necessário
   // Por enquanto, retornaremos todos os horários, pois não temos essa lógica implementada ainda
   return todosOsHorarios;
-};
-
-// Função para filtrar os horários disponíveis com base na data e hora selecionadas
-const obterHorariosFiltrados = (dataSelecionada, horaSelecionada) => {
-  const horasDisponiveis = todosOsHorarios.filter(horario => horario > horaSelecionada);
-
-  return horasDisponiveis;
 };
 
 //LOGICA COM ERRO
@@ -209,8 +203,9 @@ const obterHorariosFiltrados = (dataSelecionada, horaSelecionada) => {
 //   }
 // };
 
-// Função para lidar com a reserva dos horários selecionados
 
+
+// Função para lidar com a reserva dos horários selecionados
 const handleReservar = () => {
   // Adicione aqui a lógica para reservar os horários selecionados, se necessário
   console.log('Horários selecionados para reserva:', horariosSelecionados);
@@ -318,7 +313,7 @@ return (
                         className="boton-formulario-login"
                         onClick={() => {
                           setTimeout(() => {
-                            navigate('/pedidosEstudante');
+                            navigate('/pedidos');
                           }, 100);
                         }}
                       >
@@ -351,8 +346,7 @@ return (
 
                   {/* Campo de entrada para a data e horário */}
                   <div id="previsao" className="formulario-login__input-container">
-                  
-                  {/* Captura o dia */}
+
                     <input type="date" onChange={handleDateChange} />
 
                   {/* Captura a hora inicial */}

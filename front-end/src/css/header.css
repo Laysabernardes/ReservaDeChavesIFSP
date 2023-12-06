@@ -1,100 +1,134 @@
-/* Define margens superior e inferior de 1rem e centraliza o elemento horizontalmente */
-.header{
-    margin: 1rem auto;
+
+
+/* Remove os marcadores de lista padrão de todas as listas não ordenadas */
+li {
+    list-style: none;
 }
 
-/* Configuração para o layout do cabeçalho usando flexbox */
-.header{
-    display: flex; /* Define o contêiner como flexível */
-    flex-direction: row; /* Alinha os itens em uma linha horizontal */
-    align-items: center; /* Centraliza os itens verticalmente */
-    justify-content: space-around; /* Distribui o espaço entre os itens */
+/* Estiliza os links, removendo sublinhado, definindo a cor e deixando o texto em negrito */
+a {
+    text-decoration: none;
+    color: var(--cor-de-destaque); /* Variável CSS que deve ser definida em algum lugar */
+    font-weight: bold;
 }
 
-/* Configuração para a seção de informações no cabeçalho */
-.header_info{
-    width: 80%; /* Define a largura da seção para 80% da largura do contêiner pai */
-    display: flex; /* Define a seção como flexível */
-    flex-direction: row; /* Alinha os itens em uma linha horizontal */
-    align-items: center; /* Centraliza os itens verticalmente */
+/* Define um contêiner flexível para o cabeçalho, alinhando itens verticalmente no centro */
+.header__container {
+    display: flex;
+    align-items: center; 
 }
 
-
-/* Estilo para o logo no cabeçalho */
-.header__logo{
-    width: 80%; /* Define a largura do logo para 80% da largura do contêiner pai */
+/* Estiliza a logo, definindo sua largura em 8% da altura da viewport */
+.header__logo {
+    width: 8vh;
 }
 
-/* Estilo para o logo no cabeçalho */
-.header__titulo{
-    font-size: 1.4rem;
-    height: 80%; /* Define a altura do título para 80% da altura do contêiner pai */
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ; /* Define a família da fonte */
+/* Estiliza o título, ajustando o tamanho da fonte, altura, família da fonte e cor */
+.header__titulo {
+    font-size: 3vh;
+    height: 100%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: darkgreen;
+    align-items: center; /* Parece estar fora de contexto aqui; talvez seja mais apropriado em um contêiner flexível */
+    margin-left: 1vh;
 }
 
-
-/* Estilo para o campo de entrada de texto no cabeçalho */
-.header__input{
-    width: 40%; /* Define a largura do campo de entrada para 40% da largura do contêiner pai */
-    margin-left: 2rem; /* Adiciona uma margem à esquerda de 2rem */
-    padding: .8rem;  /* Adiciona preenchimento interno de .8rem */
-    background-color: var(--cor-de-fundo); /* Usa a variável de cor de fundo definida em algum lugar */
-    border: none; /* Remove a borda */
-    border-radius: 5rem; /* Adiciona borda arredondada com raio de 5rem */
-    font-size: 16px;  /* Define o tamanho da fonte como 16 pixels */
-    outline: none; /* Remove o contorno ao focar */
+/* Estiliza a barra de navegação, definindo seu layout, altura e cor de fundo */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 12vh;
+    background: white;
 }
 
-/* Estilo para o ícone de lupa no cabeçalho */
-.header__lupa{
-    position: relative; /* Define a posição relativa */
-    left: -35px; /* Move o ícone para a esquerda em relação à posição normal */
-    border: none; /* Remove a borda */
+/* Estiliza o texto da marca da barra de navegação, transformando-o em maiúsculas */
+.nav__brand {
+    text-transform: uppercase;
 }
 
-/* Estilo para o botão no cabeçalho */
+/* Estiliza o menu de navegação, definindo seu layout, espaçamento e cor de fundo */
+.nav__menu {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+/* Estiliza o botão de alternância do menu (hamburguer) quando a tela tem largura inferior a 768 pixels */
+.nav__toggler {
+    display: none;
+}
+
+/* Estiliza as linhas do botão de alternância do menu */
+.nav__toggler div {
+    width: 2.5rem;
+    height: 0.2rem;
+    margin: 0.4rem;
+    background: var(--cor-de-destaque);
+    transition: 0.3s ease-in;
+}
+
 .header__boton {
     border: 1px solid var(--cor-de-destaque); /* Adiciona uma borda com a cor de destaque */
     color: var(--cor-de-destaque); /* Define a cor do texto como a cor de destaque */
-    padding: .7rem 2.4rem; /* Adiciona preenchimento interno de .7rem na vertical e 2.4rem na horizontal */
+    padding: 0.5rem 2rem; /* Adiciona preenchimento interno de .7rem na vertical e 2.4rem na horizontal */
     border-radius: 5px; /* Adiciona borda arredondada com raio de 5px */
     text-decoration: none; /* remove o sublinhado do texto do botão */
     transition: all 0.2s ease; /* Adiciona um tempo para a transição ao passar o mouse */
 }
 
-/* Estilo para o botão no cabeçalho quando o mouse passa sobre ele */
-.header__boton:hover {
-    box-shadow: 1px 1px 8px 0px var(--cor-de-destaque); /* Adiciona uma sombra quando hover */
+/* Aplica estilos específicos quando a tela tem largura inferior a 768 pixels */
+@media screen and (max-width: 768px) {
+    .nav__toggler {
+        display: block;
+        cursor: pointer;
+    }
+
+    /* Estiliza o menu de navegação quando expandido em telas menores */
+    .nav__menu {
+        margin-top: 4vh;
+        margin-bottom: 1vh;
+        position: fixed;
+        top: 8vh;
+        bottom: 0vh;
+        right: 0;
+        height: 50vh;
+        width: 40vw;
+        background: aliceblue;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: 0.5s ease-in;
+        gap: 2rem;
+    }
+   
+
+    /* Ajusta a largura da logo quando o menu está expandido em telas menores */
+    .header__logo {
+        width: 5vh;
+    }
+    .header__titulo {
+        font-size: 3vh;
+    }
+
+    .primeiro{
+        margin-top: 5vh;
+    }
 }
 
-/* Estilo para o ícone de lupa em dispositivos móveis */
-.header__lupa-mobile {
-    display: none; /* Inicialmente, esconde o ícone de lupa em dispositivos móveis */
+/* Aplica estilos quando a classe 'nav__active' está presente (menu expandido) */
+.nav__active {
+    transform: translateX(0%);
 }
 
-/* ----- Responsividade para Mobiles ------ */
-
-@media only screen and (max-width: 767px){
-    
-    .header__titulo,
-    .header__input,
-    .header__lupa{
-        display: none; /*Esconde o campo de entrada, o tituolo e o ícone de lupa em dispositivos móveis */
-    }
-
-    .header__lupa-mobile{
-        display: block; /* Mostra o ícone de lupa em dispositivos móveis */
-        width: 6%; /* Define a largura do ícone de lupa em dispositivos móveis */
-        
-    }
-
-    .header_info{
-        width: 40%; /* Reduz a largura da seção de informações em dispositivos móveis */
-    }
-
-    .header__boton{
-        margin-left: 2rem; /* Adiciona uma margem à esquerda de 2rem em dispositivos móveis */
-    }
-
+/* Estiliza as linhas do botão de alternância quando a classe 'toggle' está presente */
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-4px, 5px);
 }
 
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-4px, -5px);
+}
