@@ -11,6 +11,7 @@ localRouter.get("/:cd_chave", controller.find);
 localRouter.get("/", controller.findAll);
 localRouter.get("/categoria/:ds_chave", controller.findByCategoria);
 localRouter.get("/status/:ds_status", controller.findByStatus);
+localRouter.get("/nome/:nm_chave", controller.findByNome);
 localRouter.patch("/", controller.update);
 localRouter.delete("/:cd_chave", controller.delete);
 

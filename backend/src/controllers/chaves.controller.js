@@ -5,16 +5,11 @@ class ChavesController {
     create = async (req, res) => {
         try {//constante que verifica todos os campos
             const { nm_chave, ds_chave, ds_status, ds_obs_chave } = req.body;
-
+            
             if (!nm_chave || !ds_chave || !ds_status || !ds_obs_chave) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
             
-            const chaveExistente = await services.findByCategoria(nm_chave);
-            if (chaveExistente) {
-                return res.status(400).send({ message: `A chave '${nm_chave}' já está registrada no banco de dados.` });
-            }
-
             //await é usado junto com async
             await services.create(nm_chave, ds_chave, ds_status, ds_obs_chave);
 
@@ -78,7 +73,7 @@ class ChavesController {
             console.log('Parâmetros recebidos:', { ds_chave });
             let chave = await services.findByCategoria(ds_chave);
     
-            console.log('Chave encontrada:', chave);
+            // console.log('Chave encontrada:', chave);
             
             if (chave.error) {
                 res.status(404).send({ message: 'Chave não encontradaaa.' });
@@ -123,6 +118,33 @@ class ChavesController {
         }
     }
     
+    findByNome = async (req, res) => {
+        try {
+            const { nm_chave } = req.params;
+            console.log('Parâmetros recebidos:', { nm_chave });
+    
+            if (!nm_chave) {
+                res.status(400).send({ message: "Adicione um parâmetro!" });
+                return;
+            }
+    
+            console.log('Parâmetros recebidos:', { nm_chave });
+            let chave = await services.findByNome(nm_chave);
+                
+            if (chave.error) {
+                res.status(200).send({ message: 'Chave não encontrada.' });
+            } else {
+                res.status(200).send({
+                    message: "Chave:",
+                    chave: chave
+                });
+            }
+        } catch (err) {
+            console.error('Erro na função findByNome:', err);
+            res.status(500).send({ message: err.message });
+        }
+    }
+
     update = async (req, res) => {
         try {//constante que verifica todos os campos
             const { cd_chave, ds_status } = req.body;
