@@ -104,7 +104,6 @@ function PedidosProf() {
     }
   };
 
-
   // Função para buscar as solicitações no banco de dados
   // Função para buscar as solicitações no banco de dados
   const buscarSolicitacoes = async () => {

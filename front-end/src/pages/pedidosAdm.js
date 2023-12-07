@@ -25,6 +25,7 @@ function PedidosAdm() {
     const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
     const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
     const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
+    const [precisaPermissao, setPrecisaPermissao] = useState([]);
 
     // Obtém a função navigate do React Router para redirecionamento
     const navigate = useNavigate();
@@ -35,10 +36,6 @@ function PedidosAdm() {
 
     // Obtém dados do usuário do armazenamento local (localStorage)
     const userData = JSON.parse(localStorage.getItem('userData'));
-
-    // Define o prontuário e o nome do usuário com base nos dados do usuário, se disponíveis
-    const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
-    const userName = userData ? userData.nm_usuario : 'Usuário';
 
     // Função para buscar o nome do estudante com base na matrícula
     //Argumentos:matricula: Matrícula do estudante a ser buscado
@@ -132,8 +129,42 @@ function PedidosAdm() {
         }
     };
 
+    const buscarPermissao = async (id_permissao_estudante) => {
+        try {
+            // Faz uma chamada à API, passando o código da chave como parâmetro
+            const response = await api.get(`/permissao/id/${id_permissao_estudante}`);
+            // Obtém os dados da resposta da API
+            const dadospermissao = response.data;
 
-    // Função para buscar as solicitações no banco de dados
+            // Verifica se a resposta da API contém dados da chave
+            if (dadospermissao.pedidos && dadospermissao.pedidos.length > 0) {
+                // Imprime o nome e a categoria da chave
+                const matriculaProf = dadospermissao.pedidos[0].cd_matricula_funcionario;
+                console.log("Matriculo Professor:", matriculaProf);
+                const nomeProf = await buscarNomeSolicitante(matriculaProf);
+                return nomeProf;
+            } else {            // Erro: a resposta da API não contém dados da chave
+                console.error('Resposta da API não contém dados da professor:', dadospermissao);
+                // Retorna `null`
+                return null;
+            }
+        } catch (error) {
+            // Erro ao fazer a chamada à API
+            console.error('Erro ao buscar informações do professor:', error);
+            return null;
+        }
+    }
+
+    const FormatarData = async (dt_reserva) => {
+        const data = new Date(dt_reserva);
+        // Formatar a data como dd/mm/aaaa
+        const dia = data.getDate().toString().padStart(2, '0');
+        const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+        const ano = data.getFullYear();
+        const dataFormatada = `${dia}/${mes}/${ano}`;
+        return dataFormatada;
+    }
+
     // Função para buscar as solicitações no banco de dados
     const buscarReserva = async () => {
         // Tentativa de fazer a chamada à API
@@ -171,6 +202,17 @@ function PedidosAdm() {
                     const cargo = await buscarCargo(reserva.cd_cargo);
                     // Atualiza o objeto  com o nome do solicitante
                     reserva.cargo = cargo;
+                    if (reserva.cd_cargo === 'A0001') {
+                        const ProfPermissao = await buscarPermissao(reserva.id_permissao_estudante);
+                        reserva.nomeprof = ProfPermissao;
+                        setPrecisaPermissao(true);
+                    } else {
+                        setPrecisaPermissao(false);
+                    }
+
+                    const datareserva = await FormatarData(reserva.dt_reserva);
+                    reserva.data = datareserva;
+
 
                     // Obtém o ID da permissão
                     const idReserva = reserva.id_reserva;
@@ -290,16 +332,20 @@ function PedidosAdm() {
                                         <form key={reserva.id} className="formulario-pedidos">
                                             <div className="container-pedidos">
                                                 <h2 className='identificador'>#{reserva.id_reserva}</h2>
-                                               
+
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
                                                         <p>Nome: {reserva.nomeSolicitante}</p>
                                                         <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
                                                         <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
-                                                        <p>Liberado por:</p>
+                                                        {precisaPermissao === true && (
+                                                            <>
+                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
                                                         <p>Chave solicitada: {reserva.nomeChave}</p>
-                                                        <p>Data da Reserva: {reserva.dt_reserva}</p>
-                                                        <p>Horario da reserva </p>
+                                                        <p>Data da Reserva: {reserva.data}</p>
+                                                        <p>Horario da reserva: </p>
                                                     </div>
                                                 </label>
                                                 <div className="radio-buttons-container">
@@ -337,7 +383,7 @@ function PedidosAdm() {
                                         <form key={reserva.id} className="formulario-pedidos">
                                             <div className="container-pedidos">
                                                 <h2 className='identificador'>#{reserva.id_reserva}</h2>
-                                                
+
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
                                                         <p>Nome: </p>
