@@ -37,9 +37,21 @@ function Cadastro() {
 
   const criarChave = async () => {
     const response = await api.post('/chaves', payload);
+
     setMensagem('Chave Criada com sucesso!');
-    alert("Chave criada!")
     console.log("Criada a chave:", response.data);
+  }
+
+  const chaveExiste = async () => {
+    const response = await api.get(`/chaves/nome/${payload.nm_chave}`);
+    console.log(response.data.chave)
+    if(response.data.chave === false){
+      criarChave()
+      return
+    } else {
+      setMensagem("Já existe esta chave!");
+      return
+    }
   }
 
   return (
@@ -48,6 +60,7 @@ function Cadastro() {
       <div className="formulario_cadastro_area">
         <div className="formulario-cadastro container">
           <h3 className="formulario-cadastro__titulo">Cadastrar Chave:</h3>
+          {mensagem && <p className='mensagem'>{mensagem}</p>}
           <form action="" className="formulario-cadastro_form">
             <div className="formulario-cadastro__input-container">
               <input
@@ -125,7 +138,7 @@ function Cadastro() {
             <button
                     className="boton-formulario-approved"
                     type="button"
-                    onClick={criarChave}
+                    onClick={chaveExiste}
                   >
                     Aceitar
             </button>
