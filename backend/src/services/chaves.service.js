@@ -48,7 +48,7 @@ class ChavesServices{
     return new Promise((resolve, reject) => {
         connection.query('SELECT * FROM Chaves WHERE ds_chave LIKE ?', ds_chave, (err, results) => {
             if (err) {
-                console.error('Erro ao executar a consulta SQL:', err);
+                console.error('Erro ao executar a consulta SQL Categoria:', err);
                 reject({ error: 'Erro ao encontrar categoria' });
             } else {
                 if (results.length === 0) {
@@ -67,7 +67,7 @@ class ChavesServices{
     return new Promise((resolve, reject) => {
         connection.query('SELECT * FROM Chaves WHERE ds_status LIKE ?', ds_status, (err, results) => {
             if (err) {
-                console.error('Erro ao executar a consulta SQL:', err);
+                console.error('Erro ao executar a consulta SQL Status:', err);
                 reject({ error: 'Erro ao encontrar categoria' });
             } else {
                 if (results.length === 0) {
@@ -82,6 +82,25 @@ class ChavesServices{
     });
   }  
   
+  findByNome = (nm_chave) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT * FROM Chaves WHERE nm_chave LIKE ?', nm_chave, (err, results) => {
+            if (err) {
+                console.error('Erro ao executar a consulta SQL Nm_Chave:', err);
+                reject({ error: 'Erro ao encontrar nome da chave' });
+            } else {
+                if (results.length === 0) {
+                    console.log('Não existe essa chave.');
+                    resolve(false);
+                } else {
+                    console.log('Existe essa chave!', results);
+                    resolve(results);
+                }
+            }
+        });
+    });
+  }  
+
   update = (cd_chave, ds_status) => {
     return new Promise((resolve, reject) => {
       connection.query('UPDATE Chaves SET ds_status = ? WHERE cd_chave = ?;', [ds_status, cd_chave], (err, results) => {
