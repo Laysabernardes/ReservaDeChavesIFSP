@@ -119,7 +119,7 @@ a {
 .nav__active {
     transform: translateX(0%);
     z-index: 100;
-    height: 165vh;
+    height: 50vh;
 }
 
 /* Estiliza as linhas do botão de alternância quando a classe 'toggle' está presente */
