@@ -174,37 +174,6 @@ const obterHorariosDisponiveis = (dataSelecionada, chave) => {
   return todosOsHorarios;
 };
 
-//LOGICA COM ERRO
-// const obterHorariosDisponiveis = async (dataSelecionada) => {
-//   try {
-//     // Chama a API para obter os detalhes das reservas para a data
-//     const response = await api.get('/reserva/detalhes/data', { params: { 'dt_reserva': dataSelecionada } });
-
-//     // Verifica se a resposta possui detalhes
-//     if (!response.data || typeof response.data !== 'object' || !response.data.detalhes || !Array.isArray(response.data.detalhes)) {
-//       console.error('Resposta inválida:', response.data);
-//       return [];
-//     }
-
-//     // Extrai os horários reservados da resposta
-//     const horariosReservados = response.data.detalhes.map(detalhe => detalhe.horario_reservado);
-
-//     // Filtra os horários disponíveis
-//     const horariosDisponiveis = todosOsHorarios.filter(horario => {
-//       // Verifica se o horário está reservado para a data selecionada
-//       return !horariosReservados.includes(horario);
-//     });
-
-//     return horariosDisponiveis;
-//   } catch (error) {
-//     console.error('Erro ao obter horários disponíveis:', error);
-//     // Trate o erro de acordo com sua lógica de aplicação
-//     return [];
-//   }
-// };
-
-
-
 // Função para lidar com a reserva dos horários selecionados
 const handleReservar = () => {
   // Adicione aqui a lógica para reservar os horários selecionados, se necessário
@@ -221,39 +190,15 @@ const handleDateChange = (event) => {
 };
 
 // Função para identificar os horários entre o horário inicial e final selecionados
-// const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
-//   const indiceInicial = todosOsHorarios.indexOf(horaInicial);
-//   const indiceFinal = todosOsHorarios.indexOf(horaFinal);
-
-//   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
-//     const horariosEntre = todosOsHorarios.slice(indiceInicial + 1, indiceFinal);
-//     setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
-//     console.log(setHorariosSelecionadosEntreInicialEFinal(horariosEntre))
-//   } else {
-//     setHorariosSelecionadosEntreInicialEFinal([]);
-//     console.log(setHorariosSelecionadosEntreInicialEFinal([]));
-//   }
-// };
-
-// const handleHoraInicialChange = (event) => {
-//   const horaSelecionada = event.target.value;
-//   const horasDisponiveis = obterHorariosFiltrados(dataSelecionada, horaSelecionada);
-  
-//   // Define a hora inicial
-//   setHorarioInicial(horaSelecionada);
-
-//   // Definir as horas disponíveis para o segundo select
-//   setHorariosDisponiveisSegundoSelect(horasDisponiveis);
-// };
-
-// Função para identificar os horários entre o horário inicial e final selecionados
 const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
   const indiceInicial = todosOsHorarios.indexOf(horaInicial);
   const indiceFinal = todosOsHorarios.indexOf(horaFinal);
 
   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
     const horariosEntre = todosOsHorarios.slice(indiceInicial, indiceFinal + 1);
-    setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
+    const horariosSelecionados = [horaInicial, ...horariosEntre, horaFinal]; // Inclui a hora inicial, os horários intermediários e a hora final
+    
+    setHorariosSelecionadosEntreInicialEFinal(horariosSelecionados);
   } else {
     setHorariosSelecionadosEntreInicialEFinal([]);
   }
