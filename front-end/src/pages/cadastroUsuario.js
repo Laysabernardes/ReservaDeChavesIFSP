@@ -10,12 +10,10 @@ import api from '../api';
 function CadastroUser() {
 
     const [mensagem, setMensagem] = useState('');
-    const [categoria, setCategoria] = useState('');
-    const [dsObs, setDsObs] = useState('');
 
     const [matricula, setMatricula] = useState('');
-    const [senha, setSenha] = useState('');
     const [cargo, setcargo] = useState('');
+    const [senha, setSenha] = useState('');
     const [nome, setNome] = useState('');
 
     // Obtém a função navigate do React Router para redirecionamento
@@ -29,17 +27,24 @@ function CadastroUser() {
     const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
     const userName = userData ? userData.nm_usuario : 'Usuário';
 
+    const payload = {
+        cd_matricula_usuario: matricula,
+        cd_cargo: cargo,
+        cd_senha_usuario: senha,
+        nm_usuario: nome,
+    };    
 
     const criarUsuario = async () => {
         const response = await api.post('/user/criar', payload);
 
         setMensagem('Usuario criado com sucesso!');
         console.log("Usuario criado:", response.data);
-        console.log("tudo3",payload);
+        console.log("tudo", payload);
     }
 
     const userExiste = async () => {
-        const response = await api.get(`/user/nome/${payload.cd_matricula_usuario}`);
+
+        const response = await api.get(`user/nome/${payload.cd_matricula_usuario}`);
         console.log(response.data.usuario)
         if (response.data.usuario === false) {
             console.log("tudo2",payload);
@@ -118,12 +123,6 @@ function CadastroUser() {
         }
        
     }
-    const payload = {
-        cd_matricula_usuario: matricula,
-        cd_cargo:cargo,
-        cd_senha_usuario: senha,
-        nm_usuario: nome,
-    };
 
     useEffect(() => {
 
