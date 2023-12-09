@@ -4,6 +4,10 @@ body {
 
   font-family: 'Raleway', sans-serif;
 }
+.hint {
+	font-size: 0.7em;
+	color: #888;
+  }
 .radio-buttons-container {
   display: flex;
   flex-direction: row;

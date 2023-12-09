@@ -11,6 +11,7 @@ import Perfil from '../src/pages/perfil.js';
 import PedidosProf from './pages/pedidosProf.js';
 import PedidosEstudante from './pages/pedidosEstudante.js';
 import PedidosAdm from './pages/pedidosAdm.js';
+import CadastroUser from './pages/cadastroUsuario.js';
 
 function Routes() {
   return (
@@ -26,6 +27,7 @@ function Routes() {
       <Route path="/pedidos" element={<PedidosProf/>}/>
       <Route path="/pedidosEstudante" element={<PedidosEstudante/>}/>
       <Route path="/pedidosAdm" element={<PedidosAdm/>}/>
+      <Route path="/cadastrouser" element={<CadastroUser/>}/>
     </RouterRoutes>
 
   );
