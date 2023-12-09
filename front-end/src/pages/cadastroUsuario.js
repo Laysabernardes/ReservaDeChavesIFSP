@@ -29,14 +29,6 @@ function CadastroUser() {
     const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
     const userName = userData ? userData.nm_usuario : 'Usuário';
 
-    const payload = {
-        cd_matricula_usuario: matricula,
-        cd_cargo: cargo,
-        cd_senha_usuario: senha,
-        nm_usuario: nome,
-    };
-
-    
 
     const criarUsuario = async () => {
         const response = await api.post('/user/criar', payload);
@@ -125,8 +117,13 @@ function CadastroUser() {
             console.error('Erro ao preencher as opções do combo box:', error);
         }
        
-
     }
+    const payload = {
+        cd_matricula_usuario: matricula,
+        cd_cargo:cargo,
+        cd_senha_usuario: senha,
+        nm_usuario: nome,
+    };
 
     useEffect(() => {
 
