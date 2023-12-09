@@ -64,20 +64,10 @@ function LoginForm() {
       console.log('Cargo do usuário:', userCargo);
 
       switch (userCargo) {
-        case 'A0001':
+        case 'ADMCBT':
           setIsLoggedIn(true);
           setLoginError(false);
           navigate('/perfil', { state: { userData } }); // Redireciona para a página específica para alunos
-          break;
-        case '707001':
-          setIsLoggedIn(true);
-          setLoginError(false);
-          navigate('/cadastro', { state: { userData } });
-          break;
-        case '701060':
-          setIsLoggedIn(true);
-          setLoginError(false);
-          navigate('/main', { state: { userData } });
           break;
         default:
           setIsLoggedIn(true);

@@ -18,9 +18,6 @@ function Cadastro() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // const userData = location.state ? location.state.userData : null;
-  // console.log('Dados do Usuário em pedidos:', userData);
-
   // Obtém dados do usuário do armazenamento local (localStorage)
   const userData = JSON.parse(localStorage.getItem('userData'));
 
