@@ -4,6 +4,20 @@ const connection = require("../database/db.js");
 // Classe que contém métodos relacionados a serviços de usuário
 class UserServices {
 
+  create = (cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario) => {
+    return new Promise((resolve, reject) => {
+      connection.query("INSERT INTO Usuario (cd_matricula_usuario, cd_cargo,  cd_senha_usuario, nm_usuario) VALUES (?, ?, ?, ?)",  [cd_matricula_usuario, cd_cargo, cd_senha_usuario,  nm_usuario], (err, results) => {
+        if (err) {
+          console.error('Deu algum erro:', err);
+          reject(err);
+        } else {
+          console.log('Usuario criado com sucesso:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
+  
   // Método para realizar o login de um usuário
   login = (login, senha) => {
     return new Promise((resolve, reject) => {

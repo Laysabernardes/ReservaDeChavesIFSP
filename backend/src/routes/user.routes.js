@@ -9,6 +9,7 @@ const router = Router();
 // Cria uma instância do Router para definir as rotas.
 
 router.post("/", controller.login);
+router.post("/criar", controller.create);
 router.patch("/senha", controller.updateSenha);
 // Rota para encontrar pedidos associados a um estudante (método HTTP GET)
 router.get("/nome/:cd_matricula_usuario", controller.findNome);

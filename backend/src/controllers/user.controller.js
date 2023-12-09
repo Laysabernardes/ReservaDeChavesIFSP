@@ -7,6 +7,27 @@ const services = new UserServices();
 // Classe responsável por lidar com as requisições relacionadas a usuários
 class UserController {
 
+    create = async (req, res) => {
+        try {//constante que verifica todos os campos
+            const {cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario } = req.body;
+            
+            if (!cd_matricula_usuario || !cd_cargo || !cd_senha_usuario || !nm_usuario) {
+                res.status(400).send({ message: "Preencha todos os espaços" });
+            }
+            
+            //await é usado junto com async
+            await services.create(cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario);
+
+            res.status(201).send({
+                message: "Usuario criado com sucesso!",
+                usuario: {
+                    cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario
+                }
+            });
+        } catch (err) {
+            res.status(500).send({ message: err });
+        }
+    };
     // Método para lidar com a requisição de login de um usuário
     login = async (req, res) => {
         try {
