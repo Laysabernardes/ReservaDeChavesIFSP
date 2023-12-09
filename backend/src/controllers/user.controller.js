@@ -9,12 +9,12 @@ class UserController {
 
     create = async (req, res) => {
         try {//constante que verifica todos os campos
-            const {cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario } = req.body;
-            
+            const { cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario } = req.body;
+
             if (!cd_matricula_usuario || !cd_cargo || !cd_senha_usuario || !nm_usuario) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
-            
+
             //await é usado junto com async
             await services.create(cd_matricula_usuario, cd_cargo, cd_senha_usuario, nm_usuario);
 
@@ -103,15 +103,22 @@ class UserController {
 
             if (!cd_matricula_usuario) {
                 res.status(400).send({ message: "Adicione o Código do Usuario" });
+                return;
             }
 
             //await é usado junto com async
             let usuario = await services.findNome(cd_matricula_usuario);
 
-            res.status(201).send({
-                message: "Resultado da busca:",
-                usuarios: usuario
-            });
+            if (usuario.error) {
+                res.status(200).send({ message: 'Usuario não encontrada.' });
+            } else {
+                res.status(201).send({
+                    message: "Resultado da busca:",
+                    usuario: usuario
+                });
+            }
+
+
         } catch (err) {
             res.status(404).send({ message: "Não há usuarios" });
         }

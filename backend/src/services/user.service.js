@@ -59,8 +59,7 @@ class UserServices {
     return new Promise((resolve, reject) => {
       connection.query('SELECT * FROM Usuario WHERE cd_matricula_usuario = ?;', cd_matricula_usuario, (err, results) => {
         if (results.length === 0) {
-          console.error('Erro na busca', err);
-          reject(err);
+          console.log('Não existe esse user.');
           resolve(false);
         } else {
           console.log('Busca concluida:', results);
