@@ -39,7 +39,7 @@ function CadastroUser() {
     }
 
     const userExiste = async () => {
-        const response = await api.get(`/nome/${payload.cd_matricula_usuario}`);
+        const response = await api.get(`/user/nome/${payload.cd_matricula_usuario}`);
         console.log(response.data.usuario)
         if (response.data.usuario === false) {
             console.log("tudo2",payload);
