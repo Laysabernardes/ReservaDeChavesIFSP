@@ -25,6 +25,8 @@ function LoginForm() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [linkClicado, setLinkClicado] = useState(false);
+  const [linkClicado2, setLinkClicado2] = useState(false);
 
   // Obtém a função navigate
   const navigate = useNavigate();
@@ -97,6 +99,12 @@ function LoginForm() {
     setLogin('');
     setSenha('');
   };
+  const handleClique = () => {
+    setLinkClicado(true);
+  };
+  const handleClique2 = () => {
+    setLinkClicado2(true);
+  };
 
   // Retorna a estrutura do componente JSX
   return (
@@ -120,13 +128,15 @@ function LoginForm() {
                     type="text"
                     placeholder="Login"
                     required
+                    oninput="formatarProntuario(this)"
                     value={login}
                     onChange={(e) => setLogin(e.target.value)}
                   />
                   <label className="input-label" htmlFor="login">
-                    Escreva seu login
+                    Escreva seu prontuario
                   </label>
                   <span className="input-message-error">Este campo não é válido</span>
+                  <div class="hint">Formato esperado: CB1234567</div>
                 </div>
                 <div className="formulario-login__input-container">
                   <input
@@ -151,6 +161,23 @@ function LoginForm() {
                   id="enviar-login"
                   value="Entrar"
                 />
+                <br />
+                {linkClicado ? (
+                  <p>Dirija-se a recepção para efetuar seu cadastro.</p>
+                ) : (
+                  <a href="#" onClick={handleClique}>
+                    Cadastrar-se
+                  </a>
+                )}
+                <br />
+                <br />
+                {linkClicado2 ? (
+                  <p>Dirija-se a recepção para efetuar redefinir a senha.</p>
+                ) : (
+                  <a href="#" onClick={handleClique2}>
+                    Esqueceu a senha?
+                  </a>
+                )}
               </form>
               {loginError && <p className="error-message">Login ou senha incorretos.</p>}
             </div>
