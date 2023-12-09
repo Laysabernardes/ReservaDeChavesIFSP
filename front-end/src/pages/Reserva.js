@@ -162,7 +162,7 @@ function ReservaForm(props) {
 };
 
 const todosOsHorarios = [
-  '07:15', '08:00', '08:45', '09:30', '09:45', '10:30', '11:15',
+  '-', '07:15', '08:00', '08:45', '09:30', '09:45', '10:30', '11:15',
   '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
   '19:00', '19:45', '20:30', '21:30', '22:15'
 ];
@@ -195,10 +195,9 @@ const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
   const indiceFinal = todosOsHorarios.indexOf(horaFinal);
 
   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
-    const horariosEntre = todosOsHorarios.slice(indiceInicial, indiceFinal + 1);
-    const horariosSelecionados = [horaInicial, ...horariosEntre, horaFinal]; // Inclui a hora inicial, os horários intermediários e a hora final
+    const horariosEntre = todosOsHorarios.slice(indiceInicial - 1, indiceFinal + 1);
     
-    setHorariosSelecionadosEntreInicialEFinal(horariosSelecionados);
+    setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
   } else {
     setHorariosSelecionadosEntreInicialEFinal([]);
   }
