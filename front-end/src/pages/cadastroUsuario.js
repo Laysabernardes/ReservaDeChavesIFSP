@@ -121,7 +121,6 @@ function CadastroUser() {
             console.error('Erro ao preencher as opções do combo box:', error);
         }
        
-
     }
 
     useEffect(() => {
