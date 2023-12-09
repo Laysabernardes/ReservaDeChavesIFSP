@@ -15,6 +15,7 @@ router.patch("/senha", controller.updateSenha);
 router.get("/nome/:cd_matricula_usuario", controller.findNome);
 router.get("/cargo/:cd_cargo", controller.findCargo);
 router.get("/tbcargo/:cd_cargo", controller.findTabelaCargo);
+router.get("/tbcargo", controller.findAllCargo);
 
 
 // Define uma rota POST no endpoint raiz ("/") que será acessada quando uma solicitação POST for feita para o servidor.

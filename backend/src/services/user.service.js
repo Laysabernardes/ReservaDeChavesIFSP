@@ -61,6 +61,7 @@ class UserServices {
         if (results.length === 0) {
           console.error('Erro na busca', err);
           reject(err);
+          resolve(false);
         } else {
           console.log('Busca concluida:', results);
           resolve(results);
@@ -91,6 +92,19 @@ class UserServices {
           reject(err);
         } else {
           console.log('Busca concluida:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
+  findAllCargo = () => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM Cargo;', (err, results) => {
+        if (err) {
+          console.error('Deu algum erro:', err);
+          reject(err);
+        } else {
+          console.log('Todas os Cargos encontrados:', results);
           resolve(results);
         }
       });

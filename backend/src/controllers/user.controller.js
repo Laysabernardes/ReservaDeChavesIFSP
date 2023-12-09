@@ -156,6 +156,19 @@ class UserController {
             res.status(404).send({ message: "Não há cargo" });
         }
     };
+
+    findAllCargo = async (req, res) => {
+        try {
+            const cargo = await services.findAllCargo();
+
+            if (cargo.length === 0) {
+                return res.status(400).send({ message: "Não existe nenhum cargo registrado" });
+            }
+            res.send(cargo);
+        } catch (err) {
+            res.status(500).send({ message: err.message })
+        }
+    };
 }
 
 // Exporta a classe UserController para ser utilizada em outros módulos
