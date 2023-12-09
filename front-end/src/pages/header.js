@@ -7,13 +7,14 @@ import "../css/header.css";
 import { logoIF } from '../img/index.js';
 
 // Define o componente Navbar
-function Navbar() {
+function Navbar({ locais }) {
     // Define os estados 'active' e 'icon' usando o hook useState do React
     const [active, setActive] = useState("nav__menu");
     const [icon, setIcon] = useState("nav__toggler");
-
-    // Obtém a localização atual usando o hook useLocation do React Router
     const location = useLocation();
+    const paginaEspecifica = "/";
+
+    
 
     // Função para alternar entre os estados 'active' e 'icon' ao clicar no ícone do menu
     const navToggle = () => {
@@ -45,6 +46,8 @@ function Navbar() {
             </div>
 
             {/* Lista de itens de navegação (Home, Reserve, Chaves, Sair) */}
+            {location.pathname !== paginaEspecifica &&
+
             <ul className={active}>
                 <li className="nav__item primeiro">
                     <a href="/main" className="nav__link" onClick={(e) => {
@@ -79,6 +82,8 @@ function Navbar() {
                     </a>
                 </li>
             </ul>
+
+                }
 
             {/* Ícone do menu (hamburguer) para telas menores */}
             <div onClick={navToggle} className={icon}>
