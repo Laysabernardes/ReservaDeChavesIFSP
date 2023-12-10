@@ -50,12 +50,6 @@ function ReservaForm(props) {
   const matricula = userData.cd_matricula_usuario;
   console.log('nosdg', matricula);
 
-  useEffect(() => {
-    if (userData) {
-      verificarPermissaoReserva(userData.cd_matricula_usuario, chave.cd_chave);
-    }
-  }, [userData, chave, matricula]);
-
 
   const verificarPermissaoReserva = async (matricula, cdChaveDesejada) => {
     try {
@@ -86,7 +80,8 @@ function ReservaForm(props) {
 
       setpermitir(true);
       setMensagem('Permissão de reserva aprovada pelo professor!');
-      setCodigoPermissao(permissao.id_permissao);
+      return permissao.id_permissao;
+      // setCodigoPermissao(permissao.id_permissao);
     } catch (error) {
       console.error('Erro ao verificar permissão para reserva:', error);
       setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
@@ -98,8 +93,6 @@ function ReservaForm(props) {
     //e.preventDefault() cancela a ação padrão do evento
     e.preventDefault();
 
-    verificarPermissaoReserva(matricula, chave.cd_chave);
-
     try {
       // Verifica se o usuário está presente
       if (!user) {
@@ -107,45 +100,63 @@ function ReservaForm(props) {
         return;
       }
 
-      verificarPermissaoReserva(user.cd_matricula_usuario, chave.cd_chave);
+      // verificarPermissaoReserva(user.cd_matricula_usuario, chave.cd_chave);
 
       if (!permitir) {
         setMensagem('Permissão negada. Não é possível fazer a reserva.');
         return;
       }
 
-      // Criar um payload com os dados da reserva
-      const payload = {
-        cd_matricula_usuario: user.cd_solicitante,
-        cd_cargo: user.cd_cargo,
-        cd_chave: chave.cd_chave,
-        dt_reserva: dataSelecionada,
-        dt_devolucao: new Date().toISOString().split('T')[0],
-        ds_status: 'SOLICITADO',
-      };
-
-      if (permitir === true) {
-        payload.cd_permissao = codigoPermissao;
-        return;
-      }
+      // if (permitir === true) {
+        let codigoPermissao = null;
+      //   return;
+      // }
 
       // Verifica se o usuário tem o cargo A0001 (categoria Aluno)
       if (user.cd_cargo === 'A0001') {
-        payload.cd_permissao_estudante = codigoPermissao || null;
+       const codigo =  verificarPermissaoReserva(userData.cd_matricula_usuario, chave.cd_chave);
+       setCodigoPermissao(codigo);
       }
+      else{
+        setCodigoPermissao(null);
+      setpermitir(true);
+      }
+
+      const payload = {
+        cd_matricula_solicitante: userData.cd_matricula_usuario,
+        cd_cargo: user.cd_cargo,
+        id_permissao_estutante:  codigoPermissao,
+        cd_chave: chave.cd_chave,
+        dt_reserva: dataSelecionada,
+        dt_devolucao: new Date().toISOString().split('T')[0],
+        ds_status: 'SOLICITANDO',
+      };
+
+      console.log('tudi', payload);
+
       try {
         // Envia uma solicitação POST para a API para criar a reserva
         const response = await api.post('/reserva', payload);
         console.log('Reserva bem-sucedida:', response.data);
-        setMensagem('Solicitação de reserva enviada, acompanhe em:')
+        setMensagem('Solicitação de reserva enviada, acompanhe em:');
 
-        // Obter o ID da reserva recém-criada
-        const idReserva = response.data.id_reserva;
+        const idReserva = response.data.reserva.id_reserva;
+        const dtReserva = response.data.reserva.dt_reserva;
+        console.log('Reserva:', response.data.reserva);
+        console.log('Resposta completa:', response.data);
+
+
+        console.log('ID da reserva:', idReserva);
+
         // Criar um payload para os detalhes da reserva
         const detalhesPayload = {
           id_reserva: idReserva,
-          horarios_reservados: horariosSelecionados,
+          horarios_reservados: horariosSelecionadosEntreInicialEFinal,
+          dt_reserva: dtReserva,
         };
+         // Log para verificar o payload antes de enviar
+  console.log('Detalhes payload:', detalhesPayload);
+
         // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
         const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
         console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
@@ -159,6 +170,32 @@ function ReservaForm(props) {
     console.error('Erro ao criar reserva:', error);
     setMensagem('ERRO: Solicitação de reserva não criada, tente novamente!')
   }
+
+  // const DetalhesReserva = async (matricula, cdChaveDesejada) => {
+  //   try {
+  //     const detalhesPayload = {
+  //       id_reserva: idReserva,
+  //       horarios_reservados: horariosSelecionados,
+  //     };
+  //     // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
+  //     const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
+  //     console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
+
+  //     if (dadosPermissao.pedidos.length === 0) {
+  //       setMensagem(`Aluno, você não tem permissões associadas a este local. Faça o pedido a um professor!`);
+  //       return setpermitir(false);
+  //     }
+
+     
+  //   } catch (error) {
+  //     console.error('Erro ao verificar permissão para reserva:', error);
+  //     setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
+  //   }
+  // };
+
+
+
+    // Criar um payload com os dados da reserva
 };
 
 const todosOsHorarios = [
@@ -196,8 +233,11 @@ const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
 
   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
     const horariosEntre = todosOsHorarios.slice(indiceInicial - 1, indiceFinal + 1);
+    ////////////////////////////
+    const horarioJSON = JSON.stringify(horariosEntre);
     
-    setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
+    setHorariosSelecionadosEntreInicialEFinal(horarioJSON);
+    ///////////////////////////
   } else {
     setHorariosSelecionadosEntreInicialEFinal([]);
   }
@@ -228,6 +268,19 @@ console.log('no dia', dataSelecionada);
 console.log('das', horarioInicial);
 console.log('até às', horarioFinal);
 console.log('total de horas:', horariosSelecionadosEntreInicialEFinal)
+
+
+useEffect(() => {
+  if (userData) {
+    if(userData.cd_cargo ==='A0001'){
+      verificarPermissaoReserva(userData.cd_matricula_usuario, chave.cd_chave);
+    }else{
+      userData.cd_permissao=null;
+      setpermitir(true);
+    }
+    
+  }
+}, [userData, chave, matricula]);
 
 return (
   <div>
@@ -317,7 +370,7 @@ return (
                     </select>
                   </div>                
                     {/* Botão para reservar os horários selecionados */}
-                    <button onClick={handleReservar}>Reservar</button>
+                    {/* <button onClick={handleReservar}>Reservar</button>*/}
                   </div>
 
                   {/* Botão para reservar a sala */}
