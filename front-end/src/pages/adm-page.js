@@ -2,6 +2,7 @@
 import React from 'react';
 import Header from './header';
 import Footer from './footer'
+import { useNavigate } from 'react-router-dom'
 
 
 // Importa os estilos CSS para o componente Footer.
@@ -10,13 +11,24 @@ import '../css/index.css';
 import '../css/adm-page.css';
 
 //Criando a função de Adm que carregará a página html do Administrativo
-function Adm(){
+function Adm() {
+  
+  const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem('userData'));
+
   return (
     //Elementos html criação de Div e inputs que carregarão dados do banco de dados (a ser modificados).
     <div>
       
       <Header /> 
-       <div className="formulario">
+      <div className="formulario">
+        <div className='container-botao'>
+              <a className="local_botao" href="/main"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/main', { state: { user: userData } })
+                }}>Voltar:</a>
+            </div>
         <div className="formulario-approved container">
           <h3 className="formulario-approved__titulo">Aprovar Reserva:</h3>
           <form action="" className="formulario-approved_form">
