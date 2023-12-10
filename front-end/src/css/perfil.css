@@ -16,6 +16,12 @@
   p {
     color: #666;
   }
+  .formulario-login__titulo2{
+    margin-top: 1.75rem;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
   
   button {
     background-color:darkslategray;

@@ -17,7 +17,7 @@ function PaginaPerfil() {
     // Obtém funções e dados do React Router DOM e do contexto do usuário
     const navigate = useNavigate();
     const location = useLocation();
-    const { userData } = useUser();
+    // const { userData } = useUser();
 
     // Define estados para armazenar informações relacionadas à alteração de senha
     const [currentPassword, setCurrentPassword] = useState('');
@@ -25,10 +25,14 @@ function PaginaPerfil() {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [passwordChangeError, setPasswordChangeError] = useState(false);
     const [passwordChangeMessage, setPasswordChangeMessage] = useState('');
+    
+    const userData = JSON.parse(localStorage.getItem('userData'));
 
     // Obtém o prontuário e o nome do usuário ou define valores padrão se não estiverem disponíveis
     const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
     const userName = userData ? userData.nm_usuario : 'Usuário';
+
+    
 
     // Define um estado para controlar a exibição do formulário de alteração de senha
     const [showChangePassword, setShowChangePassword] = useState(false);
@@ -73,9 +77,16 @@ function PaginaPerfil() {
             {/* Renderiza o conteúdo principal da página */}
             <div className="main-content">
                 <div className="formulario">
+                    <div className='container_botao'>
+                        <a className="local_botao" href="/main"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/main', { state: { user: userData } })
+                            }}>Voltar:</a>
+                    </div>
                     <div className="formulario-login container">
                         {/* Exibe uma saudação personalizada ao usuário */}
-                        <h2 className="formulario-login__titulo">Bem-vindo, {userName}!</h2>
+                        <h2 className="formulario-login__titulo2">Bem-vindo, {userName}!</h2>
 
                         {/* Exibe mensagens relacionadas à alteração de senha, se houver */}
                         {passwordChangeMessage && <p>{passwordChangeMessage}</p>}
@@ -141,7 +152,7 @@ function PaginaPerfil() {
                                 <p>Prontuário: {prontuario}</p>
 
                                 {/* Adicione outras informações do perfil conforme necessário */}
-                                
+
                                 {/* Botão para mostrar o formulário de alteração de senha */}
                                 <button
                                     className="boton-formulario-login"
