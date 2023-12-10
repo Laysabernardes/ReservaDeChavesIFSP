@@ -11,6 +11,8 @@ const MostraChave = () => {
 
   const navigate = useNavigate();
   const [todasChaves, setTodasChaves] = useState([]);
+  // Obtém dados do usuário do armazenamento local (localStorage)
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   useEffect(() => {
     const fetchData = async () => {

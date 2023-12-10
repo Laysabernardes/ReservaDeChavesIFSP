@@ -13,6 +13,8 @@ function Navbar({ locais }) {
     const [icon, setIcon] = useState("nav__toggler");
     const location = useLocation();
     const paginaEspecifica = "/";
+    // Obtém dados do usuário do armazenamento local (localStorage)
+    const userData = JSON.parse(localStorage.getItem('userData'));
 
     
 
