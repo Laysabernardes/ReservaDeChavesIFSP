@@ -18,6 +18,9 @@ function Banner() {
         setMostraProf(false);
         setmostraAluno(true);
         break;
+      case '701001':
+        setMostraProf(false);
+        setmostraAluno(false);
       default:
         setMostraProf(true);
         setmostraAluno(false);
@@ -53,9 +56,19 @@ function Banner() {
               }, 100);
             }}
           >
-            Verificar seus pedidos
+            Verificar suas permissões
           </button>
         )}
+          <button
+            className="banner__botao reservas__botao"
+            onClick={() => {
+              setTimeout(() => {
+                navigate('/acompanharPedidos');
+              }, 100);
+            }}
+          >
+            Verificar suas reservas
+          </button>
       </div>
     </section>
   );

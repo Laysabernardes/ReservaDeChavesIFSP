@@ -33,6 +33,10 @@
     transition: all 0.2s ease;
 }
 
+.reservas__botao{
+    margin-left: 5px;
+}
+
 .banner__botao:hover{
     box-shadow: 1px 1px 8px 0px rgba(255, 255, 255, 0.45);
 }
