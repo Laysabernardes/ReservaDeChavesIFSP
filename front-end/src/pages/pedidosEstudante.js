@@ -362,7 +362,7 @@ function PedidosEstudante() {
                 }}>Voltar:</a>
             </div>
             <div className='formulario-login_form'>
-              <h2 className="formulario_titulo">Seus pedidos, {userName}!</h2>
+              <h2 className="formulario_titulo">Seus pedidos de Permissão, {userName}!</h2>
               <div className='formulario-pedidos'>
                 <h2 className="formulario-login__h2">Faça seu pedido!</h2>
                 <form className="formulario-approved container">
