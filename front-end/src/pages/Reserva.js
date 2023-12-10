@@ -41,6 +41,7 @@ function ReservaForm(props) {
   const [horarioFinal, setHorarioFinal] = useState([]);
   const [horariosSelecionadosEntreInicialEFinal, setHorariosSelecionadosEntreInicialEFinal] = useState([]);
 
+  const [horariosDisponiveisByData, setHorariosDisponiveisByData] = useState([]);
   const [horariosDisponiveisSegundoSelect, setHorariosDisponiveisSegundoSelect] = useState([]);
 
   const [data, setData] = useState('');
@@ -87,6 +88,7 @@ function ReservaForm(props) {
       setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
     }
   };
+
 // const setarDetalhesReserva = async (idReserva, dtReserva) => {
 //   // Criar um payload para os detalhes da reserva
 //   const detalhesPayload = {
@@ -195,10 +197,37 @@ const handleReservar = () => {
   }
 };
 
+const identificarHorariosDisponiveisByData = async (data) => {
+  try{
+    const response = await api.get(`/reserva/detalhes/${data}`);
+    const arrayHorarios = [];
+    
+    if (response.data && response.data.data && Array.isArray(response.data.data.detalhes)) {
+      const detalhesArray = response.data.data.detalhes;
+      
+      detalhesArray.forEach(detalhe => {
+        // Aqui você pode fazer o que deseja com cada item do array detalhes
+        console.log("Cada detalhe:", detalhe); // Exemplo: Exibir cada detalhe no console
+        const hr_reserva_Array = JSON.parse(detalhe.hr_reserva)
+        arrayHorarios.push(...hr_reserva_Array);   
+      });
+
+    } else {
+      console.log('Array "detalhes" não encontrado em response.data.data');
+    }
+    
+    setHorariosDisponiveisByData(arrayHorarios);
+  } catch(error){
+    console.error('Erro ao buscar horarios disponiveis pela data:', error);
+  }
+} 
+
 // Função para lidar com a mudança na data
 const handleDateChange = (event) => {
   setDataSelecionada(event.target.value);
+  identificarHorariosDisponiveisByData(event.target.value);
 };
+
 
 // Função para identificar os horários entre o horário inicial e final selecionados
 const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
@@ -236,10 +265,11 @@ const handleHoraChange = (event, isHoraInicial) => {
 
 // console.log(identificarHorariosSelecionados(horarioInicial, horarioFinal));
 
-console.log('no dia', dataSelecionada);
-console.log('das', horarioInicial);
-console.log('até às', horarioFinal);
-console.log('total de horas:', horariosSelecionadosEntreInicialEFinal)
+// console.log('no dia', dataSelecionada);
+// console.log('das', horarioInicial);
+// console.log('até às', horarioFinal);
+// console.log('total de horas:', horariosSelecionadosEntreInicialEFinal)
+console.log("Estes são os horários disponiveis desse dia:", horariosDisponiveisByData);
 
 
 useEffect(() => {
@@ -252,6 +282,11 @@ useEffect(() => {
     }
     
   }
+  console.log("DIA SELECIONADO É: ", dataSelecionada)
+  console.log("type: ", typeof(dataSelecionada))
+  console.log("Horarios Disponiveis do dia É: ", horariosDisponiveisByData)
+  console.log("type: ", typeof(horariosDisponiveisByData))
+
 }, [userData, chave, matricula]);
 
 return (
