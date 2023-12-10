@@ -124,12 +124,12 @@ class ReservaServices {
 
   findByDataReserva = (dt_reserva) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM detalhes_reserva WHERE dt_reserva = ?;', [dt_reserva], (err, results) => {
+      connection.query('SELECT * FROM Reservas WHERE dt_reserva = ?;', [dt_reserva], (err, results) => {
         if (err) {
-          console.error('Erro ao buscar detalhes da reserva por data:', err);
+          console.error('Erro ao buscar dia da reserva:', err);
           reject(err);
         } else {
-          console.log('Detalhes da reserva encontrados com sucesso:', results);
+          console.log('Dia da reserva encontrado com sucesso:', results);
           resolve(results);
         }
       });

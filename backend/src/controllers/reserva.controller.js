@@ -103,31 +103,32 @@ class ReservaController {
       res.status(500).send({ message: err });
     }
   }
-  adicionarDetalhesReserva = async (req, res) => {
-    try {
-      const { id_reserva, horario_reservado, dt_reserva } = req.body;
 
-      if (!id_reserva || !horario_reservado || !dt_reserva) {
-        res.status(400).send({ message: "Preencha todos os espaços" });
-      }
-      await services.adicionarDetalhesReserva(id_reserva, horario_reservado, dt_reserva);
+  // adicionarDetalhesReserva = async (req, res) => {
+  //   try {
+  //     const { id_reserva, horario_reservado, dt_reserva } = req.body;
 
-      res.status(200).json({ mensagem: 'Detalhes da reserva adicionados com sucesso.' });
-      if (!res.headersSent) {
-        res.status(201).send({
-          message: "Detalhes da reserva adicionados com sucesso",
-          reserva: {
-            id_reserva, horario_reservado, dt_reserva
-          }
-        });
-      }
-    } catch (error) {
-      if (!res.headersSent) {
-        res.status(500).send({ message: error.message });
-      }
+  //     if (!id_reserva || !horario_reservado || !dt_reserva) {
+  //       res.status(400).send({ message: "Preencha todos os espaços" });
+  //     }
+  //     await services.adicionarDetalhesReserva(id_reserva, horario_reservado, dt_reserva);
 
-    }
-  };
+  //     res.status(200).json({ mensagem: 'Detalhes da reserva adicionados com sucesso.' });
+  //     if (!res.headersSent) {
+  //       res.status(201).send({
+  //         message: "Detalhes da reserva adicionados com sucesso",
+  //         reserva: {
+  //           id_reserva, horario_reservado, dt_reserva
+  //         }
+  //       });
+  //     }
+  //   } catch (error) {
+  //     if (!res.headersSent) {
+  //       res.status(500).send({ message: error.message });
+  //     }
+
+  //   }
+  // };
 
   findByDataReserva = async (req, res) => {
     try {
