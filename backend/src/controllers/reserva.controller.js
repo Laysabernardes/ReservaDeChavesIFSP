@@ -152,7 +152,7 @@ class ReservaController {
 
   findByDataReserva = async (req, res) => {
     try {
-      const { dt_reserva } = req.body;
+      const { dt_reserva } = req.params;
 
       if (typeof dt_reserva === 'undefined' || dt_reserva.length === 0) {
         return res.status(400).json({ message: "Adicione uma data de reserva válida!" });
@@ -164,7 +164,7 @@ class ReservaController {
         console.log('Detalhes da reserva encontrados com sucesso:', result);
         return res.status(200).json({ message: 'Data encontrada com sucesso.', data: { dt_reserva, detalhes: result } });
       } else {
-        return res.status(404).json({ message: 'Data não encontrada.' });
+        return res.status(200).json({ message: 'Data não encontrada.' });
       }
     } catch (error) {
       return res.status(500).json({ message: error.message });

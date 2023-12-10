@@ -42,7 +42,7 @@ function Cadastro() {
   const chaveExiste = async () => {
     const response = await api.get(`/chaves/nome/${payload.nm_chave}`);
     console.log(response.data.chave)
-    if(response.data.chave === false){
+    if (response.data.chave === false) {
       criarChave()
       return
     } else {
@@ -56,6 +56,14 @@ function Cadastro() {
       <Header />
       <div className="formulario_cadastro_area">
         <div className="formulario-cadastro container">
+          <div className='container_botao'>
+            <a className="local_botao" href="/main"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/main', { state: { user: userData } })
+              }}>Voltar:</a>
+          </div>
+          
           <h3 className="formulario-cadastro__titulo">Cadastrar Chave:</h3>
           {mensagem && <p className='mensagem'>{mensagem}</p>}
           <form action="" className="formulario-cadastro_form">
@@ -78,9 +86,11 @@ function Cadastro() {
 
               <label className="input-label" htmlFor="categoriaLocal">
                 Tipo de sala:
+                <br />
               </label>
               <div className="radio-buttons-container">
                 <div className='centralizar'>
+                  
                   <input
                     type="radio"
                     id="sala"
@@ -133,11 +143,11 @@ function Cadastro() {
             </div>
 
             <button
-                    className="boton-formulario-approved"
-                    type="button"
-                    onClick={chaveExiste}
-                  >
-                    Aceitar
+              className="boton-formulario-approved"
+              type="button"
+              onClick={chaveExiste}
+            >
+              Aceitar
             </button>
 
           </form>

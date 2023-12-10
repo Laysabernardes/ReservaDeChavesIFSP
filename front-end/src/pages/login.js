@@ -55,7 +55,11 @@ function LoginForm() {
         cd_senha_usuario: response.data.user[0].cd_senha_usuario,
         nm_usuario: response.data.user[0].nm_usuario,
       };
+      /////////////////////////////// PARTE QUE PEGA AS INFORMAÇÕES DO USER
       localStorage.setItem('userData', JSON.stringify(user));
+      // Obtém dados do usuário do armazenamento local (localStorage)
+      ///////////////////// PARA ACESSAR COLE ESSA LINHA ABAIXO NO CODIGO E FAÇA userData.cd_matricula por exemplo
+      //const userData = JSON.parse(localStorage.getItem('userData'));
 
       // Imprime informações para depuração
       console.log('Login:', login);

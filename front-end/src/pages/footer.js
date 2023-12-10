@@ -11,6 +11,8 @@ import { logoIF } from '../img/index.js';
 
 // Função que representa o componente Footer.
 function Footer() {
+  // Obtém dados do usuário do armazenamento local (localStorage)
+  const userData = JSON.parse(localStorage.getItem('userData'));
   return (
     <div>
       {/* Seção do Footer contendo informações e formulário de contato */}

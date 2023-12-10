@@ -32,7 +32,7 @@ function CadastroUser() {
         cd_cargo: cargo,
         cd_senha_usuario: senha,
         nm_usuario: nome,
-    };    
+    };
 
     const criarUsuario = async () => {
         const response = await api.post('/user/criar', payload);
@@ -47,7 +47,7 @@ function CadastroUser() {
         const response = await api.get(`user/nome/${payload.cd_matricula_usuario}`);
         console.log(response.data.usuario)
         if (response.data.usuario === false) {
-            console.log("tudo2",payload);
+            console.log("tudo2", payload);
             criarUsuario()
             return
         } else {
@@ -55,7 +55,7 @@ function CadastroUser() {
             return
         }
     }
-    
+
 
     const buscarCargo = async () => {
         try {
@@ -114,14 +114,14 @@ function CadastroUser() {
                 // Obtém o código do cargo selecionado
                 const cargoSelecionado = arrayCargos.find(cargo => cargo.cd_cargo === this.value)?.cd_cargo;
                 console.log('Código do cargo selecionado:', cargoSelecionado);
-                console.log("tudo",payload);
+                console.log("tudo", payload);
             });
 
         } catch (error) {
             // Trate os erros, se necessário
             console.error('Erro ao preencher as opções do combo box:', error);
         }
-       
+
     }
 
     useEffect(() => {
@@ -135,6 +135,13 @@ function CadastroUser() {
             <Header />
             <div className="formulario_cadastro_area">
                 <div className="formulario-cadastro container">
+                    <div className='container_botao'>
+                        <a className="local_botao" href="/main"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/main', { state: { user: userData } })
+                            }}>Voltar:</a>
+                    </div>
 
                     <h3 className="formulario-cadastro__titulo">Cadastrar Usuario:</h3>
                     {mensagem && <p className='mensagem'>{mensagem}</p>}
