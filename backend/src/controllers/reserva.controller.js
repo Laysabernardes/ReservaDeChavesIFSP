@@ -3,14 +3,14 @@ const services = new ReservaServicesServices();
 class ReservaController {
   create = async (req, res) => {
     try {//constante que verifica todos os campos
-      const { cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status } = req.body;
+      const { cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva } = req.body;
 
-      if (!cd_matricula_solicitante || !cd_cargo || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status) {
+      if (!cd_matricula_solicitante || !cd_cargo || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status || !hr_reserva) {
         res.status(400).send({ message: "Preencha todos os espaços" });
       }
 
       //await é usado junto com async
-      const result = await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status);
+      const result = await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva);
 
       const id_reserva = result.insertId; // Obtenha o ID da reserva
 

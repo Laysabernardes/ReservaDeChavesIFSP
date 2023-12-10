@@ -87,8 +87,25 @@ function ReservaForm(props) {
       setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
     }
   };
+// const setarDetalhesReserva = async (idReserva, dtReserva) => {
+//   // Criar um payload para os detalhes da reserva
+//   const detalhesPayload = {
+//     id_reserva: idReserva,
+//     horarios_reservados: "15:30",
+//     dt_reserva: dtReserva,
+//   };
+
+//   // Log para verificar o payload antes de enviar
+//   console.log('Detalhes payload:', detalhesPayload);
+
+//   // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
+//   const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
+//   console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
+
+// }
 
   // Função assíncrona para lidar com a reserva
+  
   const handleReservarSala = async (e) => {
     //e.preventDefault() cancela a ação padrão do evento
     e.preventDefault();
@@ -130,6 +147,7 @@ function ReservaForm(props) {
         dt_reserva: dataSelecionada,
         dt_devolucao: new Date().toISOString().split('T')[0],
         ds_status: 'SOLICITANDO',
+        hr_reserva: JSON.stringify(horariosSelecionadosEntreInicialEFinal)
       };
 
       console.log('tudi', payload);
@@ -145,23 +163,12 @@ function ReservaForm(props) {
         console.log('Reserva:', response.data.reserva);
         console.log('Resposta completa:', response.data);
 
-
         console.log('ID da reserva:', idReserva);
 
-        // Criar um payload para os detalhes da reserva
-        const detalhesPayload = {
-          id_reserva: idReserva,
-          horarios_reservados: horariosSelecionadosEntreInicialEFinal,
-          dt_reserva: dtReserva,
-        };
-         // Log para verificar o payload antes de enviar
-  console.log('Detalhes payload:', detalhesPayload);
 
-        // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
-        const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
-        console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
+        // //CHAMAR FUNÇÃO do DETALHES:
+        // setarDetalhesReserva(idReserva, dtReserva)
 
-        // navigate('/solicitacao', { state: { chave: response.data } });
       } catch (error) {
         console.error('Erro ao criar reserva:', error);
         setMensagem('ERRO: Solicitação de reserva não criada, tente novamente!')
@@ -170,46 +177,13 @@ function ReservaForm(props) {
     console.error('Erro ao criar reserva:', error);
     setMensagem('ERRO: Solicitação de reserva não criada, tente novamente!')
   }
-
-  // const DetalhesReserva = async (matricula, cdChaveDesejada) => {
-  //   try {
-  //     const detalhesPayload = {
-  //       id_reserva: idReserva,
-  //       horarios_reservados: horariosSelecionados,
-  //     };
-  //     // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
-  //     const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
-  //     console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
-
-  //     if (dadosPermissao.pedidos.length === 0) {
-  //       setMensagem(`Aluno, você não tem permissões associadas a este local. Faça o pedido a um professor!`);
-  //       return setpermitir(false);
-  //     }
-
-     
-  //   } catch (error) {
-  //     console.error('Erro ao verificar permissão para reserva:', error);
-  //     setMensagem(`Erro ao verificar permissão para reserva. Tente novamente mais tarde.`);
-  //   }
-  // };
-
-
-
-    // Criar um payload com os dados da reserva
 };
 
 const todosOsHorarios = [
-  '-', '07:15', '08:00', '08:45', '09:30', '09:45', '10:30', '11:15',
-  '13:15', '14:00', '14:45', '15:45', '16:30', '17:15', '18:00',
-  '19:00', '19:45', '20:30', '21:30', '22:15'
+  "-", "07:15", "08:00", "08:45", "09:30", "09:45", "10:30", "11:15",
+  "13:15", "14:00", "14:45", "15:45", "16:30", "17:15", "18:00",
+  "19:00", "19:45", "20:30", "21:30", "22:15"
 ];
-
-// Função para filtrar os horários disponíveis com base na data selecionada
-const obterHorariosDisponiveis = (dataSelecionada, chave) => {
-  // Adicione aqui a lógica para obter os horários reservados para a data selecionada, se necessário
-  // Por enquanto, retornaremos todos os horários, pois não temos essa lógica implementada ainda
-  return todosOsHorarios;
-};
 
 // Função para lidar com a reserva dos horários selecionados
 const handleReservar = () => {
@@ -234,9 +208,7 @@ const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
     const horariosEntre = todosOsHorarios.slice(indiceInicial - 1, indiceFinal + 1);
     ////////////////////////////
-    const horarioJSON = JSON.stringify(horariosEntre);
-    
-    setHorariosSelecionadosEntreInicialEFinal(horarioJSON);
+    setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
     ///////////////////////////
   } else {
     setHorariosSelecionadosEntreInicialEFinal([]);
