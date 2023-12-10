@@ -2,9 +2,9 @@ const connection = require("../database/db.js");
 
 class ReservaServices {
 
-  create = (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status) => {
+  create = (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva) => {
     return new Promise((resolve, reject) => {
-      connection.query("INSERT INTO Reservas (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status) VALUES (?, ?, ?, ?, ?, ? ,? )", [cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status], (err, results) => {
+      connection.query("INSERT INTO Reservas (cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva) VALUES (?, ?, ?, ?, ?, ? ,?, ?)", [cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva], (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
@@ -96,16 +96,15 @@ class ReservaServices {
 
   adicionarDetalhesReserva = (id_reserva, horarios_reservados, dt_reserva) => {
     return new Promise((resolve, reject) => {
-      const horariosReservadosArray = JSON.parse(horarios_reservados);
 
       // Certifique-se de que horarios_reservados é um array
-      if (!Array.isArray(horariosReservadosArray)) {
+      if (!Array.isArray(horarios_reservados)) {
         reject(new Error('O parâmetro horarios_reservados deve ser um array.'));
         return;
       }
   
       // Mapeie cada horário para um array de valores
-      const values = horariosReservadosArray.map((horario) => [id_reserva, horario, dt_reserva]);
+      const values = horarios_reservados.map((horario) => [id_reserva, horario, dt_reserva]);
   
       // Use INSERT INTO ... VALUES (?, ?, ?), (?, ?, ?), ... para inserir múltiplos registros
       const query = "INSERT INTO detalhes_reserva (id_reserva, horario_reservado, dt_reserva) VALUES ?";
