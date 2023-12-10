@@ -132,7 +132,7 @@ class ReservaController {
 
   findByDataReserva = async (req, res) => {
     try {
-      const { dt_reserva } = req.body;
+      const { dt_reserva } = req.params;
 
       if (typeof dt_reserva === 'undefined' || dt_reserva.length === 0) {
         return res.status(400).json({ message: "Adicione uma data de reserva válida!" });
