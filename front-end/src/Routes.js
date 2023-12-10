@@ -12,21 +12,24 @@ import PedidosProf from './pages/pedidosProf.js';
 import PedidosEstudante from './pages/pedidosEstudante.js';
 import PedidosAdm from './pages/pedidosAdm.js';
 import CadastroUser from './pages/cadastroUsuario.js';
+import { PrivateRoute } from './PrivateRoute.js';
+import { AccessProfessor } from './AccessProfessor.js';
+import { AccessAdm } from './AccessAdm.js';
 
 function Routes() {
   return (
     <RouterRoutes>
       <Route path="/" element={<Login />} />
-      <Route path="/main" element={<Main />} />
-      <Route path="/reserva" element={<Reserva />} />
+      <Route path="/main" element={<PrivateRoute><Main /></PrivateRoute>} />
+      <Route path="/reserva" element={<PrivateRoute><Reserva /></PrivateRoute>} />
       <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/mostraChave" element={<MostraChave />} />
-      <Route path="/solicitacao" element={<PaginaDeSolicitacao />} />
-      <Route path="/adm" element={<Adm />} />
-      <Route path="/perfil" element={<Perfil/>}/>
-      <Route path="/pedidos" element={<PedidosProf/>}/>
-      <Route path="/pedidosEstudante" element={<PedidosEstudante/>}/>
-      <Route path="/pedidosAdm" element={<PedidosAdm/>}/>
+      <Route path="/mostraChave" element={<PrivateRoute><MostraChave /></PrivateRoute>} />
+      <Route path="/solicitacao" element={<PrivateRoute><PaginaDeSolicitacao /></PrivateRoute>} />
+      <Route path="/adm" element={<PrivateRoute><AccessAdm><Adm /></AccessAdm></PrivateRoute>} />
+      <Route path="/perfil" element={<PrivateRoute><Perfil/></PrivateRoute>}/>
+      <Route path="/pedidos" element={<PrivateRoute><AccessProfessor><PedidosProf/></AccessProfessor></PrivateRoute>}/>
+      <Route path="/pedidosEstudante" element={<PrivateRoute><PedidosEstudante/></PrivateRoute>}/>
+      <Route path="/pedidosAdm" element={<PrivateRoute><AccessAdm><PedidosAdm/></AccessAdm></PrivateRoute>}/>
       <Route path="/cadastrouser" element={<CadastroUser/>}/>
     </RouterRoutes>
 
