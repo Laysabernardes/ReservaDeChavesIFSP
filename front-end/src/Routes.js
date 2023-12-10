@@ -23,7 +23,7 @@ function Routes() {
       <Route path="/" element={<Login />} />
       <Route path="/main" element={<PrivateRoute><Main /></PrivateRoute>} />
       <Route path="/reserva" element={<PrivateRoute><Reserva /></PrivateRoute>} />
-      <Route path="/cadastro" element={<Cadastro />} />
+      <Route path="/cadastro" element={<PrivateRoute><AccessAdm><Cadastro /></AccessAdm></PrivateRoute>} />
       <Route path="/mostraChave" element={<PrivateRoute><MostraChave /></PrivateRoute>} />
       <Route path="/solicitacao" element={<PrivateRoute><PaginaDeSolicitacao /></PrivateRoute>} />
       <Route path="/adm" element={<PrivateRoute><AccessAdm><Adm /></AccessAdm></PrivateRoute>} />
@@ -31,7 +31,7 @@ function Routes() {
       <Route path="/pedidos" element={<PrivateRoute><AccessProfessor><PedidosProf/></AccessProfessor></PrivateRoute>}/>
       <Route path="/pedidosEstudante" element={<PrivateRoute><PedidosEstudante/></PrivateRoute>}/>
       <Route path="/pedidosAdm" element={<PrivateRoute><AccessAdm><PedidosAdm/></AccessAdm></PrivateRoute>}/>
-      <Route path="/cadastrouser" element={<CadastroUser/>}/>
+      <Route path="/cadastrouser" element={<PrivateRoute><AccessAdm><CadastroUser/></AccessAdm></PrivateRoute>}/>
     </RouterRoutes>
 
   );
