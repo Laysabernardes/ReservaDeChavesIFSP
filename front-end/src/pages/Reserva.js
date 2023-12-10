@@ -200,7 +200,7 @@ const handleReservar = () => {
 const identificarHorariosDisponiveisByData = async (data) => {
   try{
     const response = await api.get(`/reserva/detalhes/${data}`);
-    const arrayHorarios = [];
+    const arrayHorariosPegos = [];
     
     if (response.data && response.data.data && Array.isArray(response.data.data.detalhes)) {
       const detalhesArray = response.data.data.detalhes;
@@ -209,14 +209,20 @@ const identificarHorariosDisponiveisByData = async (data) => {
         // Aqui você pode fazer o que deseja com cada item do array detalhes
         console.log("Cada detalhe:", detalhe); // Exemplo: Exibir cada detalhe no console
         const hr_reserva_Array = JSON.parse(detalhe.hr_reserva)
-        arrayHorarios.push(...hr_reserva_Array);   
+        arrayHorariosPegos.push(...hr_reserva_Array);   
       });
 
     } else {
       console.log('Array "detalhes" não encontrado em response.data.data');
     }
-    
-    setHorariosDisponiveisByData(arrayHorarios);
+    // Filtra os horários disponíveis que não estão presentes em todosOsHorarios
+    const horariosRestantes = todosOsHorarios.filter(horario => !arrayHorariosPegos.includes(horario));
+
+    if(horariosRestantes.length === 0){
+      setHorariosDisponiveisByData(todosOsHorarios);
+    } else{
+      setHorariosDisponiveisByData(horariosRestantes);
+    }
   } catch(error){
     console.error('Erro ao buscar horarios disponiveis pela data:', error);
   }
@@ -231,11 +237,11 @@ const handleDateChange = (event) => {
 
 // Função para identificar os horários entre o horário inicial e final selecionados
 const identificarHorariosSelecionados = (horaInicial, horaFinal) => {
-  const indiceInicial = todosOsHorarios.indexOf(horaInicial);
-  const indiceFinal = todosOsHorarios.indexOf(horaFinal);
+  const indiceInicial = horariosDisponiveisByData.indexOf(horaInicial);
+  const indiceFinal = horariosDisponiveisByData.indexOf(horaFinal);
 
   if (indiceInicial !== -1 && indiceFinal !== -1 && indiceInicial < indiceFinal) {
-    const horariosEntre = todosOsHorarios.slice(indiceInicial - 1, indiceFinal + 1);
+    const horariosEntre = horariosDisponiveisByData.slice(indiceInicial - 1, indiceFinal + 1);
     ////////////////////////////
     setHorariosSelecionadosEntreInicialEFinal(horariosEntre);
     ///////////////////////////
@@ -258,7 +264,7 @@ const handleHoraChange = (event, isHoraInicial) => {
   identificarHorariosSelecionados(horaInicialSelecionada, horaFinalSelecionada);
 
   if (isHoraInicial) {
-    const horasDisponiveisSegundoSelect = todosOsHorarios.filter(horario => horario > horaInicialSelecionada);
+    const horasDisponiveisSegundoSelect = horariosDisponiveisByData.filter(horario => horario > horaInicialSelecionada);
     setHorariosDisponiveisSegundoSelect(horasDisponiveisSegundoSelect);
   }
 };
@@ -358,7 +364,7 @@ return (
                     <label for="select-horario1" className='input-label'>Horário inicial:</label>
                     <select name="select-horario1" className="input inputs" required 
                     onChange={(e) => handleHoraChange(e, true)}>
-                      {todosOsHorarios.map(horario => (
+                      {horariosDisponiveisByData.map(horario => (
                           <option
                             id={horario}
                             value={horario}
