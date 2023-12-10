@@ -188,5 +188,3 @@ class ChavesController {
 };
 
 module.exports = ChavesController;
-
-

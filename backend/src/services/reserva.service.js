@@ -121,6 +121,19 @@ class ReservaServices {
     });
   };
   
+  findBySolicitante = (cd_matricula_solicitante) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM Reservas WHERE cd_matricula_solicitante = ?;', [cd_matricula_solicitante], (err, results) => {
+        if (err) {
+          console.error('Erro ao buscar solicitação:', err);
+          reject(err);
+        } else {
+          console.log('Solicitação encontrada com sucesso:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
 
   findByDataReserva = (dt_reserva) => {
     return new Promise((resolve, reject) => {
