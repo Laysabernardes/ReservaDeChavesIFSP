@@ -16,6 +16,7 @@ import { PrivateRoute } from './PrivateRoute.js';
 import { AccessProfessor } from './AccessProfessor.js';
 import { AccessAdm } from './AccessAdm.js';
 
+
 function Routes() {
   return (
     <RouterRoutes>
