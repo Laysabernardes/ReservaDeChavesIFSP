@@ -52,9 +52,9 @@ function PedidosProf() {
       // Obtém os dados da resposta da API
       const dadosEstudante = response.data;
       // Verifica se a resposta da API contém dados do usuário
-      if (dadosEstudante.usuarios && dadosEstudante.usuarios.length > 0) {
+      if (dadosEstudante.usuario && dadosEstudante.usuario.length > 0) {
         // Obtém o nome do estudante
-        const nomeEstudante = dadosEstudante.usuarios[0].nm_usuario;
+        const nomeEstudante = dadosEstudante.usuario[0].nm_usuario;
         // Imprime o nome do estudante
         console.log("nome:", nomeEstudante);
         // Retorna o nome do estudante

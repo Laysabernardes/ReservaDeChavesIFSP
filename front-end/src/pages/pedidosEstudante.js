@@ -57,9 +57,9 @@ function PedidosEstudante() {
       // Obtém os dados da resposta da API
       const dadosProfessor = response.data;
       // Verifica se a resposta da API contém dados do usuário
-      if (dadosProfessor.usuarios && dadosProfessor.usuarios.length > 0) {
+      if (dadosProfessor.usuario && dadosProfessor.usuario.length > 0) {
         // Obtém o nome do estudante
-        const nomeprofessor = dadosProfessor.usuarios[0].nm_usuario;
+        const nomeprofessor = dadosProfessor.usuario[0].nm_usuario;
         // Imprime o nome do estudante
         console.log("nome:", nomeprofessor);
         // Retorna o nome do estudante

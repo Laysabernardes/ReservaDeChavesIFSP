@@ -46,9 +46,9 @@ function PedidosAdm() {
             // Obtém os dados da resposta da API
             const dadosSolicitante = response.data;
             // Verifica se a resposta da API contém dados do usuário
-            if (dadosSolicitante.usuarios && dadosSolicitante.usuarios.length > 0) {
+            if (dadosSolicitante.usuario && dadosSolicitante.usuario.length > 0) {
                 // Obtém o nome do estudante
-                const nomeSolicitante = dadosSolicitante.usuarios[0].nm_usuario;
+                const nomeSolicitante = dadosSolicitante.usuario[0].nm_usuario;
                 // Imprime o nome do estudante
                 console.log("nome:", nomeSolicitante);
                 // Retorna o nome do estudante
