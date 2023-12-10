@@ -10,14 +10,16 @@ class ReservaController {
       }
 
       //await é usado junto com async
-      await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status);
+      const result = await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status);
+
+      const id_reserva = result.insertId; // Obtenha o ID da reserva
 
       // Verifique se a resposta já foi enviada
       if (!res.headersSent) {
         res.status(201).send({
           message: "Reserva criada com sucesso!",
           reserva: {
-            cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status
+            cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status,id_reserva,
           }
         });
       }
@@ -103,25 +105,25 @@ class ReservaController {
   }
   adicionarDetalhesReserva = async (req, res) => {
     try {
-      const { id_reserva, horariosSelecionados, dt_reserva } = req.body;
+      const { id_reserva, horario_reservado, dt_reserva } = req.body;
 
-      if (!id_reserva || !horariosSelecionados || !dt_reserva) {
+      if (!id_reserva || !horario_reservado || !dt_reserva) {
         res.status(400).send({ message: "Preencha todos os espaços" });
       }
-      await services.adicionarDetalhesReserva(id_reserva, horariosSelecionados, dt_reserva);
+      await services.adicionarDetalhesReserva(id_reserva, horario_reservado, dt_reserva);
 
       res.status(200).json({ mensagem: 'Detalhes da reserva adicionados com sucesso.' });
       if (!res.headersSent) {
         res.status(201).send({
           message: "Detalhes da reserva adicionados com sucesso",
           reserva: {
-            id_reserva, horariosSelecionados, dt_reserva
+            id_reserva, horario_reservado, dt_reserva
           }
         });
       }
     } catch (error) {
       if (!res.headersSent) {
-        res.status(500).send({ message: err.message });
+        res.status(500).send({ message: error.message });
       }
 
     }

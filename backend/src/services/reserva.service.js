@@ -8,10 +8,17 @@ class ReservaServices {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
+        } else  
+        {
+          const insertId = results && results.insertId;
+        if (insertId) {
+            console.log('Reserva criada com sucesso. ID:', insertId);
+            resolve(results);
         } else {
-          console.log('reserva criada com sucesso:', results);
-          resolve(results);
+            console.error('A propriedade insertId não foi encontrada na resposta:', results);
+            reject(new Error('A propriedade insertId não foi encontrada na resposta.'));
         }
+      }
       });
     });
   }
@@ -72,11 +79,38 @@ class ReservaServices {
     });
   }
 
-  adicionarDetalhesReserva = (id_reserva, horariosSelecionados, dt_reserva) => {
-    return new Promise((resolve, reject) => {
-      const values = horariosSelecionados.map(horario => [id_reserva, horario, dt_reserva]);
+  // adicionarDetalhesReserva = (id_reserva, horario_reservado, dt_reserva) => {
+  //   return new Promise((resolve, reject) => {
 
-      connection.query("INSERT INTO detalhes_reserva (id_reserva, horario_reservado, dt_reserva) VALUES ?", [values], (err, results) => {
+  //     connection.query("INSERT INTO detalhes_reserva (id_reserva, horario_reservado, dt_reserva) VALUES (?, ?, ? )", [id_reserva, horario_reservado, dt_reserva], (err, results) => {
+  //       if (err) {
+  //         console.error('Erro ao adicionar detalhes da reserva:', err);
+  //         reject(err);
+  //       } else {
+  //         console.log('Detalhes da reserva adicionados com sucesso:', results);
+  //         resolve(results);
+  //       }
+  //     });
+  //   });
+  // };
+
+  adicionarDetalhesReserva = (id_reserva, horarios_reservados, dt_reserva) => {
+    return new Promise((resolve, reject) => {
+      const horariosReservadosArray = JSON.parse(horarios_reservados);
+
+      // Certifique-se de que horarios_reservados é um array
+      if (!Array.isArray(horariosReservadosArray)) {
+        reject(new Error('O parâmetro horarios_reservados deve ser um array.'));
+        return;
+      }
+  
+      // Mapeie cada horário para um array de valores
+      const values = horariosReservadosArray.map((horario) => [id_reserva, horario, dt_reserva]);
+  
+      // Use INSERT INTO ... VALUES (?, ?, ?), (?, ?, ?), ... para inserir múltiplos registros
+      const query = "INSERT INTO detalhes_reserva (id_reserva, horario_reservado, dt_reserva) VALUES ?";
+  
+      connection.query(query, [values], (err, results) => {
         if (err) {
           console.error('Erro ao adicionar detalhes da reserva:', err);
           reject(err);
@@ -87,6 +121,7 @@ class ReservaServices {
       });
     });
   };
+  
 
   findByDataReserva = (dt_reserva) => {
     return new Promise((resolve, reject) => {
