@@ -1,6 +1,6 @@
 // Importa as funcionalidades necessárias do React
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Importa estilos do arquivo "munu.css" e a imagem do logo do Instituto Federal
 import "../css/header.css";
@@ -31,7 +31,14 @@ function Navbar({ locais }) {
         } else {
             setIcon("nav__toggler");
         }
+
     };
+
+      const navigate = useNavigate();
+        const handleLogout = () => {
+            localStorage.clear();
+            navigate('/');
+        }
 
     // Renderiza o componente Navbar
     return (
@@ -76,7 +83,7 @@ function Navbar({ locais }) {
                 <li className="nav__item header__boton">
                     <a href="/" className="nav__link" onClick={(e) => {
                         e.preventDefault();
-                        window.location.replace("/");
+                        handleLogout();
                     }}>
                         Sair
                     </a>
