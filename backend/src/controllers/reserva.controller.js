@@ -103,35 +103,36 @@ class ReservaController {
       res.status(500).send({ message: err });
     }
   }
-  adicionarDetalhesReserva = async (req, res) => {
-    try {
-      const { id_reserva, horario_reservado, dt_reserva } = req.body;
 
-      if (!id_reserva || !horario_reservado || !dt_reserva) {
-        res.status(400).send({ message: "Preencha todos os espaços" });
-      }
-      await services.adicionarDetalhesReserva(id_reserva, horario_reservado, dt_reserva);
+  // adicionarDetalhesReserva = async (req, res) => {
+  //   try {
+  //     const { id_reserva, horario_reservado, dt_reserva } = req.body;
 
-      res.status(200).json({ mensagem: 'Detalhes da reserva adicionados com sucesso.' });
-      if (!res.headersSent) {
-        res.status(201).send({
-          message: "Detalhes da reserva adicionados com sucesso",
-          reserva: {
-            id_reserva, horario_reservado, dt_reserva
-          }
-        });
-      }
-    } catch (error) {
-      if (!res.headersSent) {
-        res.status(500).send({ message: error.message });
-      }
+  //     if (!id_reserva || !horario_reservado || !dt_reserva) {
+  //       res.status(400).send({ message: "Preencha todos os espaços" });
+  //     }
+  //     await services.adicionarDetalhesReserva(id_reserva, horario_reservado, dt_reserva);
 
-    }
-  };
+  //     res.status(200).json({ mensagem: 'Detalhes da reserva adicionados com sucesso.' });
+  //     if (!res.headersSent) {
+  //       res.status(201).send({
+  //         message: "Detalhes da reserva adicionados com sucesso",
+  //         reserva: {
+  //           id_reserva, horario_reservado, dt_reserva
+  //         }
+  //       });
+  //     }
+  //   } catch (error) {
+  //     if (!res.headersSent) {
+  //       res.status(500).send({ message: error.message });
+  //     }
+
+  //   }
+  // };
 
   findByDataReserva = async (req, res) => {
     try {
-      const { dt_reserva } = req.body;
+      const { dt_reserva } = req.params;
 
       if (typeof dt_reserva === 'undefined' || dt_reserva.length === 0) {
         return res.status(400).json({ message: "Adicione uma data de reserva válida!" });
@@ -143,7 +144,7 @@ class ReservaController {
         console.log('Detalhes da reserva encontrados com sucesso:', result);
         return res.status(200).json({ message: 'Data encontrada com sucesso.', data: { dt_reserva, detalhes: result } });
       } else {
-        return res.status(404).json({ message: 'Data não encontrada.' });
+        return res.status(200).json({ message: 'Data não encontrada.' });
       }
     } catch (error) {
       return res.status(500).json({ message: error.message });
