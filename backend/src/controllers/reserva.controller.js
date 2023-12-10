@@ -144,7 +144,7 @@ class ReservaController {
         console.log('Detalhes da reserva encontrados com sucesso:', result);
         return res.status(200).json({ message: 'Data encontrada com sucesso.', data: { dt_reserva, detalhes: result } });
       } else {
-        return res.status(404).json({ message: 'Data não encontrada.' });
+        return res.status(200).json({ message: 'Data não encontrada.' });
       }
     } catch (error) {
       return res.status(500).json({ message: error.message });
