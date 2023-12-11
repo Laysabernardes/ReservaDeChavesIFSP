@@ -327,30 +327,6 @@ function ReservaForm(props) {
                       )}
                     </div>
 
-                    {/* Campo de entrada para a situação (readonly) */}
-                    {permitir === true && (
-                      <div className="formulario-login__input-container">
-                        <input
-                          name="situacao"
-                          id="situacao"
-                          className="input inputs"
-                          type="text"
-                          placeholder="Situação"
-                          required
-                          data-tipo="situacao"
-                          value={situacao}
-                          onChange={(e) => setSituacao(e.target.value)}
-                          readOnly
-                        />
-                        <label className="input-label" htmlFor="situacao">
-                          Situação:
-                        </label>
-                        <span className="input-message-error">
-                          Este campo não é válido
-                        </span>
-                      </div>
-                    )}
-
                     {/* Campo de entrada para a data e horário */}
                     {permitir === true && (
                       <div id="previsao" className="formulario-login__input-container">
