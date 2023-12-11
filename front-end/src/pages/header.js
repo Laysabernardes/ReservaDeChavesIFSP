@@ -108,6 +108,14 @@ function Navbar({ locais }) {
                             Nova Chave
                         </a>
                     </li>
+                    <li className="nav__item">
+                        <a href="/deletar" className="nav__link" onClick={(e) => {
+                            e.preventDefault();
+                            window.location.replace("/deletar");
+                        }}>
+                            Deletar
+                        </a>
+                    </li>
                 </>
                 )}
                 <li className="nav__item header__boton">
