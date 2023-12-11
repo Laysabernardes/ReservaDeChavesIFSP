@@ -210,6 +210,13 @@ function PedidosAdm() {
                     const datareserva = await FormatarData(reserva.dt_reserva);
                     reserva.data = datareserva;
 
+                    const horarioreserva = reserva.hr_reserva;
+                    const JSONhorario = JSON.parse(horarioreserva);
+                    const inicial = JSONhorario[0];
+                    const final = JSONhorario[JSONhorario.length - 1];
+                    const formatohora = (`${inicial} até ${final}`);
+                    reserva.hr_reserva = formatohora;
+                    console.log(formatohora);
 
                     // Obtém o ID da permissão
                     const idReserva = reserva.id_reserva;
@@ -297,10 +304,10 @@ function PedidosAdm() {
     };
 
     const DeleteReserva = async (id_reserva) => {
-        try{
+        try {
             const response = await api.delete(`/reserva/${id_reserva}`);
-            console.log("Reserva deletada: ",response.log);
-        } catch(error) {
+            console.log("Reserva deletada: ", response.log);
+        } catch (error) {
             console.log("Erro: ", error);
         }
     }
@@ -349,20 +356,20 @@ function PedidosAdm() {
 
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                        <p>Nome: {reserva.nomeSolicitante}</p>
-                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
-                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
                                                         {reserva.cd_cargo === 'A0001' && (
                                                             <>
-                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
                                                             </>
                                                         )}
-                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
-                                                        <p>Data da Reserva: {reserva.data}</p>
-                                                        <p>Horario da reserva: </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
                                                     <button
                                                         className="boton-form-aceitar"
                                                         type="button"
@@ -400,20 +407,20 @@ function PedidosAdm() {
 
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                    <p>Nome: {reserva.nomeSolicitante}</p>
-                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
-                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
                                                         {reserva.cd_cargo === 'A0001' && (
                                                             <>
-                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
                                                             </>
                                                         )}
-                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
-                                                        <p>Data da Reserva: {reserva.data}</p>
-                                                        <p>Horario da reserva: </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
                                                     <button
                                                         className="boton-form-aceitar"
                                                         type="button"
@@ -450,20 +457,20 @@ function PedidosAdm() {
                                                 <h2 className='identificador'>#{reserva.id_reserva}</h2>
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                    <p>Nome: {reserva.nomeSolicitante}</p>
-                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
-                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
                                                         {reserva.cd_cargo === 'A0001' && (
                                                             <>
-                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
                                                             </>
                                                         )}
-                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
-                                                        <p>Data da Reserva: {reserva.data}</p>
-                                                        <p>Horario da reserva: </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
                                                     <button
                                                         className="boton-form-aceitar"
                                                         type="button"
@@ -499,21 +506,21 @@ function PedidosAdm() {
                                             <div className="container-pedidos">
                                                 <h2 className='identificador'>#{reserva.id_reserva}</h2>
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
-                                                    <div className="container-texto">
-                                                    <p>Nome: {reserva.nomeSolicitante}</p>
-                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
-                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                <div className="container-texto">
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
                                                         {reserva.cd_cargo === 'A0001' && (
                                                             <>
-                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
                                                             </>
                                                         )}
-                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
-                                                        <p>Data da Reserva: {reserva.data}</p>
-                                                        <p>Horario da reserva: </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
                                                     <button
                                                         className="boton-form-recusar"
                                                         type="button"

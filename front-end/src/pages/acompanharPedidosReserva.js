@@ -211,6 +211,13 @@ function AcompanharPedidos() {
                     const datasolicitacoes = await FormatarData(solicitacoes.dt_reserva);
                     solicitacoes.data = datasolicitacoes;
 
+                    const horarioreserva = solicitacoes.hr_reserva;
+                    const JSONhorario = JSON.parse(horarioreserva);
+                    const inicial = JSONhorario[0];
+                    const final = JSONhorario[JSONhorario.length - 1];
+                    const formatohora = (`${inicial} até ${final}`);
+                    solicitacoes.hr_reserva = formatohora;
+                    console.log(formatohora);
 
                     // Obtém o ID da permissão
                     const idsolicitacoes = solicitacoes.id_reserva;
@@ -327,27 +334,27 @@ function AcompanharPedidos() {
                             {solicitacoesPendentes.length > 0 && (
                                 <>
                                     {solicitacoesPendentes.map((solicitacoes) => (
-                                        <form key={solicitacoes.id} className="formulario-pedidos">
+                                        <form key={solicitacoes.id} className="formulario-pedidos2">
                                             <div className="container-pedidos">
                                                 <h2 className='identificador'>#{solicitacoes.id_reserva}</h2>
 
                                                 <label className="input-label" htmlFor={`solicitacoes-${solicitacoes.id}`}>
-                                                    <div className="container-texto">
-                                                        <p>Nome: {solicitacoes.nomeSolicitante}</p>
-                                                        <p>Matrícula: {solicitacoes.cd_matricula_solicitante}</p>
-                                                        <p>Cartegoria : {solicitacoes.cargo.ds_cargo}</p>
+                                                    <div className="container-texto-aluno">
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {solicitacoes.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {solicitacoes.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {solicitacoes.cargo.ds_cargo}</p>
                                                         {precisaPermissao === true && (
                                                             <>
-                                                                <p>Liberado por: {solicitacoes.nomeprof}</p>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {solicitacoes.nomeprof}</p>
                                                             </>
                                                         )}
-                                                        <p>Chave solicitada: {solicitacoes.nomeChave}</p>
-                                                        <p>Data da solicitacoes: {solicitacoes.data}</p>
-                                                        <p>Horario da solicitacoes: </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {solicitacoes.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da solicitação:</span> {solicitacoes.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da solicitação:</span> {solicitacoes.hr_reserva}</p>
                                                     </div>
                                                 </label>
                                                 <div className="radio-buttons-container">
-                                                   
+
                                                 </div>
                                             </div>
                                         </form>
@@ -365,23 +372,27 @@ function AcompanharPedidos() {
                             {solicitacoesAceitas.length > 0 && (
                                 <>
                                     {solicitacoesAceitas.map((solicitacoes) => (
-                                        <form key={solicitacoes.id} className="formulario-pedidos">
+                                        <form key={solicitacoes.id} className="formulario-pedidos2">
                                             <div className="container-pedidos">
                                                 <h2 className='identificador'>#{solicitacoes.id_reserva}</h2>
 
                                                 <label className="input-label" htmlFor={`solicitacoes-${solicitacoes.id}`}>
-                                                    <div className="container-texto">
-                                                        <p>Nome: </p>
-                                                        <p>Matrícula: </p>
-                                                        <p>Cartegoria : </p>
-                                                        <p>Liberado por:</p>
-                                                        <p>Chave solicitada: </p>
-                                                        <p>Data da solicitacoes: </p>
-                                                        <p>Horario da solicitacoes </p>
+                                                <div className="container-texto-aluno">
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {solicitacoes.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {solicitacoes.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {solicitacoes.cargo.ds_cargo}</p>
+                                                        {precisaPermissao === true && (
+                                                            <>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {solicitacoes.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {solicitacoes.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da solicitação:</span> {solicitacoes.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da solicitação:</span> {solicitacoes.hr_reserva}</p>
                                                     </div>
                                                 </label>
                                                 <div className="radio-buttons-container">
-                                                    
+
                                                 </div>
                                             </div>
                                         </form>
@@ -398,23 +409,27 @@ function AcompanharPedidos() {
                             {solicitacoesRecusadas.length > 0 && (
                                 <>
                                     {solicitacoesRecusadas.map((solicitacoes) => (
-                                        <form key={solicitacoes.id} className="formulario-pedidos">
+                                        <form key={solicitacoes.id} className="formulario-pedidos2">
                                             {/* Renderize as informações da solicitação aqui */}
                                             <div className="container-pedidos">
                                                 <h2 className='identificador'>#{solicitacoes.id_reserva}</h2>
                                                 <label className="input-label" htmlFor={`solicitacoes-${solicitacoes.id}`}>
-                                                    <div className="container-texto">
-                                                        <p>Nome: </p>
-                                                        <p>Matrícula: </p>
-                                                        <p>Cartegoria : </p>
-                                                        <p>Liberado por:</p>
-                                                        <p>Chave solicitada: </p>
-                                                        <p>Data da solicitacoes: </p>
-                                                        <p>Horario da solicitacoes </p>
+                                                <div className="container-texto-aluno">
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {solicitacoes.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {solicitacoes.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {solicitacoes.cargo.ds_cargo}</p>
+                                                        {precisaPermissao === true && (
+                                                            <>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {solicitacoes.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {solicitacoes.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da solicitação:</span> {solicitacoes.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da solicitação:</span> {solicitacoes.hr_reserva}</p>
                                                     </div>
                                                 </label>
                                                 <div className="radio-buttons-container">
-                                                    
+
                                                 </div>
                                             </div>
                                         </form>
