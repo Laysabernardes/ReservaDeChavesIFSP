@@ -8,17 +8,10 @@ class ReservaServices {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);
-        } else  
-        {
-          const insertId = results && results.insertId;
-        if (insertId) {
-            console.log('Reserva criada com sucesso. ID:', insertId);
-            resolve(results);
         } else {
-            console.error('A propriedade insertId não foi encontrada na resposta:', results);
-            reject(new Error('A propriedade insertId não foi encontrada na resposta.'));
+          console.log('Chave criada com sucesso:', results);
+          resolve(results);
         }
-      }
       });
     });
   }

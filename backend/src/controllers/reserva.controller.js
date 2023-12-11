@@ -2,33 +2,36 @@ const ReservaServicesServices = require("../services/reserva.service.js");
 const services = new ReservaServicesServices();
 class ReservaController {
   create = async (req, res) => {
-    try {//constante que verifica todos os campos
-      const { cd_matricula_solicitante, cd_cargo, id_permissao_SolicitantefindSolicitante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva } = req.body;
-
+    try {
+      // Constante que verifica todos os campos
+      const { cd_matricula_solicitante, cd_cargo, id_permissao_estudante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva } = req.body;
+  
       if (!cd_matricula_solicitante || !cd_cargo || !cd_chave || !dt_reserva || !dt_devolucao || !ds_status || !hr_reserva) {
         res.status(400).send({ message: "Preencha todos os espaços" });
       }
-
-      //await é usado junto com async
-      const result = await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_SolicitantefindSolicitante, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva);
-
-      const id_reserva = result.insertId; // Obtenha o ID da reserva
-
-      // Verifique se a resposta já foi enviada
-      if (!res.headersSent) {
-        res.status(201).send({
-          message: "Reserva criada com sucesso!",
-          reserva: {
-            cd_matricula_solicitante, cd_cargo, id_permissao_SolicitantefindSolicitante, cd_chave, dt_reserva, dt_devolucao, ds_status,id_reserva,
-          }
-        });
-      }
+  
+      // Garante que id_permissao_estudante seja null se estiver vazio
+      const id_permissao_estudante_value = id_permissao_estudante === '' ? null : id_permissao_estudante;
+  
+      // Await é usado junto com async
+      const result = await services.create(cd_matricula_solicitante, cd_cargo, id_permissao_estudante_value, cd_chave, dt_reserva, dt_devolucao, ds_status, hr_reserva);
+  
+      // Verifique se result contém o ID da reserva
+      const id_reserva = result && result.insertId;
+  
+      res.status(201).send({
+        message: "Reserva criada com sucesso!",
+        reserva: {
+          cd_matricula_solicitante, cd_cargo, id_permissao_estudante: id_permissao_estudante_value, cd_chave, dt_reserva, dt_devolucao, ds_status, id_reserva,
+        }
+      });
     } catch (err) {
       if (!res.headersSent) {
         res.status(500).send({ message: err.message });
       }
     }
-  }
+  };
+  
 
   find = async (req, res) => {
     try {//constante que verifica todos os campos
@@ -52,23 +55,23 @@ class ReservaController {
 
   findBySolicitante = async (req, res) => {
     try {//constante que verifica todos os campos
-        const { cd_matricula_solicitante } = req.params;
+      const { cd_matricula_solicitante } = req.params;
 
-        if (!cd_matricula_solicitante) {
-            res.status(400).send({ message: "Adicione o Código do Solicitante" });
-        }
+      if (!cd_matricula_solicitante) {
+        res.status(400).send({ message: "Adicione o Código do Solicitante" });
+      }
 
-        //await é usado junto com async
-        let solicitacoes = await services.findBySolicitante(cd_matricula_solicitante);
+      //await é usado junto com async
+      let solicitacoes = await services.findBySolicitante(cd_matricula_solicitante);
 
-        res.status(201).send({
-            message: "Seus solicitações",
-            solicitacoes: solicitacoes
-        });
+      res.status(201).send({
+        message: "Seus solicitações",
+        solicitacoes: solicitacoes
+      });
     } catch (err) {
-        res.status(404).send({ message: "Não há solicitacoes em andamentou" });
+      res.status(404).send({ message: "Não há solicitacoes em andamentou" });
     }
-};
+  };
 
   findAll = async (req, res) => {
     try {
