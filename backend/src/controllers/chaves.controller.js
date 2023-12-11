@@ -6,7 +6,7 @@ class ChavesController {
         try {//constante que verifica todos os campos
             const { nm_chave, ds_chave, ds_status, ds_obs_chave } = req.body;
             
-            if (!nm_chave || !ds_chave || !ds_status || !ds_obs_chave) {
+            if (!nm_chave || !ds_chave || !ds_status) {
                 res.status(400).send({ message: "Preencha todos os espaços" });
             }
             
