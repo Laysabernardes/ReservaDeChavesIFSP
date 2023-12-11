@@ -89,26 +89,8 @@ function ReservaForm(props) {
     }
   };
 
-// const setarDetalhesReserva = async (idReserva, dtReserva) => {
-//   // Criar um payload para os detalhes da reserva
-//   const detalhesPayload = {
-//     id_reserva: idReserva,
-//     horarios_reservados: "15:30",
-//     dt_reserva: dtReserva,
-//   };
-
-//   // Log para verificar o payload antes de enviar
-//   console.log('Detalhes payload:', detalhesPayload);
-
-//   // Enviar uma solicitação POST para a API para adicionar detalhes à reserva
-//   const detalhesResponse = await api.post('/reserva/detalhes', detalhesPayload);
-//   console.log('Detalhes da reserva adicionados:', detalhesResponse.data);
-
-// }
-
-  // Função assíncrona para lidar com a reserva
-  
-  const handleReservarSala = async (e) => {
+// Função assíncrona para lidar com a reserva
+const handleReservarSala = async (e) => {
     //e.preventDefault() cancela a ação padrão do evento
     e.preventDefault();
 
@@ -269,14 +251,7 @@ const handleHoraChange = (event, isHoraInicial) => {
   }
 };
 
-// console.log(identificarHorariosSelecionados(horarioInicial, horarioFinal));
-
-// console.log('no dia', dataSelecionada);
-// console.log('das', horarioInicial);
-// console.log('até às', horarioFinal);
-// console.log('total de horas:', horariosSelecionadosEntreInicialEFinal)
 console.log("Estes são os horários disponiveis desse dia:", horariosDisponiveisByData);
-
 
 useEffect(() => {
   if (userData) {
@@ -323,7 +298,7 @@ return (
                         className="boton-formulario-login"
                         onClick={() => {
                           setTimeout(() => {
-                            navigate('/pedidos');
+                            navigate('/pedidosEstudante');
                           }, 100);
                         }}
                       >
