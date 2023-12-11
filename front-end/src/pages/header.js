@@ -1,5 +1,5 @@
 // Importa as funcionalidades necessárias do React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // Importa estilos do arquivo "munu.css" e a imagem do logo do Instituto Federal
@@ -10,14 +10,20 @@ import { logoIF } from '../img/index.js';
 function Navbar({ locais }) {
     // Define os estados 'active' e 'icon' usando o hook useState do React
     const [active, setActive] = useState("nav__menu");
+    const [mostraAdm, setMostraAdm] = useState(false);
     const [icon, setIcon] = useState("nav__toggler");
     const location = useLocation();
     const paginaEspecifica = "/";
     // Obtém dados do usuário do armazenamento local (localStorage)
-    const userData = JSON.parse(localStorage.getItem('userData'));
-
+    const userData = JSON.parse(localStorage.getItem('userData'));    
+    const cargo = userData && userData.cd_cargo;
     
-
+    useEffect(() => {
+        if (cargo === '701001') {
+            setMostraAdm(true);
+        }
+    }, [cargo]);
+    
     // Função para alternar entre os estados 'active' e 'icon' ao clicar no ícone do menu
     const navToggle = () => {
         // Altera a classe 'active' com base no estado atual
@@ -74,6 +80,7 @@ function Navbar({ locais }) {
                         Perfil
                     </a>
                 </li>
+                {mostraAdm === false &&(
                 <li className="nav__item">
                     <a href="/mostraChave" className="nav__link" onClick={(e) => {
                         e.preventDefault();
@@ -82,6 +89,27 @@ function Navbar({ locais }) {
                         Chaves
                     </a>
                 </li>
+                )}
+                {/* Renderiza o botão somente se mostraAdm for true */}
+                {mostraAdm && (<>
+                    <li className="nav__item">
+                        <a href="/cadastrouser" className="nav__link" onClick={(e) => {
+                            e.preventDefault();
+                            window.location.replace("/cadastrouser");
+                        }}>
+                            Novo Usuário
+                        </a>
+                    </li>
+                    <li className="nav__item">
+                        <a href="/cadastro" className="nav__link" onClick={(e) => {
+                            e.preventDefault();
+                            window.location.replace("/cadastro");
+                        }}>
+                            Nova Chave
+                        </a>
+                    </li>
+                </>
+                )}
                 <li className="nav__item header__boton">
                     <a href="/" className="nav__link" onClick={(e) => {
                         e.preventDefault();
