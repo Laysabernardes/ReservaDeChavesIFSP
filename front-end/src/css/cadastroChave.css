@@ -162,7 +162,20 @@ body {
   /* Adiciona uma transição suave de 0.25 segundos para alterações */
 }
 
+.mensagem_deletar{
+  margin: 0rem 0rem 1.5rem 0rem;
+  font-size: 1rem;
+  align-items: center;
+  width: 100%;
+  font-weight: bold;
+  color: var(--cor-de-destaque);
+  letter-spacing: 0.08rem;
+}
 
+.hint {
+	font-size: 0.7em;
+	color: #888;
+  }
 
 
 

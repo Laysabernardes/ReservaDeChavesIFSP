@@ -65,8 +65,8 @@ function Cadastro() {
           </div>
           
           <h3 className="formulario-cadastro__titulo">Cadastrar Chave:</h3>
-          {mensagem && <p className='mensagem'>{mensagem}</p>}
           <form action="" className="formulario-cadastro_form">
+          {mensagem && <p className='mensagem_deletar'>{mensagem}</p>}
             <div className="formulario-cadastro__input-container">
               <input
                 name="nome_reserva"
@@ -78,14 +78,15 @@ function Cadastro() {
                 onChange={(e) => setNmChave(e.target.value)}
               />
               <label className="input-label" htmlFor="reservaName">
-                Número da chave:
+                Nome da chave:
               </label>
+              <div class="hint">Exemplo: 213 ou auditorio.</div>
             </div>
 
             <div className="formulario-cadastro__input-container input ">
 
               <label className="input-label" htmlFor="categoriaLocal">
-                Tipo de sala:
+                Tipo do local:
                 <br />
               </label>
               <div className="radio-buttons-container">
@@ -140,6 +141,7 @@ function Cadastro() {
               <label className="input-label" htmlFor="aprovadorPor">
                 Observações adicionais:
               </label>
+              <div class="hint">Observações são opcionais!</div>
             </div>
 
             <button
