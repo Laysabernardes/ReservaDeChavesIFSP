@@ -24,6 +24,7 @@ function PedidosAdm() {
     const [solicitacoesPendentes, setSolicitacoesPendentes] = useState([]);
     const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
     const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
+    const [solicitacoesEntregues, setSolicitacoesEntregues] = useState([]);
     const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
 
     // Obtém a função navigate do React Router para redirecionamento
@@ -176,6 +177,7 @@ function PedidosAdm() {
                 const pendentes = [];
                 const aceitas = [];
                 const recusadas = [];
+                const entregues = [];
 
                 // Itera sobre as solicitações da resposta da API
                 for (const reserva of dadosDaAPI) {
@@ -220,6 +222,8 @@ function PedidosAdm() {
                         aceitas.push(reserva);
                     } else if (reserva.ds_status === 'RECUSADO') {
                         recusadas.push(reserva);
+                    } else if (reserva.ds_status === 'ENTREGUE') {
+                        entregues.push(reserva);
                     }
                 }
 
@@ -227,6 +231,7 @@ function PedidosAdm() {
                 setSolicitacoesPendentes(pendentes);
                 setSolicitacoesAceitas(aceitas);
                 setSolicitacoesRecusadas(recusadas);
+                setSolicitacoesEntregues(entregues)
 
                 // Atualiza a variável de estado para indicar se há solicitações pendentes
                 setTemSolicitacoesPendentes(pendentes.length > 0);
@@ -286,6 +291,20 @@ function PedidosAdm() {
     const handleRecusar = async (idReserva) => {
         await atualizarSolicitacao(idReserva, 'RECUSADO');
     };
+
+    const handleEntregue = async (idReserva) => {
+        await atualizarSolicitacao(idReserva, 'ENTREGUE');
+    };
+
+    const DeleteReserva = async (id_reserva) => {
+        try{
+            const response = await api.delete(`/reserva/${id_reserva}`);
+            console.log("Reserva deletada: ",response.log);
+        } catch(error) {
+            console.log("Erro: ", error);
+        }
+    }
+
 
     // Efeito para buscar as solicitações ao montar o componente
     useEffect(() => {
@@ -396,6 +415,13 @@ function PedidosAdm() {
                                                 </label>
                                                 <div className="radio-buttons-container">
                                                     <button
+                                                        className="boton-form-aceitar"
+                                                        type="button"
+                                                        onClick={() => handleEntregue(reserva.id_reserva)}
+                                                    >
+                                                        Chave Entregue
+                                                    </button>
+                                                    <button
                                                         className="boton-form-recusar"
                                                         type="button"
                                                         onClick={() => handleRecusar(reserva.id_reserva)}
@@ -444,6 +470,63 @@ function PedidosAdm() {
                                                         onClick={() => handleAceitar(reserva.id_reserva)}
                                                     >
                                                         Reconsiderar pedido
+                                                    </button>
+                                                    <button
+                                                        className="boton-form-recusar"
+                                                        type="button"
+                                                        onClick={() => DeleteReserva(reserva.id_reserva)}
+                                                    >
+                                                        Deletar Reserva
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    ))}
+                                </>
+                            )}
+                            <h2 className="formulario-login__h2">Pedidos Entregues:</h2>
+                            {solicitacoesRecusadas.length === 0 && (
+                                <>
+                                    <p className='sem-pedido'>Não há pedidos Entregues!</p>
+                                </>
+                            )}
+                            {/* Seção de Chaves Entregues */}
+                            {solicitacoesEntregues.length > 0 && (
+                                <>
+                                    {solicitacoesEntregues.map((reserva) => (
+                                        <form key={reserva.id} className="formulario-pedidos">
+                                            {/* Renderize as informações da solicitação aqui */}
+                                            <div className="container-pedidos">
+                                                <h2 className='identificador'>#{reserva.id_reserva}</h2>
+                                                <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
+                                                    <div className="container-texto">
+                                                    <p>Nome: {reserva.nomeSolicitante}</p>
+                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
+                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
+                                                            <>
+                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
+                                                        <p>Data da Reserva: {reserva.data}</p>
+                                                        <p>Horario da reserva: </p>
+                                                    </div>
+                                                </label>
+                                                <div className="radio-buttons-container">
+                                                    <button
+                                                        className="boton-form-recusar"
+                                                        type="button"
+                                                        onClick={() => DeleteReserva(reserva.id_reserva)}
+                                                    >
+                                                        Deletar Reserva
+                                                    </button>
+                                                    <button
+                                                        className="boton-form-aceitar"
+                                                        type="button"
+                                                        onClick={() => handleAceitar(reserva.id_reserva)}
+                                                    >
+                                                        Reconsiderar
                                                     </button>
                                                 </div>
                                             </div>
