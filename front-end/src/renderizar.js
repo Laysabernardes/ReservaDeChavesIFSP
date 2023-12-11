@@ -12,7 +12,6 @@ export const renderizarLocais = (locais, navigate, userData) => {
                 style={{ backgroundColor: coresHex[index % coresHex.length] }}
             ></div>
             <h3 className="local__card__titulo">{local.nm_chave}</h3>
-            <p className="local__card__status">{local.ds_status}</p>
             <a
                 href="/reserva"
                 className="local__card__botao"
