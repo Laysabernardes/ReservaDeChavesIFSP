@@ -4,10 +4,12 @@ body {
 
   font-family: 'Raleway', sans-serif;
 }
+
 .hint {
-	font-size: 0.7em;
-	color: #888;
-  }
+  font-size: 0.7em;
+  color: #888;
+}
+
 .radio-buttons-container {
   display: flex;
   flex-direction: row;
@@ -20,7 +22,7 @@ body {
   margin-right: 0.5rem;
 }
 
-.centralizar{
+.centralizar {
   display: flex;
   align-items: center;
 }
@@ -87,6 +89,7 @@ body {
   box-sizing: border-box;
   /* Configura a caixa para incluir bordas e preenchimento no tamanho total */
 }
+
 .formulario-cadastro__input-container {
   position: relative;
   /* Define a posição do contêiner em relação ao elemento pai */
@@ -162,7 +165,7 @@ body {
   /* Adiciona uma transição suave de 0.25 segundos para alterações */
 }
 
-.mensagem_deletar{
+.mensagem_deletar {
   margin: 0rem 0rem 1.5rem 0rem;
   font-size: 1rem;
   align-items: center;
@@ -173,11 +176,22 @@ body {
 }
 
 .hint {
-	font-size: 0.7em;
-	color: #888;
-  }
+  font-size: 0.7em;
+  color: #888;
+}
 
-
+.formulario-deletar {
+  width: 70%;
+  background-color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.5rem;
+  margin: 1rem;
+}
 
 
 
@@ -256,21 +270,21 @@ body {
 .boton-formulario-repproved {
   margin-top: 10px;
   border-radius: 5px;
-    /* Adiciona bordas arredondadas ao botão */
-    padding: 1rem 2rem;
-    /* Adiciona preenchimento ao botão */
-    color: var(--branco);
-    /* Define a cor do texto do botão como branco */
-    background-color: rgb(173, 23, 23);
-    /* Define a cor de fundo do botão como a cor de destaque */
-    font-weight: 500;
-    /* Define o peso da fonte como 500 (moderadamente negrito) */
-    border: none;
-    /* Remove a borda do botão */
-    font-size: 1rem;
-    /* Define o tamanho da fonte como 1rem */
-    width: 100%;
-    /* Define a largura do botão como 100% */
+  /* Adiciona bordas arredondadas ao botão */
+  padding: 1rem 2rem;
+  /* Adiciona preenchimento ao botão */
+  color: var(--branco);
+  /* Define a cor do texto do botão como branco */
+  background-color: rgb(173, 23, 23);
+  /* Define a cor de fundo do botão como a cor de destaque */
+  font-weight: 500;
+  /* Define o peso da fonte como 500 (moderadamente negrito) */
+  border: none;
+  /* Remove a borda do botão */
+  font-size: 1rem;
+  /* Define o tamanho da fonte como 1rem */
+  width: 100%;
+  /* Define a largura do botão como 100% */
 }
 
 .boton-formulario-repproved:hover {
@@ -303,13 +317,3 @@ body {
     /* Define a largura do formulário como 70% da largura da tela */
   }
 }
-
-
-
-
-
-
-
-
-
-
