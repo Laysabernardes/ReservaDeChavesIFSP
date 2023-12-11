@@ -14,7 +14,7 @@ export function AccessProfessor({ children, }) {
         // Faz a requisição 
         const user = JSON.parse(localStorage.getItem('userData'));
         // Verifica se o código do usuário é o esperado
-        if ( user.cd_cargo === '707001' || user.cd_cargo === '701060') {
+        if ( user.cd_cargo === '707001') {
           // Caso o usuário não seja o esperado, navega para a página inicial
          return children
         }

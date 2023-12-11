@@ -267,13 +267,7 @@ function ReservaForm(props) {
     }
   };
 
-  // console.log(identificarHorariosSelecionados(horarioInicial, horarioFinal));
-
-  // console.log('no dia', dataSelecionada);
-  // console.log('das', horarioInicial);
-  // console.log('até às', horarioFinal);
-  // console.log('total de horas:', horariosSelecionadosEntreInicialEFinal)
-  console.log("Estes são os horários disponiveis desse dia:", horariosDisponiveisByData);
+console.log("Estes são os horários disponiveis desse dia:", horariosDisponiveisByData);
 
   useEffect(() => {
     if (userData) {
