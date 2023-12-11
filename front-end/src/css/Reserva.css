@@ -4,6 +4,19 @@
     padding-bottom: 1rem;
 }
 
+.botao--reserva{
+    margin-bottom: 2rem;
+}
+
+.mensagem_reserva2{
+    margin: 2rem 0rem 0rem 0rem;
+    font-size: 1rem;
+    align-items: left;
+    width: 100%;
+    font-weight: bold;
+    color: var(--cor-de-destaque);
+    letter-spacing: 0.08rem;
+}
 /* Estilo para o título do formulário de login */
 .titulo {
     margin-bottom: 0.5rem;            /* Margem inferior de 3 unidades de medida */
