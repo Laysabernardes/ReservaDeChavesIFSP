@@ -25,7 +25,6 @@ function PedidosAdm() {
     const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
     const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
     const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
-    const [precisaPermissao, setPrecisaPermissao] = useState([]);
 
     // Obtém a função navigate do React Router para redirecionamento
     const navigate = useNavigate();
@@ -197,14 +196,13 @@ function PedidosAdm() {
                     }
 
                     const cargo = await buscarCargo(reserva.cd_cargo);
-                    // Atualiza o objeto  com o nome do solicitante
+                    // Atualiza o objeto com o nome do solicitante
                     reserva.cargo = cargo;
                     if (reserva.cd_cargo === 'A0001') {
                         const ProfPermissao = await buscarPermissao(reserva.id_permissao_estudante);
                         reserva.nomeprof = ProfPermissao;
-                        setPrecisaPermissao(true);
                     } else {
-                        setPrecisaPermissao(false);
+                        console.log("Não achou permissão")
                     }
 
                     const datareserva = await FormatarData(reserva.dt_reserva);
@@ -335,7 +333,7 @@ function PedidosAdm() {
                                                         <p>Nome: {reserva.nomeSolicitante}</p>
                                                         <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
                                                         <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
-                                                        {precisaPermissao === true && (
+                                                        {reserva.cd_cargo === 'A0001' && (
                                                             <>
                                                                 <p>Liberado por: {reserva.nomeprof}</p>
                                                             </>
@@ -383,13 +381,17 @@ function PedidosAdm() {
 
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                        <p>Nome: </p>
-                                                        <p>Matrícula: </p>
-                                                        <p>Cartegoria : </p>
-                                                        <p>Liberado por:</p>
-                                                        <p>Chave solicitada: </p>
-                                                        <p>Data da Reserva: </p>
-                                                        <p>Horario da reserva </p>
+                                                    <p>Nome: {reserva.nomeSolicitante}</p>
+                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
+                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
+                                                            <>
+                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
+                                                        <p>Data da Reserva: {reserva.data}</p>
+                                                        <p>Horario da reserva: </p>
                                                     </div>
                                                 </label>
                                                 <div className="radio-buttons-container">
@@ -422,13 +424,17 @@ function PedidosAdm() {
                                                 <h2 className='identificador'>#{reserva.id_reserva}</h2>
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                        <p>Nome: </p>
-                                                        <p>Matrícula: </p>
-                                                        <p>Cartegoria : </p>
-                                                        <p>Liberado por:</p>
-                                                        <p>Chave solicitada: </p>
-                                                        <p>Data da Reserva: </p>
-                                                        <p>Horario da reserva </p>
+                                                    <p>Nome: {reserva.nomeSolicitante}</p>
+                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
+                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
+                                                            <>
+                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
+                                                        <p>Data da Reserva: {reserva.data}</p>
+                                                        <p>Horario da reserva: </p>
                                                     </div>
                                                 </label>
                                                 <div className="radio-buttons-container">
