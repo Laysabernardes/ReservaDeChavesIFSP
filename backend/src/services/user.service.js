@@ -54,6 +54,21 @@ class UserServices {
     });
   }
 
+  delete = (cd_matricula_usuario) => {
+    return new Promise((resolve, reject) => {
+      connection.query('DELETE FROM Usuario WHERE cd_matricula_usuario = ?;', [cd_matricula_usuario], (err, results) => {
+        if (err) {
+          console.error('Deu algum erro:', err);
+          reject(err);
+        } else {
+          console.log('Usuário deletado com sucesso:', results);
+          resolve(results);
+        }
+      });
+    });
+  }
+
+
   
   findNome = (cd_matricula_usuario) => {
     return new Promise((resolve, reject) => {
