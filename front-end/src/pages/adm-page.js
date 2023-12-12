@@ -12,23 +12,23 @@ import '../css/adm-page.css';
 
 //Criando a função de Adm que carregará a página html do Administrativo
 function Adm() {
-  
+
   const navigate = useNavigate();
   const userData = JSON.parse(localStorage.getItem('userData'));
 
   return (
     //Elementos html criação de Div e inputs que carregarão dados do banco de dados (a ser modificados).
     <div>
-      
-      <Header /> 
+
+      <Header />
       <div className="formulario">
         <div className='container-botao'>
-              <a className="local_botao" href="/main"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate('/main', { state: { user: userData } })
-                }}>Voltar:</a>
-            </div>
+          <a className="local_botao" href="/main"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/main', { state: { user: userData } })
+            }}>Voltar:</a>
+        </div>
         <div className="formulario-approved container">
           <h3 className="formulario-approved__titulo">Aprovar Reserva:</h3>
           <form action="" className="formulario-approved_form">
@@ -57,7 +57,7 @@ function Adm() {
                 disabled
               />
               <label className="input-label" htmlFor="categoriaLocal">
-                Categoria 
+                Categoria
               </label>
             </div>
             <div className="formulario-approved__input-container">
@@ -110,7 +110,7 @@ function Adm() {
                 type="text"
                 placeholder=""
                 disabled
-                
+
               />
               <label className="input-label" htmlFor="tempoLimite">
                 Tempo limite de retirada da chave
@@ -145,7 +145,7 @@ function Adm() {
     </div>
 
 
-)
+  )
 }
 
 export default Adm

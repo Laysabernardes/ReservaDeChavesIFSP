@@ -6,15 +6,26 @@ import { useSolicitacoes } from '../SolicitacoesContext';
 import '../css/banner.css';
 
 function Banner() {
+  //variaveis de estados
   const [mostraAdm, setMostraAdm] = useState(true);
   const [mostraProf, setMostraProf] = useState(true);
   const [mostraAluno, setmostraAluno] = useState(true);
   const [mostraDefault, setmostraDefault] = useState(true);
+
+  //função para fazer a navegação entre as páginas
   const navigate = useNavigate();
+
+  //função que armazenas as informações de login
   const userData = JSON.parse(localStorage.getItem('userData'));
+
+  //constante com as informções do cargo 
   const cargo = userData.cd_cargo;
 
+  //Executa efeito assíncrono em componentes React.
   useEffect(() => {
+
+    //switch case para determiados cargos
+    //dependendo do cargo vai mostar ou não itens no menu
     switch (cargo) {
       case 'A0001':
         setMostraAdm(false)
