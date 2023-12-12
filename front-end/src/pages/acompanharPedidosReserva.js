@@ -34,12 +34,11 @@ function AcompanharPedidos() {
     // Obtém dados do usuário do armazenamento local (localStorage)
     const userData = JSON.parse(localStorage.getItem('userData'));
 
-    // Função para buscar o nome do estudante com base na matrícula
-    //Argumentos:matricula: Matrícula do estudante a ser buscado
-    // Retorno: O nome do estudante, ou Nome não encontrado se o estudante não for encontrado
-    // Função para buscar o nome do estudante com base na matrícula
+    // Função para buscar o nome do solicitante com base na matrícula
+    //Argumentos:matricula: Matrícula do solicitante a ser buscado
+    // Retorno: O nome do solicitante, ou Nome não encontrado se o solicitante não for encontrado
+    // Função para buscar o nome do colicitante com base na matrícula
     const buscarNomeSolicitante = async (matricula) => {
-        // Tentativa de fazer a chamada à API
         try {
             // Faz uma chamada à API, passando a matrícula como parâmetro
             const response = await api.get(`/user/nome/${matricula}`);
@@ -49,8 +48,6 @@ function AcompanharPedidos() {
             if (dadosSolicitante.usuario && dadosSolicitante.usuario.length > 0) {
                 // Obtém o nome do estudante
                 const nomeSolicitante = dadosSolicitante.usuario[0].nm_usuario;
-                // Imprime o nome do estudante
-                console.log("nome:", nomeSolicitante);
                 // Retorna o nome do estudante
                 return nomeSolicitante;
             } else {
@@ -80,9 +77,6 @@ function AcompanharPedidos() {
 
             // Verifica se a resposta da API contém dados da chave
             if (dadosChave.chave && dadosChave.chave.length > 0) {
-                // Imprime o nome e a categoria da chave
-                console.log("Chave:", dadosChave.chave[0].nm_chave);
-                console.log("Categoria:", dadosChave.chave[0].ds_chave);
                 // Retorna o objeto com as informações da chave
                 return dadosChave.chave[0];
             } else {
@@ -98,46 +92,44 @@ function AcompanharPedidos() {
         }
     };
 
+     //É uma Função para buscar informações do cargo
     const buscarCargo = async (cd_cargo) => {
-        // Tentativa de fazer a chamada à API
         try {
-            // Faz uma chamada à API, passando o código da chave como parâmetro
+            // Faz uma chamada à API, passando o código do cargo como parâmetro
             const response = await api.get(`/user/tbcargo/${cd_cargo}`);
             // Obtém os dados da resposta da API
             const dadosCargo = response.data;
 
-            // Verifica se a resposta da API contém dados da chave
+            // Verifica se a resposta da API contém dados do cargo
             if (dadosCargo.cargo && dadosCargo.cargo.length > 0) {
-                // Imprime o nome e a categoria da chave
-                console.log("Cargo:", dadosCargo.cargo[0].ds_cargo);
-                console.log("Categoria do Cargo:", dadosCargo.cargo[0].ds_categoria_cargo);
-                // Retorna o objeto com as informações da chave
+                // Retorna o objeto com as informações do cargo
                 return dadosCargo.cargo[0];
             } else {
-                // Erro: a resposta da API não contém dados da chave
-                console.error('Resposta da API não contém dados da chave:', dadosCargo);
+                // Erro: a resposta da API não contém dados do cargo
+                console.error('Resposta da API não contém dados do cargo:', dadosCargo);
                 // Retorna `null`
                 return null;
             }
         } catch (error) {
             // Erro ao fazer a chamada à API
-            console.error('Erro ao buscar informações da chave:', error);
+            console.error('Erro ao buscar informações do cargo:', error);
             return null;
         }
     };
 
+    //É uma Função para buscar informações da permissão
     const buscarPermissao = async (id_permissao_estudante) => {
         try {
-            // Faz uma chamada à API, passando o código da chave como parâmetro
+            // Faz uma chamada à API, passando o código do cargo como parâmetro
             const response = await api.get(`/permissao/id/${id_permissao_estudante}`);
             // Obtém os dados da resposta da API
             const dadospermissao = response.data;
 
-            // Verifica se a resposta da API contém dados da chave
+            // Verifica se a resposta da API contém dados da permissão
             if (dadospermissao.pedidos && dadospermissao.pedidos.length > 0) {
-                // Imprime o nome e a categoria da chave
+                //pega da reposta da api o codigo do professor 
                 const matriculaProf = dadospermissao.pedidos[0].cd_matricula_funcionario;
-                console.log("Matriculo Professor:", matriculaProf);
+                //faz uma busca do nome do do professro com a função buscar nome
                 const nomeProf = await buscarNomeSolicitante(matriculaProf);
                 return nomeProf;
             } else {            // Erro: a resposta da API não contém dados da chave
@@ -152,6 +144,7 @@ function AcompanharPedidos() {
         }
     }
 
+    //função para formar a data
     const FormatarData = async (dt_reserva) => {
         const data = new Date(dt_reserva);
         // Formatar a data como dd/mm/aaaa
@@ -164,11 +157,9 @@ function AcompanharPedidos() {
 
     // Função para buscar as solicitações no banco de dados
     const buscarsolicitacoes = async () => {
-        // Tentativa de fazer a chamada à API
         try {
             // Faz uma chamada à API, passando o prontuário do funcionário como parâmetro
             const response = await api.get(`/reserva/solicitante/${userData.cd_matricula_usuario}`);
-            console.log(response.data.solicitacoes);
             // Obtém os dados da resposta da API
             const dadosDaAPI = response.data.solicitacoes;
             // Verifica se a resposta da API contém um array de solicitações
@@ -268,7 +259,6 @@ function AcompanharPedidos() {
 
     // Função para atualizar o status de uma solicitação
     const atualizarSolicitacao = async (idsolicitacoes, novoStatus) => {
-        // Tentativa de fazer a chamada à API
         try {
             // Cria um objeto com os dados da atualização
             const dadosAtualizacao = {
