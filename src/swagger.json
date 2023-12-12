@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://api-login-0qlo.onrender.com",
+            "url": "https://backend-reserva-ifsp.onrender.com/doc/",
             "description": "Render Server"
         },
         {
