@@ -9,6 +9,7 @@ import api from '../api';
 
 function Cadastro() {
 
+  //variaveis de estados 
   const [mensagem, setMensagem] = useState('');
   const [nmChave, setNmChave] = useState('');
   const [categoria, setCategoria] = useState('');
@@ -25,6 +26,7 @@ function Cadastro() {
   const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
   const userName = userData ? userData.nm_usuario : 'Usuário';
 
+  //é um obejto com as informções necessarios para fazer o cadastro da chave
   const payload = {
     nm_chave: nmChave,
     ds_chave: categoria,
@@ -32,16 +34,16 @@ function Cadastro() {
     ds_obs_chave: dsObs
   };
 
+  //função que cria a chave
   const criarChave = async () => {
     const response = await api.post('/chaves', payload);
 
     setMensagem('Chave Criada com sucesso!');
-    console.log("Criada a chave:", response.data);
   }
 
+  //função que verifica se a chave ja esta criada
   const chaveExiste = async () => {
     const response = await api.get(`/chaves/nome/${payload.nm_chave}`);
-    console.log(response.data.chave)
     if (response.data.chave === false) {
       criarChave()
       return
