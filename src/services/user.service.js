@@ -11,7 +11,7 @@ class UserServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Usuario criado com sucesso:', results);
+          // console.log('Usuario criado com sucesso:', results);
           resolve(results);
         }
       });
@@ -29,7 +29,7 @@ class UserServices {
           reject(err);
         } else {
           // Se houver resultados, o usuário foi encontrado e a promessa é resolvida com os resultados
-          console.log('Usuário logado com sucesso:', results);
+          // console.log('Usuário logado com sucesso:', results);
           resolve(results);
         }
       });
@@ -47,7 +47,7 @@ class UserServices {
           reject(err);
         } else {
           // Se a senha for atualizada com sucesso, a promessa é resolvida com os resultados
-          console.log('Senha atualizada com sucesso:', results);
+          // console.log('Senha atualizada com sucesso:', results);
           resolve(results);
         }
       });
@@ -61,7 +61,7 @@ class UserServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Usuário deletado com sucesso:', results);
+          // console.log('Usuário deletado com sucesso:', results);
           resolve(results);
         }
       });
@@ -74,10 +74,10 @@ class UserServices {
     return new Promise((resolve, reject) => {
       connection.query('SELECT * FROM Usuario WHERE cd_matricula_usuario = ?;', cd_matricula_usuario, (err, results) => {
         if (results.length === 0) {
-          console.log('Não existe esse user.');
+          // console.log('Não existe esse user.');
           resolve(false);
         } else {
-          console.log('Busca concluida:', results);
+          // console.log('Busca concluida:', results);
           resolve(results);
         }
       });
@@ -92,7 +92,7 @@ class UserServices {
           console.error('Erro na busca', err);
           reject(err);
         } else {
-          console.log('Busca concluida:', results);
+          // console.log('Busca concluida:', results);
           resolve(results);
         }
       });
@@ -105,7 +105,7 @@ class UserServices {
           console.error('Erro na busca', err);
           reject(err);
         } else {
-          console.log('Busca concluida:', results);
+          // console.log('Busca concluida:', results);
           resolve(results);
         }
       });
@@ -118,7 +118,7 @@ class UserServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Todas os Cargos encontrados:', results);
+          // console.log('Todas os Cargos encontrados:', results);
           resolve(results);
         }
       });

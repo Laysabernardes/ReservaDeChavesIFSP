@@ -9,7 +9,7 @@ class ChavesServices{
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Chave criada com sucesso:', results);
+          // console.log('Chave criada com sucesso:', results);
           resolve(results);
         }
       });
@@ -23,7 +23,7 @@ class ChavesServices{
           console.error('Chave não encontradoo:', err);
           reject(err);
         } else {
-          console.log('Chave encontrada com sucesso:', results);
+          // console.log('Chave encontrada com sucesso:', results);
           resolve(results);
         }
       });
@@ -37,7 +37,7 @@ class ChavesServices{
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Todas as Chaves encontradas:', results);
+          // console.log('Todas as Chaves encontradas:', results);
           resolve(results);
         }
       });
@@ -52,10 +52,10 @@ class ChavesServices{
                 reject({ error: 'Erro ao encontrar categoria' });
             } else {
                 if (results.length === 0) {
-                    console.log('Categoria não encontrada.');
+                    // console.log('Categoria não encontrada.');
                     resolve({ error: 'Erro ao encontrar categoria' });
                 } else {
-                    console.log('Categoria encontrada com sucesso:', results);
+                    // console.log('Categoria encontrada com sucesso:', results);
                     resolve(results);
                 }
             }
@@ -71,10 +71,10 @@ class ChavesServices{
                 reject({ error: 'Erro ao encontrar categoria' });
             } else {
                 if (results.length === 0) {
-                    console.log('Categoria não encontrada.');
+                    // console.log('Categoria não encontrada.');
                     resolve({ error: 'Erro ao encontrar categoria' });
                 } else {
-                    console.log('Categoria encontrada com sucesso:', results);
+                    // console.log('Categoria encontrada com sucesso:', results);
                     resolve(results);
                 }
             }
@@ -90,10 +90,10 @@ class ChavesServices{
                 reject({ error: 'Erro ao encontrar nome da chave' });
             } else {
                 if (results.length === 0) {
-                    console.log('Não existe essa chave.');
+                    // console.log('Não existe essa chave.');
                     resolve(false);
                 } else {
-                    console.log('Existe essa chave!', results);
+                    // console.log('Existe essa chave!', results);
                     resolve(results);
                 }
             }
@@ -108,7 +108,7 @@ class ChavesServices{
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Chave Status Update:', results);
+          // console.log('Chave Status Update:', results);
           resolve(results);
         }
       });
@@ -122,7 +122,7 @@ class ChavesServices{
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Chave Deletada com sucesso:', results);
+          // console.log('Chave Deletada com sucesso:', results);
           resolve(results);
         }
       });

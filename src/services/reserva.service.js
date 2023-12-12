@@ -9,7 +9,7 @@ class ReservaServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Chave criada com sucesso:', results);
+          // console.log('Chave criada com sucesso:', results);
           resolve(results);
         }
       });
@@ -23,7 +23,7 @@ class ReservaServices {
           console.error('Reserva não encontrada:', err);
           reject(err);
         } else {
-          console.log('Reserva encontrada com sucesso:', results);
+          // console.log('Reserva encontrada com sucesso:', results);
           resolve(results);
         }
       });
@@ -37,7 +37,7 @@ class ReservaServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Todas as Reserva encontradas:', results);
+          // console.log('Todas as Reserva encontradas:', results);
           resolve(results);
         }
       });
@@ -51,7 +51,7 @@ class ReservaServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Reserva Status Update:', results);
+          // console.log('Reserva Status Update:', results);
           resolve(results);
         }
       });
@@ -65,7 +65,7 @@ class ReservaServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Reserva Deletada com sucesso:', results);
+          // console.log('Reserva Deletada com sucesso:', results);
           resolve(results);
         }
       });
@@ -107,7 +107,7 @@ class ReservaServices {
           console.error('Erro ao adicionar detalhes da reserva:', err);
           reject(err);
         } else {
-          console.log('Detalhes da reserva adicionados com sucesso:', results);
+          // console.log('Detalhes da reserva adicionados com sucesso:', results);
           resolve(results);
         }
       });
@@ -121,7 +121,7 @@ class ReservaServices {
           console.error('Erro ao buscar solicitação:', err);
           reject(err);
         } else {
-          console.log('Solicitação encontrada com sucesso:', results);
+          // console.log('Solicitação encontrada com sucesso:', results);
           resolve(results);
         }
       });
@@ -135,7 +135,7 @@ class ReservaServices {
           console.error('Erro ao buscar dia da reserva:', err);
           reject(err);
         } else {
-          console.log('Dia da reserva encontrado com sucesso:', results);
+          // console.log('Dia da reserva encontrado com sucesso:', results);
           resolve(results);
         }
       });

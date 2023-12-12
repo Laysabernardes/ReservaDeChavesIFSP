@@ -13,7 +13,7 @@ class ChavesServices {
           console.error('Erro ao criar pedido:', err);
           reject(err);
         } else {
-          console.log('Pedido enviado ao responsável:', results);
+          // console.log('Pedido enviado ao responsável:', results);
           resolve(results);
         }
       });
@@ -29,7 +29,7 @@ class ChavesServices {
           console.error('Nenhum pedido feito:', err);
           reject(err);
         } else {
-          console.log('Pedidos de permissão enviados:', results);
+          // console.log('Pedidos de permissão enviados:', results);
           resolve(results);
         }
       });
@@ -44,7 +44,7 @@ class ChavesServices {
           console.error('Não há pedidos em andamentou E/OU permissões:', err);
           reject(err);
         } else {
-          console.log('Pedidos E/OU Permissões:', results);
+          // console.log('Pedidos E/OU Permissões:', results);
           resolve(results);
         }
       });
@@ -58,7 +58,7 @@ class ChavesServices {
           console.error('Esta permissão não existe:', err);
           reject(err);
         } else {
-          console.log('Permissão:', results);
+          // console.log('Permissão:', results);
           resolve(results);
         }
       });
@@ -72,7 +72,7 @@ class ChavesServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          console.log('Todas as permissões encontradas:', results);
+          // console.log('Todas as permissões encontradas:', results);
           resolve(results);
         }
       });
@@ -88,7 +88,7 @@ class ChavesServices {
           console.error('Erro ao atualizar permissão:', err);
           reject(err);
         } else {
-          console.log('Permissão Status Update:', results);
+          // console.log('Permissão Status Update:', results);
           resolve(results);
         }
       });

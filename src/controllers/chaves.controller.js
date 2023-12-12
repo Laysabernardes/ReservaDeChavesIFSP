@@ -63,14 +63,14 @@ class ChavesController {
     findByCategoria = async (req, res) => {
         try {
             const { ds_chave } = req.params;
-            console.log('Parâmetros recebidos:', { ds_chave });
+            // console.log('Parâmetros recebidos:', { ds_chave });
     
             if (!ds_chave) {
                 res.status(400).send({ message: "Adicione uma chave válida!" });
                 return;
             }
     
-            console.log('Parâmetros recebidos:', { ds_chave });
+            // console.log('Parâmetros recebidos:', { ds_chave });
             let chave = await services.findByCategoria(ds_chave);
     
             // console.log('Chave encontrada:', chave);
@@ -92,17 +92,17 @@ class ChavesController {
     findByStatus = async (req, res) => {
         try {
             const { ds_status } = req.params;
-            console.log('Parâmetros recebidos:', { ds_status });
+            // console.log('Parâmetros recebidos:', { ds_status });
     
             if (!ds_status) {
                 res.status(400).send({ message: "Adicione um parâmetro!" });
                 return;
             }
     
-            console.log('Parâmetros recebidos:', { ds_status });
+            // console.log('Parâmetros recebidos:', { ds_status });
             let chave = await services.findByStatus(ds_status);
     
-            console.log('Chave encontrada:', chave);
+            // console.log('Chave encontrada:', chave);
             
             if (chave.error) {
                 res.status(404).send({ message: 'Chave não encontradaaa.' });
@@ -121,14 +121,14 @@ class ChavesController {
     findByNome = async (req, res) => {
         try {
             const { nm_chave } = req.params;
-            console.log('Parâmetros recebidos:', { nm_chave });
+            // console.log('Parâmetros recebidos:', { nm_chave });
     
             if (!nm_chave) {
                 res.status(400).send({ message: "Adicione um parâmetro!" });
                 return;
             }
     
-            console.log('Parâmetros recebidos:', { nm_chave });
+            // console.log('Parâmetros recebidos:', { nm_chave });
             let chave = await services.findByNome(nm_chave);
                 
             if (chave.error) {

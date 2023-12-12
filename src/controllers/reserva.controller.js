@@ -164,7 +164,7 @@ class ReservaController {
       const result = await services.findByDataReserva(dt_reserva);
 
       if (result.length > 0) {
-        console.log('Detalhes da reserva encontrados com sucesso:', result);
+        // console.log('Detalhes da reserva encontrados com sucesso:', result);
         return res.status(200).json({ message: 'Data encontrada com sucesso.', data: { dt_reserva, detalhes: result } });
       } else {
         return res.status(200).json({ message: 'Data não encontrada.' });
