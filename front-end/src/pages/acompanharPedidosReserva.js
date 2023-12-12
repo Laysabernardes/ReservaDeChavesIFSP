@@ -313,7 +313,7 @@ function AcompanharPedidos() {
                                     navigate('/main', { state: { user: userData } })
                                 }}>Voltar:</a>
                         </div>
-                        <h2 className="formulario_titulo">Pedidos de solicitacoes:</h2>
+                        <h2 className="formulario_titulo">Pedidos de solicitações:</h2>
                         <div className="formulario-login_form">
                             {/* Seção de Pedidos Pendentes */}
                             {/* Seção de Pedidos Pendentes */}
