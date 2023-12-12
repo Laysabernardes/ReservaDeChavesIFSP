@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://10.111.50.229/ReservaDeChavesIFSP/backend', // Substitua pela URL do seu backend
+    baseURL: 'http://localhost:3001', // Substitua pela URL do seu backend
   });
 
 export default instance;

@@ -16,9 +16,9 @@ dotenv.config();
 const app = express();
 // Cria uma instância do aplicativo Express.
 
-const port = process.env.PORT || 'http://10.111.50.229/ReservaDeChavesIFSP/backend';
+const port = process.env.PORT || '3001';
 
-// Define uma porta para o servidor, usando a variável de ambiente 'PORT' se estiver definida, caso contrário, usa a porta 3000.
+// Define uma porta para o servidor, usando a variável de ambiente 'PORT' se estiver definida, caso contrário, usa a porta 3001.
 
 connection.connect();
 // Conecta ao banco de dados.
