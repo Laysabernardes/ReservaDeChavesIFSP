@@ -13,6 +13,10 @@ import PedidosEstudante from './pages/pedidosEstudante.js';
 import PedidosAdm from './pages/pedidosAdm.js';
 import CadastroUser from './pages/cadastroUsuario.js';
 import AcompanharPedidos from './pages/acompanharPedidosReserva.js';
+import DeletarChave from './pages/deletarChave.js';
+import DeletarUser from './pages/deletarUsuario.js';
+import Deletar from './pages/deletar.js';
+
 import { PrivateRoute } from './PrivateRoute.js';
 import { AccessProfessor } from './AccessProfessor.js';
 import { AccessAdm } from './AccessAdm.js';
@@ -34,6 +38,9 @@ function Routes() {
       <Route path="/pedidosEstudante" element={<PrivateRoute><PedidosEstudante/></PrivateRoute>}/>
       <Route path="/pedidosAdm" element={<PrivateRoute><AccessAdm><PedidosAdm/></AccessAdm></PrivateRoute>}/>
       <Route path="/cadastrouser" element={<PrivateRoute><AccessAdm><CadastroUser/></AccessAdm></PrivateRoute>}/>
+      <Route path="/deletarChave" element={<PrivateRoute><AccessAdm><DeletarChave /></AccessAdm></PrivateRoute>} />
+      <Route path="/deletarUser" element={<PrivateRoute><AccessAdm><DeletarUser /></AccessAdm></PrivateRoute>} />
+      <Route path="/deletar" element={<PrivateRoute><AccessAdm><Deletar /></AccessAdm></PrivateRoute>} />
     </RouterRoutes>
 
   );

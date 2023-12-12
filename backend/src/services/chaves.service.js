@@ -18,7 +18,7 @@ class ChavesServices{
 
   find = (cd_chave) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM Chaves WHERE cd_chave = ?;',  cd_chave, (err, results) => {
+      connection.query('SELECT * FROM Chaves WHERE cd_chave = ?;',  [cd_chave], (err, results) => {
         if (results.length === 0) {
           console.error('Chave não encontradoo:', err);
           reject(err);
@@ -46,7 +46,7 @@ class ChavesServices{
 
   findByCategoria = (ds_chave) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM Chaves WHERE ds_chave LIKE ?', ds_chave, (err, results) => {
+        connection.query('SELECT * FROM Chaves WHERE ds_chave LIKE ?', [ds_chave], (err, results) => {
             if (err) {
                 console.error('Erro ao executar a consulta SQL Categoria:', err);
                 reject({ error: 'Erro ao encontrar categoria' });
@@ -65,7 +65,7 @@ class ChavesServices{
 
   findByStatus = (ds_status) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM Chaves WHERE ds_status LIKE ?', ds_status, (err, results) => {
+        connection.query('SELECT * FROM Chaves WHERE ds_status LIKE ?', [ds_status], (err, results) => {
             if (err) {
                 console.error('Erro ao executar a consulta SQL Status:', err);
                 reject({ error: 'Erro ao encontrar categoria' });
@@ -84,7 +84,7 @@ class ChavesServices{
   
   findByNome = (nm_chave) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM Chaves WHERE nm_chave LIKE ?', nm_chave, (err, results) => {
+        connection.query('SELECT * FROM Chaves WHERE nm_chave LIKE ?', [nm_chave], (err, results) => {
             if (err) {
                 console.error('Erro ao executar a consulta SQL Nm_Chave:', err);
                 reject({ error: 'Erro ao encontrar nome da chave' });
@@ -117,7 +117,7 @@ class ChavesServices{
 
   delete = (cd_chave) => {
     return new Promise((resolve, reject) => {
-      connection.query('DELETE FROM Chaves WHERE cd_chave = ?;', cd_chave, (err, results) => {
+      connection.query('DELETE FROM Chaves WHERE cd_chave = ?;', [cd_chave], (err, results) => {
         if (err) {
           console.error('Deu algum erro:', err);
           reject(err);

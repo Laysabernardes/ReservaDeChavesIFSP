@@ -137,7 +137,7 @@ class UserController {
 
             res.status(201).send({
                 message: "Resultado da busca:",
-                usuarios: usuario
+                usuario: usuario
             });
         } catch (err) {
             res.status(404).send({ message: "Não há usuarios" });
@@ -176,6 +176,28 @@ class UserController {
             res.status(500).send({ message: err.message })
         }
     };
+
+    delete = async (req, res) => {
+        try {
+            const { cd_matricula_usuario } = req.params;
+    
+            if (!cd_matricula_usuario) {
+                return res.status(400).send({ message: "Adicione o código do usuário!" });
+            }
+    
+            //await é usado junto com async
+            let user = await services.delete(cd_matricula_usuario);
+    
+            res.status(201).send({
+                message: "Usuário deletado com sucesso!",
+                user: user
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send({ message: "Erro ao processar a solicitação." });
+        }
+    };
+    
 }
 
 // Exporta a classe UserController para ser utilizada em outros módulos

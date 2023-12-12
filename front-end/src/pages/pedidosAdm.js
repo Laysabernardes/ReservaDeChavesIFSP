@@ -24,8 +24,8 @@ function PedidosAdm() {
     const [solicitacoesPendentes, setSolicitacoesPendentes] = useState([]);
     const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
     const [solicitacoesRecusadas, setSolicitacoesRecusadas] = useState([]);
+    const [solicitacoesEntregues, setSolicitacoesEntregues] = useState([]);
     const [temSolicitacoesPendentes, setTemSolicitacoesPendentes] = useState([]);
-    const [precisaPermissao, setPrecisaPermissao] = useState([]);
 
     // Obtém a função navigate do React Router para redirecionamento
     const navigate = useNavigate();
@@ -177,6 +177,7 @@ function PedidosAdm() {
                 const pendentes = [];
                 const aceitas = [];
                 const recusadas = [];
+                const entregues = [];
 
                 // Itera sobre as solicitações da resposta da API
                 for (const reserva of dadosDaAPI) {
@@ -197,19 +198,25 @@ function PedidosAdm() {
                     }
 
                     const cargo = await buscarCargo(reserva.cd_cargo);
-                    // Atualiza o objeto  com o nome do solicitante
+                    // Atualiza o objeto com o nome do solicitante
                     reserva.cargo = cargo;
                     if (reserva.cd_cargo === 'A0001') {
                         const ProfPermissao = await buscarPermissao(reserva.id_permissao_estudante);
                         reserva.nomeprof = ProfPermissao;
-                        setPrecisaPermissao(true);
                     } else {
-                        setPrecisaPermissao(false);
+                        console.log("Não achou permissão")
                     }
 
                     const datareserva = await FormatarData(reserva.dt_reserva);
                     reserva.data = datareserva;
 
+                    const horarioreserva = reserva.hr_reserva;
+                    const JSONhorario = JSON.parse(horarioreserva);
+                    const inicial = JSONhorario[0];
+                    const final = JSONhorario[JSONhorario.length - 1];
+                    const formatohora = (`${inicial} até ${final}`);
+                    reserva.hr_reserva = formatohora;
+                    console.log(formatohora);
 
                     // Obtém o ID da permissão
                     const idReserva = reserva.id_reserva;
@@ -222,6 +229,8 @@ function PedidosAdm() {
                         aceitas.push(reserva);
                     } else if (reserva.ds_status === 'RECUSADO') {
                         recusadas.push(reserva);
+                    } else if (reserva.ds_status === 'ENTREGUE') {
+                        entregues.push(reserva);
                     }
                 }
 
@@ -229,6 +238,7 @@ function PedidosAdm() {
                 setSolicitacoesPendentes(pendentes);
                 setSolicitacoesAceitas(aceitas);
                 setSolicitacoesRecusadas(recusadas);
+                setSolicitacoesEntregues(entregues)
 
                 // Atualiza a variável de estado para indicar se há solicitações pendentes
                 setTemSolicitacoesPendentes(pendentes.length > 0);
@@ -289,6 +299,20 @@ function PedidosAdm() {
         await atualizarSolicitacao(idReserva, 'RECUSADO');
     };
 
+    const handleEntregue = async (idReserva) => {
+        await atualizarSolicitacao(idReserva, 'ENTREGUE');
+    };
+
+    const DeleteReserva = async (id_reserva) => {
+        try {
+            const response = await api.delete(`/reserva/${id_reserva}`);
+            console.log("Reserva deletada: ", response.log);
+        } catch (error) {
+            console.log("Erro: ", error);
+        }
+    }
+
+
     // Efeito para buscar as solicitações ao montar o componente
     useEffect(() => {
 
@@ -332,20 +356,20 @@ function PedidosAdm() {
 
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                        <p>Nome: {reserva.nomeSolicitante}</p>
-                                                        <p>Matrícula: {reserva.cd_matricula_solicitante}</p>
-                                                        <p>Cartegoria : {reserva.cargo.ds_cargo}</p>
-                                                        {precisaPermissao === true && (
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
                                                             <>
-                                                                <p>Liberado por: {reserva.nomeprof}</p>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
                                                             </>
                                                         )}
-                                                        <p>Chave solicitada: {reserva.nomeChave}</p>
-                                                        <p>Data da Reserva: {reserva.data}</p>
-                                                        <p>Horario da reserva: </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
                                                     <button
                                                         className="boton-form-aceitar"
                                                         type="button"
@@ -383,16 +407,27 @@ function PedidosAdm() {
 
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                        <p>Nome: </p>
-                                                        <p>Matrícula: </p>
-                                                        <p>Cartegoria : </p>
-                                                        <p>Liberado por:</p>
-                                                        <p>Chave solicitada: </p>
-                                                        <p>Data da Reserva: </p>
-                                                        <p>Horario da reserva </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
+                                                            <>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
+                                                    <button
+                                                        className="boton-form-aceitar"
+                                                        type="button"
+                                                        onClick={() => handleEntregue(reserva.id_reserva)}
+                                                    >
+                                                        Chave Entregue
+                                                    </button>
                                                     <button
                                                         className="boton-form-recusar"
                                                         type="button"
@@ -422,22 +457,83 @@ function PedidosAdm() {
                                                 <h2 className='identificador'>#{reserva.id_reserva}</h2>
                                                 <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
                                                     <div className="container-texto">
-                                                        <p>Nome: </p>
-                                                        <p>Matrícula: </p>
-                                                        <p>Cartegoria : </p>
-                                                        <p>Liberado por:</p>
-                                                        <p>Chave solicitada: </p>
-                                                        <p>Data da Reserva: </p>
-                                                        <p>Horario da reserva </p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
+                                                            <>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
                                                     </div>
                                                 </label>
-                                                <div className="radio-buttons-container">
+                                                <div className="radio-buttons-container2">
                                                     <button
                                                         className="boton-form-aceitar"
                                                         type="button"
                                                         onClick={() => handleAceitar(reserva.id_reserva)}
                                                     >
                                                         Reconsiderar pedido
+                                                    </button>
+                                                    <button
+                                                        className="boton-form-recusar"
+                                                        type="button"
+                                                        onClick={() => DeleteReserva(reserva.id_reserva)}
+                                                    >
+                                                        Deletar Reserva
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    ))}
+                                </>
+                            )}
+                            <h2 className="formulario-login__h2">Pedidos Entregues:</h2>
+                            {solicitacoesRecusadas.length === 0 && (
+                                <>
+                                    <p className='sem-pedido'>Não há pedidos Entregues!</p>
+                                </>
+                            )}
+                            {/* Seção de Chaves Entregues */}
+                            {solicitacoesEntregues.length > 0 && (
+                                <>
+                                    {solicitacoesEntregues.map((reserva) => (
+                                        <form key={reserva.id} className="formulario-pedidos">
+                                            {/* Renderize as informações da solicitação aqui */}
+                                            <div className="container-pedidos">
+                                                <h2 className='identificador'>#{reserva.id_reserva}</h2>
+                                                <label className="input-label" htmlFor={`reserva-${reserva.id}`}>
+                                                <div className="container-texto">
+                                                        <p><span style={{ fontWeight: 'bold' }}>Nome:</span> {reserva.nomeSolicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Matrícula:</span> {reserva.cd_matricula_solicitante}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Categoria:</span> {reserva.cargo.ds_cargo}</p>
+                                                        {reserva.cd_cargo === 'A0001' && (
+                                                            <>
+                                                                <p><span style={{ fontWeight: 'bold' }}>Liberado por:</span> {reserva.nomeprof}</p>
+                                                            </>
+                                                        )}
+                                                        <p><span style={{ fontWeight: 'bold' }}>Chave solicitada:</span> {reserva.nomeChave}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Data da Reserva:</span> {reserva.data}</p>
+                                                        <p><span style={{ fontWeight: 'bold' }}>Horario da reserva:</span> {reserva.hr_reserva}</p>
+                                                    </div>
+                                                </label>
+                                                <div className="radio-buttons-container2">
+                                                    <button
+                                                        className="boton-form-recusar"
+                                                        type="button"
+                                                        onClick={() => DeleteReserva(reserva.id_reserva)}
+                                                    >
+                                                        Deletar Reserva
+                                                    </button>
+                                                    <button
+                                                        className="boton-form-aceitar"
+                                                        type="button"
+                                                        onClick={() => handleAceitar(reserva.id_reserva)}
+                                                    >
+                                                        Reconsiderar
                                                     </button>
                                                 </div>
                                             </div>

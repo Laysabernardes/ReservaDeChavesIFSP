@@ -405,12 +405,12 @@ function PedidosEstudante() {
                 <>
                   {solicitacoesPendentes.map((solicitacao) => (
                     <form key={solicitacao.id} className="formulario-pedidos">
-                      <div className="container-pedidos">
+                      <div className="container-pedidos container-texto-aluno">
                         <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
-                          <div className="container-texto">
-                            <p>Professor: {solicitacao.nomeprofessor}</p>
-                            <p>Chave: {solicitacao.nomeChave} </p>
-                            <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                          <div className="container-texto container-texto-aluno">
+                            <p><span style={{ fontWeight: 'bold' }}>Professor:</span> {solicitacao.nomeprofessor}</p>
+                            <p><span style={{ fontWeight: 'bold' }}>Chave:</span> {solicitacao.nomeChave}</p>
+                            <p><span style={{ fontWeight: 'bold' }}>Categoria da Chave:</span> {solicitacao.categoriaChave}</p>
                           </div>
                         </label>
                         <div className="radio-buttons-container">
@@ -434,10 +434,10 @@ function PedidosEstudante() {
                     <form key={solicitacao.id} className="formulario-pedidos">
                       <div className="container-pedidos">
                         <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
-                          <div className="container-texto">
-                            <p>Professor: {solicitacao.nomeprofessor}</p>
-                            <p>Chave: {solicitacao.nomeChave} </p>
-                            <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
+                          <div className="container-texto container-texto-aluno">
+                            <p><span style={{ fontWeight: 'bold' }}>Professor:</span> {solicitacao.nomeprofessor}</p>
+                            <p><span style={{ fontWeight: 'bold' }}>Chave:</span> {solicitacao.nomeChave}</p>
+                            <p><span style={{ fontWeight: 'bold' }}>Categoria da Chave:</span> {solicitacao.categoriaChave}</p>
                           </div>
                         </label>
                         <div className="radio-buttons-container">
@@ -461,11 +461,11 @@ function PedidosEstudante() {
                       {/* Renderize as informações da solicitação aqui */}
                       <div className="container-pedidos">
                         <label className="input-label" htmlFor={`solicitacao-${solicitacao.id}`}>
-                          <div className="container-texto">
-                            <p>Professor: {solicitacao.nomeprofessor}</p>
-                            <p>Chave: {solicitacao.nomeChave} </p>
-                            <p>Categoria da Chave: {solicitacao.categoriaChave}</p>
-                          </div>
+                        <div className="container-texto container-texto-aluno">
+                        <p><span style={{ fontWeight: 'bold' }}>Professor:</span> {solicitacao.nomeprofessor}</p>
+                        <p><span style={{ fontWeight: 'bold' }}>Chave:</span> {solicitacao.nomeChave}</p>
+                        <p><span style={{ fontWeight: 'bold' }}>Categoria da Chave:</span> {solicitacao.categoriaChave}</p>
+                      </div>
                         </label>
                         <div className="radio-buttons-container">
                           <button
