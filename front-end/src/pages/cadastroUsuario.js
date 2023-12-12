@@ -9,8 +9,8 @@ import api from '../api';
 
 function CadastroUser() {
 
+    //variaveis de estados 
     const [mensagem, setMensagem] = useState('');
-
     const [matricula, setMatricula] = useState('');
     const [cargo, setcargo] = useState('');
     const [senha, setSenha] = useState('');
@@ -27,6 +27,7 @@ function CadastroUser() {
     const prontuario = userData ? userData.cd_matricula_usuario : 'N/A';
     const userName = userData ? userData.nm_usuario : 'Usuário';
 
+    //pbejto que contem as informções necessarias para cadastrar o user
     const payload = {
         cd_matricula_usuario: matricula,
         cd_cargo: cargo,
@@ -34,28 +35,26 @@ function CadastroUser() {
         nm_usuario: nome,
     };
 
+    //função para cirar o ususario 
     const criarUsuario = async () => {
         const response = await api.post('/user/criar', payload);
 
         setMensagem('Usuario criado com sucesso!');
-        console.log("Usuario criado:", response.data);
-        console.log("tudo", payload);
     }
 
+    //verifica se o usuario ja existe
     const userExiste = async () => {
-
         const response = await api.get(`user/nome/${payload.cd_matricula_usuario}`);
-        console.log(response.data.usuario)
         if (response.data.usuario === false) {
-            console.log("tudo2", payload);
+            //se o usuario não existir chama função cirar usuario
             criarUsuario()
             return
         } else {
+            //se ja existe mostra uma mensagem na tela 
             setMensagem("Usuario já cadastrado!");
             return
         }
     }
-
 
     const buscarCargo = async () => {
         try {
@@ -67,8 +66,6 @@ function CadastroUser() {
             if (dadosCargo && dadosCargo.length > 0) {
                 // Obtém o nome do professor
                 const cargo = dadosCargo[0].cd_cargo;
-                // Imprime o nome do professor
-                console.log("nome:", cargo);
                 // Retorna o nome do estudante
                 return dadosCargo;
             } else {
@@ -113,17 +110,15 @@ function CadastroUser() {
             selectCargo.addEventListener('change', function () {
                 // Obtém o código do cargo selecionado
                 const cargoSelecionado = arrayCargos.find(cargo => cargo.cd_cargo === this.value)?.cd_cargo;
-                console.log('Código do cargo selecionado:', cargoSelecionado);
-                console.log("tudo", payload);
             });
 
         } catch (error) {
             // Trate os erros, se necessário
             console.error('Erro ao preencher as opções do combo box:', error);
         }
-
     }
 
+    //Executa efeito assíncrono em componentes React.
     useEffect(() => {
 
         optionComboBoxCargo();
