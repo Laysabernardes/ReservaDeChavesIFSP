@@ -74,10 +74,10 @@ function Footer() {
           Desenvolvido por
           <a href="https://www.linkedin.com/in/laysabernardes/" target="_blank"> Laysa Bernardes</a>,
           <a href="https://www.linkedin.com/in/lucas-lopes-781b39263/" target="_blank"> Lucas Lopes</a>,
-          <a href="https://www.linkedin.com/in/miguel-luizatto/" target="_blank"> Miguel Luizatto</a>,
-          <a href="URL_DO_PERFIL_LINKEDIN_BEATRIZ" target="_blank"> Beatriz Bastos</a>,
-          <a href="https://www.linkedin.com/in/eduardo-miranda-silva-sousa-49b768165/" target="_blank"> Eduardo Miranda</a>,
-          <a href="https://www.linkedin.com/in/maria-eduarda-fodor-588a01209/" target="_blank"> Maria Eduarda Fodor </a>
+          <a href="URL_DO_PERFIL_LINKEDIN" target="_blank"> Miguel Luizatto</a>,
+          <a href="URL_DO_PERFIL_LINKEDIN" target="_blank"> Beatriz Bastos</a>,
+          <a href="URL_DO_PERFIL_LINKEDIN" target="_blank"> Eduardo Miranda</a>,
+          <a href="URL_DO_PERFIL_LINKEDIN" target="_blank"> Maria Eduarda Fodor </a>
           alunos de ADS - 2 semestre de 2023
         </p>
       </footer>

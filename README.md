@@ -22,13 +22,22 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
 - [x] Aprovar ou recusar pedidos dos alunos.
 - [x] Reservar chave.
 
+### O que falta? 🛠️
+- [ ] Melhorar segurança da API.
+- [ ] Autentificação e autorização com tokens JWT.
+- [ ] Desenolvolder middlwares para deixar o código limpo.
+- [ ] Implementar Notificações por E-mail ou Mensagem.
+- [ ] Adicionar Histórico de Reservas.
+- [ ] Melhorar Interface do Usuário (UI) e Experiência do Usuário (UX).
+
+Se você tem alguma dica do que poderia ser feito, por favor entre em contato comigo 🚀
+
 <br>
  
 ## Link do projeto👨‍💻
 - [Figma](https://www.figma.com/file/9Tv6VRPZciiEMYh1am0cpL/Reserva-de-Chaves?type=design&node-id=0-1&mode=design&t=1NGAws6fL6hmiK0f-0) : Contém o design do projeto.
 - [Deploy do Back-end](https://backend-reserva-ifsp.onrender.com/doc/#/) : Swagger UI para explorar e testar a API.
 - [Deploy do Front-end](https://laysabernardes.github.io/frontendreserva/) : Para visualizar o projeto.
-- [Banco de dados](https://db4free.net/phpMyAdmin/) : Hospedagem do Banco de dados. (User: admreservaifsp | password: reserva123 | Banco:reservaifsp ) 
 
 ### Tutoriais:📝
 - [Tutorial instalação do sistema ](https://drive.google.com/file/d/1AE7yujYhzW_vidkUfBpyLbY8LE-i82Xz/view?usp=drivesdk)
@@ -43,9 +52,6 @@ Desenvolver um sistema de reservas por chave para o campus, permitindo a catalog
 - Prontuario : CB303030
 - Senha: CB303030
 
-### Nivel administrador
-- Prontuario : CB_ADM001
-- Senha: CB_ADM001
 
 
 
