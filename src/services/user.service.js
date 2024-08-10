@@ -118,7 +118,7 @@ class UserServices {
           console.error('Deu algum erro:', err);
           reject(err);
         } else {
-          // console.log('Todas os Cargos encontrados:', results);
+          // console.log('Todas os Cargos encontradossss:', results);
           resolve(results);
         }
       });
