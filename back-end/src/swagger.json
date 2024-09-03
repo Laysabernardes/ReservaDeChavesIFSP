@@ -1,0 +1,1418 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Pagina de Reserva de Chaves",
+        "description": "Pagina destinada a reserva de chaves no IFSP - CBT. Tecnologias usadas: Mysql, Express.js, React.js, e Nodejs.",
+        "versio": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://backend-reserva-ifsp.onrender.com/doc/",
+            "description": "Render Server"
+        },
+        {
+            "url": "http://localhost:3001",
+            "description": "local server"
+        }
+    ],
+    "paths": {
+        "/user/criar": {
+            "post": {
+                "summary": "Criar um novo Usuario",
+                "description": "Rota para criar um novo user",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Users": {
+                                    "value": {
+                                        "cd_matricula_usuario": "CB1234567",
+                                        "cd_cargo": "A0001",
+                                        "cd_senha_usuario": "CB1234567",
+                                        "nm_usuario": "Laysa Bernardes"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/nome/:{cd_matricula_usuario}": {
+            "get": {
+                "summary": "Busca pela matricula",
+                "description": "Rota que busca com base na matrcila do user",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "cd_matricula_usuario",
+                        "type": "string",
+                        "description": "User ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/tbcargo": {
+            "get": {
+                "summary": "Busca todos os cargos",
+                "description": "RRota faz uma busca de todos os cargos existentes na tabela cargo",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/cargo/:{cd_cargo}": {
+            "get": {
+                "summary": "Busca usuario com o cargo",
+                "description": "Rota que faz uma busca nos usuario com determinado codigo de cargo",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "cd_cargo",
+                        "type": "string",
+                        "description": "User cargo",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/tbcargo/:{cd_cargo}/": {
+            "get": {
+                "summary": "Busca no codigo do cargo",
+                "description": "Rota faz uma busca no banco passando o cd_cargo para obter outras informações do cargo ",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "cd_cargo",
+                        "type": "string",
+                        "description": "User cargo",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/senha/": {
+            "patch": {
+                "summary": "Atualizar senha",
+                "description": "Rota para atualizar senha",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cd_matricula_usuario": {
+                                        "type": "string"
+                                    },
+                                    "cd_senha_usuario": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "cd_matricula_usuario",
+                                    "cd_senha_usuario"
+                                ]
+                            },
+                            "examples": {
+                                "UpdateSenha": {
+                                    "value": {
+                                        "cd_matricula_usuario": "CB1234567",
+                                        "cd_senha_usuario": "CB1234567"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "201": {
+                        "description": "Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "senha": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message",
+                                        "senha"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:{cd_matricula_usuario}/": {
+            "delete": {
+                "summary": "Deletar usuario",
+                "description": "Rota responsavel por deletar o usuario",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "cd_matricula_usuario",
+                        "type": "string",
+                        "description": "User ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "201": {
+                        "description": "Deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "required": [
+                                        "message",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/": {
+            "post": {
+                "summary": "Login",
+                "description": "Rota para  fazer o login",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "senha": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "login",
+                                    "senha"
+                                ]
+                            }
+                        }
+                    },
+                    "examples": {
+                        "Login": {
+                            "value": {
+                                "login": "CB1234567",
+                                "senha": "CB1234567"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "201": {
+                        "description": "Login Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reserva/": {
+            "post": {
+                "summary": "Criar Reserva",
+                "description": "Cria uma nova reserva",
+                "tags": [
+                    "Reservas"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReservaInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reserva criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reserva"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/reserva": {
+            "get": {
+                "summary": "Listar Reservas",
+                "description": "Obtém a lista de todas as reservas",
+                "tags": [
+                    "Reservas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de reservas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Reserva"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/reserva/:{id_reserva}/": {
+            "get": {
+                "summary": "Obter Detalhes da Reserva",
+                "description": "Obtém detalhes de uma reserva específica",
+                "tags": [
+                    "Reservas"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_reserva",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da Reserva"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes da reserva",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reserva"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Reserva não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/reserva/update": {
+            "patch": {
+                "summary": "Atualizar Status da Reserva",
+                "description": "Atualiza o status de uma reserva",
+                "tags": [
+                    "Reservas"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_reserva",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da Reserva"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "ds_status": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "ds_status"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Status da reserva atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/reserva/:id_reserva": {
+            "delete": {
+                "summary": "Deletar Reserva",
+                "description": "Deleta uma reserva",
+                "tags": [
+                    "Reservas"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_reserva",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da Reserva"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Reserva deletada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reserva"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Reserva não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/reserva/solicitante/:{cd_matricula_solicitante}/": {
+            "get": {
+                "summary": "Listar Reservas por Solicitante",
+                "description": "Obtém a lista de todas as reservas feitas por um solicitante",
+                "tags": [
+                    "Reservas"
+                ],
+                "parameters": [
+                    {
+                        "name": "cd_matricula_solicitante",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Matrícula do Solicitante"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de reservas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Reserva"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhuma reserva encontrada para o solicitante"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/reserva/datalhes/:{dt_reserva}/": {
+            "get": {
+                "summary": "Listar Reservas por Data",
+                "description": "Obtém a lista de todas as reservas para uma determinada data",
+                "tags": [
+                    "Reservas"
+                ],
+                "parameters": [
+                    {
+                        "name": "dt_reserva",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "description": "Data da Reserva (formato: YYYY-MM-DD)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de reservas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Reserva"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "404": {
+                        "description": "Nenhuma reserva encontrada para a data"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/permissao/": {
+            "post": {
+                "summary": "Enviar Pedido de Permissão",
+                "description": "Cria um novo pedido de permissão",
+                "tags": [
+                    "Permissoes"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PedidoPermissaoInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pedido de permissão enviado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/permissao/funcionario/{cd_matricula_funcionario}/": {
+            "get": {
+                "summary": "Listar Pedidos de Permissão por Funcionário",
+                "description": "Obtém a lista de todos os pedidos de permissão feitos por um funcionário",
+                "tags": [
+                    "Permissoes"
+                ],
+                "parameters": [
+                    {
+                        "name": "cd_matricula_funcionario",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Matrícula do Funcionário"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de pedidos de permissão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PedidoPermissao"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhum pedido de permissão encontrado para o funcionário"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/permissao/estudante/{cd_matricula_estudante}/": {
+            "get": {
+                "summary": "Listar Pedidos de Permissão por Estudante",
+                "description": "Obtém a lista de todos os pedidos de permissão feitos por um estudante",
+                "tags": [
+                    "Permissoes"
+                ],
+                "parameters": [
+                    {
+                        "name": "cd_matricula_estudante",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Matrícula do Estudante"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de pedidos de permissão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PedidoPermissao"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhum pedido de permissão encontrado para o estudante"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/permissao/{id_permissao}/": {
+            "get": {
+                "summary": "Obter Detalhes da Permissão",
+                "description": "Obtém detalhes de uma permissão específica",
+                "tags": [
+                    "Permissoes"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_permissao",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da Permissão"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes da permissão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PedidoPermissao"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Permissão não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/permissao": {
+            "get": {
+                "summary": "Listar Todas as Permissões",
+                "description": "Obtém a lista de todas as permissões",
+                "tags": [
+                    "Permissoes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de todas as permissões",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PedidoPermissao"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhuma permissão encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/permissao//": {
+            "patch": {
+                "summary": "Atualizar Status da Permissão",
+                "description": "Atualiza o status de uma permissão específica",
+                "tags": [
+                    "Permissoes"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePermissaoInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Status da permissão atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/chaves": {
+            "post": {
+                "summary": "Criar Chave",
+                "tags": [
+                    "Chaves"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChaveInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Chave criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Chave"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/chaves/": {
+            "get": {
+                "summary": "Listar Todas as Chaves",
+                "tags": [
+                    "Chaves"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de todas as chaves",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Chave"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhuma chave encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/chaves/{cd_chave}": {
+            "get": {
+                "summary": "Buscar Chave por ID",
+                "tags": [
+                    "Chaves"
+                ],
+                "parameters": [
+                    {
+                        "name": "cd_chave",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chave encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Chave"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Chave não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/chaves/:{cd_chave}": {
+            "patch": {
+                "summary": "Atualizar Chave",
+                "tags": [
+                    "Chaves"
+                ],
+                "parameters": [
+                    {
+                        "name": "cd_chave",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChaveUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Chave atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Chave"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                }
+            }
+        },
+        "/chaves/{cd_chave}/":{
+        "delete": {
+            "summary": "Deletar Chave",
+            "tags": [
+                "Chaves"
+            ],
+            "parameters": [
+                {
+                    "name": "cd_chave",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "responses": {
+                "201": {
+                    "description": "Chave deletada com sucesso",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Chave"
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "Chave não encontrada"
+                },
+                "500": {
+                    "description": "Erro interno do servidor"
+                }
+            }
+        }
+        },
+        "/chaves/categoria/{ds_chave}": {
+            "get": {
+              "summary": "Buscar Chave por Categoria",
+              "tags": ["Chaves"],
+              "parameters": [
+                {
+                  "name": "ds_chave",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Chave encontrada",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Chave"
+                        }
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Chave não encontrada"
+                },
+                "500": {
+                  "description": "Erro interno do servidor"
+                }
+              }
+            }
+          },
+          "/chaves/status/{ds_status}": {
+            "get": {
+              "summary": "Buscar Chave por Status",
+              "tags": ["Chaves"],
+              "parameters": [
+                {
+                  "name": "ds_status",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Chave encontrada",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Chave"
+                        }
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Chave não encontrada"
+                },
+                "500": {
+                  "description": "Erro interno do servidor"
+                }
+              }
+            }
+          },
+          "/chaves/nome/{nm_chave}": {
+            "get": {
+              "summary": "Buscar Chave por Nome",
+              "tags": ["Chaves"],
+              "parameters": [
+                {
+                  "name": "nm_chave",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Chave encontrada",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Chave"
+                      }
+                    }
+                  }
+                },
+                "404": {
+                  "description": "Chave não encontrada"
+                },
+                "500": {
+                  "description": "Erro interno do servidor"
+                }
+              }
+            }
+          }
+},
+"components": {
+    "schemas": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "cd_matricula_usuario": {
+                    "type": "string"
+                },
+                "cd_cargo": {
+                    "type": "string"
+                },
+                "cd_senha_usuario": {
+                    "type": "string"
+                },
+                "nm_usuario": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cd_matricula_usuario",
+                "cd_cargo",
+                "cd_senha_usuario",
+                "nm_usuario"
+            ]
+        },
+        "ReservaInput": {
+            "type": "object",
+            "properties": {
+                "cd_matricula_solicitante": {
+                    "type": "string"
+                },
+                "cd_cargo": {
+                    "type": "string"
+                },
+                "id_permissao_estudante": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "cd_chave": {
+                    "type": "string"
+                },
+                "dt_reserva": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "dt_devolucao": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "ds_status": {
+                    "type": "string"
+                },
+                "hr_reserva": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cd_matricula_solicitante",
+                "cd_cargo",
+                "cd_chave",
+                "dt_reserva",
+                "dt_devolucao",
+                "ds_status",
+                "hr_reserva"
+            ]
+        },
+        "Reserva": {
+            "type": "object",
+            "properties": {
+                "cd_matricula_solicitante": {
+                    "type": "string"
+                },
+                "cd_cargo": {
+                    "type": "string"
+                },
+                "id_permissao_estudante": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "cd_chave": {
+                    "type": "string"
+                },
+                "dt_reserva": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "dt_devolucao": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "ds_status": {
+                    "type": "string"
+                },
+                "hr_reserva": {
+                    "type": "string"
+                },
+                "id_reserva": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "cd_matricula_solicitante",
+                "cd_cargo",
+                "cd_chave",
+                "dt_reserva",
+                "dt_devolucao",
+                "ds_status",
+                "hr_reserva",
+                "id_reserva"
+            ]
+        },
+        "PedidoPermissaoInput": {
+            "type": "object",
+            "properties": {
+                "cd_matricula_funcionario": {
+                    "type": "string"
+                },
+                "cd_matricula_estudante": {
+                    "type": "string"
+                },
+                "cd_chave": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cd_matricula_funcionario",
+                "cd_matricula_estudante",
+                "cd_chave"
+            ]
+        },
+        "UpdatePermissaoInput": {
+            "type": "object",
+            "properties": {
+                "id_permissao": {
+                    "type": "integer"
+                },
+                "ds_status": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id_permissao",
+                "ds_status"
+            ]
+        },
+        "PedidoPermissao": {
+            "type": "object",
+            "properties": {
+                "cd_matricula_funcionario": {
+                    "type": "string"
+                },
+                "cd_matricula_estudante": {
+                    "type": "string"
+                },
+                "cd_chave": {
+                    "type": "string"
+                },
+                "id_permissao": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "cd_matricula_funcionario",
+                "cd_matricula_estudante",
+                "cd_chave",
+                "id_permissao"
+            ]
+        },
+        "ChaveInput": {
+            "type": "object",
+            "properties": {
+                "nm_chave": {
+                    "type": "string"
+                },
+                "ds_chave": {
+                    "type": "string"
+                },
+                "ds_status": {
+                    "type": "string"
+                },
+                "ds_obs_chave": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "nm_chave",
+                "ds_chave",
+                "ds_status"
+            ]
+        },
+        "Chave": {
+            "type": "object",
+            "properties": {
+                "nm_chave": {
+                    "type": "string"
+                },
+                "ds_chave": {
+                    "type": "string"
+                },
+                "ds_status": {
+                    "type": "string"
+                },
+                "ds_obs_chave": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "nm_chave",
+                "ds_chave",
+                "ds_status"
+            ]
+        },
+        "ChaveUpdate": {
+            "type": "object",
+            "properties": {
+                "ds_status": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ds_status"
+            ]
+        }
+    }
+}
+}
