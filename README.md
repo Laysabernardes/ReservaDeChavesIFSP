@@ -28,7 +28,7 @@ Se você tem alguma dica do que poderia ser feito, por favor entre em contato co
  
 ## Link do projeto👨‍💻
 - [Figma](https://www.figma.com/file/9Tv6VRPZciiEMYh1am0cpL/Reserva-de-Chaves?type=design&node-id=0-1&mode=design&t=1NGAws6fL6hmiK0f-0) : Contém o design do projeto.
-- [Deploy do Back-end](https://backend-reserva-ifsp.onrender.com/doc/#/) : Swagger UI para explorar e testar a API.
+- [Deploy do Back-end](https://backend-reserva-ifsp.onrender.com/doc/) : Swagger UI para explorar e testar a API.
 - [Deploy do Front-end](https://laysabernardes.github.io/frontendreserva/) : Para visualizar o projeto.
 - [Assista ao vídeo do Projeto no YouTube](https://youtu.be/MHvu_VzqNRY)
 
