@@ -2,7 +2,7 @@
 <img align="right" height="700em" src="https://github.com/Laysabernardes/ReservaDeChavesIFSP/assets/132034642/5c46298c-c79e-46af-a5da-5bb31e500b0f"/>
 <br>
 <div style=" align-items: center;">
-<p>  Bem-vindo ao repositório do projeto Sistema de Reservas por Chave! Aqui você encontrará informações importantes sobre o projeto que foi desenvolvido por Laysa Bernardes, Lucas Lopes, Miguel Luizatto, Beatriz Bastos, Eduardo Miranda e Matia Eduarda Fodor.</p>
+<p>  Bem-vindo ao repositório do projeto Sistema de Reservas por Chave! Aqui você encontrará informações importantes sobre o projeto que foi desenvolvido por Laysa Bernardes, Lucas Lopes, Miguel Luizatto, Beatriz Bastos, Eduardo Miranda e Maria Eduarda Fodor.</p>
 </div>
 
 ## Proposta 💡
